@@ -12,7 +12,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{env.FLUTTER_VERSION}}
+          flutter-version: stable
 
       - name: Install dependencies
         run: flutter pub get
@@ -25,9 +25,14 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Upload coverage to Codecov
-        run: node --max-old-space-size=4096 ./node_modules/.bin/codecov
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          file: coverage/lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./coverage
+
+      - name: Generate Coverage Badge
+        uses: tj-actions/coverage-badge-generator@v1
+        with:
+          coverage-file: coverage/lcov.info
+          output-file: coverage/coverage-badge.svg

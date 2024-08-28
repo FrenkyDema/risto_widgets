@@ -1,7 +1,8 @@
 ## Risto Widgets for Flutter
 
 [![pub package](https://img.shields.io/pub/v/risto_widgets.svg)](https://pub.dev/packages/risto_widgets)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/risto_widgets/flutter.yml)](https://github.com/frenkydema/risto_widgets/actions/workflows/flutter.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/risto_widgets/flutter_test.yml)](https://github.com/frenkydema/risto_widgets/actions/workflows/flutter_test.yml)
+[![Coverage](./coverage/coverage-badge.svg)](./coverage/index.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ### Overview
