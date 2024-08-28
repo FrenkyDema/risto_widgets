@@ -25,14 +25,15 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
+      - name: Generate Coverage Badge
+        uses: dschinkel/coverage-badge-action@v1.1.0
+        with:
+          covfile: coverage/lcov.info
+          outdir: coverage
+          badgefile: coverage-badge.svg
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./coverage
-
-      - name: Generate Coverage Badge
-        uses: tj-actions/coverage-badge-generator@v1
-        with:
-          coverage-file: coverage/lcov.info
-          output-file: coverage/coverage-badge.svg
