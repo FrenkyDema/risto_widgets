@@ -1,12 +1,10 @@
-name: Coverage
+name: Flutter Test
 
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # This grants write permissions to the GitHub Actions bot.
 
     steps:
       - uses: actions/checkout@v2
@@ -26,6 +24,11 @@ jobs:
         run: |
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
+
+      - name: Verify Coverage Directory
+        run: |
+          ls -la coverage
+          cat coverage/index.html || echo "Coverage report not generated!"
 
       - name: Generate Coverage Badge
         run: |
