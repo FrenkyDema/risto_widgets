@@ -1,9 +1,11 @@
 ## Risto Widgets for Flutter
 
+## Risto Widgets for Flutter
+
 [![pub package](https://img.shields.io/pub/v/risto_widgets.svg)](https://pub.dev/packages/risto_widgets)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/risto_widgets/flutter.yml)](https://github.com/frenkydema/risto_widgets/actions/workflows/flutter.yml)
+[![Coverage](https://frenkydema.github.io/risto_widgets/coverage/coverage-badge.svg)](https://frenkydema.github.io/risto_widgets/coverage/index.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
 ### Overview
 
 The **Risto Widgets** library provides a collection of customizable Flutter widgets designed to
