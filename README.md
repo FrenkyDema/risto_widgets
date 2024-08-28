@@ -6,13 +6,29 @@
 
 ### Overview
 
-The **Risto Widgets** library provides a collection of customizable Flutter widgets designed to simplify UI development. These include widgets like buttons, expandable list tiles, and custom action sheets, all of which can be easily integrated into your Flutter app.
+The **Risto Widgets** library provides a collection of customizable Flutter widgets designed to
+simplify UI development. These include widgets like buttons, expandable list tiles, and custom
+action sheets, all of which can be easily integrated into your Flutter app.
+
+### Descrizione dei Widget:
+
+- **ListTileButton**: Un pulsante personalizzabile che imita un `ListTile`, ideale per creare
+  pulsanti che somigliano a voci di elenco.
+- **CustomActionButton**: Un pulsante flessibile che permette di aggiungere contenuti e stili
+  personalizzati.
+- **IncrementDecrementWidget**: Un widget per incrementare e decrementare valori, utile per
+  selezioni di quantità.
+- **ExpandableListTileButton**: Un widget che combina un `ListTileButton` con funzionalità
+  espandibili per mostrare o nascondere contenuti aggiuntivi.
+- **OpenCustomSheet**: Un'utilità per mostrare fogli modali personalizzati con azioni di conferma e
+  annullamento.
 
 ### Widgets
 
 #### 1. `ListTileButton`
 
-A customizable button that mimics a `ListTile` widget, with options for leading, trailing, body, and more. Ideal for creating buttons that resemble list items.
+A customizable button that mimics a `ListTile` widget, with options for leading, trailing, body, and
+more. Ideal for creating buttons that resemble list items.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -34,7 +50,8 @@ class MyWidget extends StatelessWidget {
 
 #### 2. `CustomActionButton`
 
-A flexible button widget that allows for custom content and styles. Use this widget when you need a button with more customization options than the default Flutter buttons provide.
+A flexible button widget that allows for custom content and styles. Use this widget when you need a
+button with more customization options than the default Flutter buttons provide.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -56,7 +73,8 @@ class MyWidget extends StatelessWidget {
 
 #### 3. `IncrementDecrementWidget`
 
-A widget for incrementing and decrementing values, complete with customizable increment and decrement buttons. This widget is ideal for use cases like quantity selection.
+A widget for incrementing and decrementing values, complete with customizable increment and
+decrement buttons. This widget is ideal for use cases like quantity selection.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -93,7 +111,9 @@ class _MyWidgetState extends State<MyWidget> {
 
 #### 4. `ExpandableListTileButton`
 
-A widget that combines a `ListTileButton` with expandable functionality, allowing you to show or hide additional content when the button is pressed. Useful for creating collapsible sections in your UI.
+A widget that combines a `ListTileButton` with expandable functionality, allowing you to show or
+hide additional content when the button is pressed. Useful for creating collapsible sections in your
+UI.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -121,7 +141,8 @@ class MyWidget extends StatelessWidget {
 
 #### 5. `OpenCustomSheet`
 
-A utility for displaying custom modal sheets with confirm and cancel actions. This widget simplifies the creation of modal dialogs for user confirmations or custom content.
+A utility for displaying custom modal sheets with confirm and cancel actions. This widget simplifies
+the creation of modal dialogs for user confirmations or custom content.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -152,21 +173,19 @@ class MyWidget extends StatelessWidget {
 
 ### Features
 
-- **Customizable Buttons**: Includes `ListTileButton` and `CustomActionButton` with flexible UI options.
+- **Customizable Buttons**: Includes `ListTileButton` and `CustomActionButton` with flexible UI
+  options.
 - **Expandable List Tiles**: Easily create expandable sections with `ExpandableListTileButton`.
-- **State Management Ready**: Widgets are designed to work seamlessly with popular state management solutions like `flutter_bloc`.
-- **UI Customization**: Customize widgets with various options for colors, padding, borders, and more.
+- **State Management Ready**: Widgets are designed to work seamlessly with popular state management
+  solutions like `flutter_bloc`.
+- **UI Customization**: Customize widgets with various options for colors, padding, borders, and
+  more.
 
 ### Usage
 
-To use the Risto Widgets, simply import the package and integrate the desired widget into your Flutter app.
+To use the Risto Widgets, simply import the package and integrate the desired widget into your
+Flutter app.
 
-For more examples and documentation, visit the [pub.dev page](https://pub.dev/packages/risto_widgets) or the [GitHub repository](https://github.com/frenkydema/risto_widgets).
-```
-
-### Descrizione dei Widget:
-- **ListTileButton**: Un pulsante personalizzabile che imita un `ListTile`, ideale per creare pulsanti che somigliano a voci di elenco.
-- **CustomActionButton**: Un pulsante flessibile che permette di aggiungere contenuti e stili personalizzati.
-- **IncrementDecrementWidget**: Un widget per incrementare e decrementare valori, utile per selezioni di quantità.
-- **ExpandableListTileButton**: Un widget che combina un `ListTileButton` con funzionalità espandibili per mostrare o nascondere contenuti aggiuntivi.
-- **OpenCustomSheet**: Un'utilità per mostrare fogli modali personalizzati con azioni di conferma e annullamento.
+For more examples and documentation, visit
+the [pub.dev page](https://pub.dev/packages/risto_widgets) or
+the [GitHub repository](https://github.com/frenkydema/risto_widgets).
