@@ -25,12 +25,15 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Generate Coverage Badge
-        uses: dschinkel/coverage-badge-action@v1.1.0
-        with:
-          covfile: coverage/lcov.info
-          outdir: coverage
-          badgefile: coverage-badge.svg
+      - name: Calculate Coverage Percentage
+        id: coverage
+        run: |
+          COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
+          echo "coverage=$COVERAGE_PERCENT" >> $GITHUB_ENV
+
+      - name: Generate Coverage Badge with Shields.io
+        run: |
+          curl -o coverage/coverage-badge.svg "https://img.shields.io/badge/coverage-${{ env.coverage }}25-green"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
