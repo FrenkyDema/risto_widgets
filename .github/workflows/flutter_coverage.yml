@@ -1,10 +1,12 @@
-name: Flutter Test
+name: Coverage
 
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # This grants write permissions to the GitHub Actions bot.
 
     steps:
       - uses: actions/checkout@v2
@@ -12,7 +14,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{env.FLUTTER_VERSION}}
+          flutter-version: stable
 
       - name: Install dependencies
         run: flutter pub get
@@ -25,14 +27,10 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Calculate Coverage Percentage
-        id: coverage
+      - name: Generate Coverage Badge
         run: |
           COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
           echo "coverage=$COVERAGE_PERCENT" >> $GITHUB_ENV
-
-      - name: Generate Coverage Badge with Shields.io
-        run: |
           curl -o coverage/coverage-badge.svg "https://img.shields.io/badge/coverage-${{ env.coverage }}25-green"
 
       - name: Deploy to GitHub Pages
