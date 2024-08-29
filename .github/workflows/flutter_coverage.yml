@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -25,49 +26,44 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Debug Coverage Directory Before Add
+      - name: Debug Coverage Directory
         run: |
-          echo "Listing contents of coverage directory before add..."
+          echo "Listing contents of coverage directory..."
           ls -la coverage/
           echo "Checking if coverage files exist..."
           test -f coverage/lcov.info && echo "lcov.info exists" || echo "lcov.info does not exist"
-          test -d coverage && echo "coverage directory exists" || echo "coverage directory does not exist"
 
       - name: Configure Git User
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Fetch and Merge gh-pages Branch
+      - name: Commit Coverage Files on Main Branch
+        run: |
+          git add coverage/
+          git commit -m "Add coverage report"
+
+      - name: Fetch gh-pages Branch
         run: |
           git fetch origin gh-pages
+
+      - name: Switch to gh-pages Branch
+        run: |
           git checkout gh-pages
-          git merge origin/gh-pages --allow-unrelated-histories
+          git pull origin gh-pages
 
-      - name: Add Coverage Files
+      - name: Copy Coverage Files to gh-pages Branch
         run: |
-          echo "Adding coverage files..."
-          git add coverage/* || echo "No coverage files to add"
-
-      - name: Commit Coverage Files
-        run: |
-          echo "Committing files..."
-          git commit -m "Add coverage report" || echo "No changes to commit"
-          echo "Pushing to gh-pages branch..."
+          git checkout main -- coverage/
+          git add coverage/
+          git commit -m "Update coverage report on gh-pages"
           git push origin gh-pages
 
       - name: Generate Coverage Badge
         run: |
-          if [ -f coverage/lcov.info ]; then
-            COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
-            echo "Coverage percentage: $COVERAGE_PERCENT"
-            ENCODED_COVERAGE_PERCENT=$(echo $COVERAGE_PERCENT | sed 's/%/%25/')
-            echo "Encoded Coverage percentage: $ENCODED_COVERAGE_PERCENT"
-            curl -o coverage/coverage-badge.svg "https://img.shields.io/badge/Coverage-${ENCODED_COVERAGE_PERCENT}-brightgreen.svg"
-          else
-            echo "lcov.info not found, skipping badge generation"
-            exit 1
-          fi
+          COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
+          ENCODED_COVERAGE_PERCENT=$(echo $COVERAGE_PERCENT | sed 's/%/%25/')
+          curl -o coverage/coverage-badge.svg "https://img.shields.io/badge/Coverage-${ENCODED_COVERAGE_PERCENT}-brightgreen.svg"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
