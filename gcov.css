@@ -1,0 +1,112 @@
+body {
+  color: #333;
+  background-color: #f7f7f7;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+td.title {
+  text-align: center;
+  padding-bottom: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: #333;
+}
+
+td.headerItem {
+  text-align: right;
+  padding-right: 8px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+td.headerValue {
+  text-align: left;
+  color: #0066cc;
+  font-weight: bold;
+}
+
+td.headerCovTableHead, td.headerCovTableEntry, td.headerCovTableEntryHi, td.headerCovTableEntryMed, td.headerCovTableEntryLo {
+  text-align: center;
+  padding: 10px;
+  font-size: 12pt;
+}
+
+td.headerCovTableEntryHi {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+td.headerCovTableEntryMed {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+td.headerCovTableEntryLo {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+td.coverFile {
+  text-align: left;
+  padding: 12px 20px;
+  background-color: #e9ecef;
+  font-family: monospace;
+}
+
+td.coverBar {
+  padding: 0 10px;
+  background-color: #e9ecef;
+}
+
+td.coverBarOutline {
+  background-color: #000;
+}
+
+td.coverPerHi, td.coverNumHi {
+  background-color: #d4edda;
+}
+
+td.coverPerMed, td.coverNumMed {
+  background-color: #fff3cd;
+}
+
+td.coverPerLo, td.coverNumLo {
+  background-color: #f8d7da;
+}
+
+td.versionInfo {
+  text-align: center;
+  padding: 15px;
+  font-style: italic;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table tr:first-child td {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+table tr:last-child td {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
