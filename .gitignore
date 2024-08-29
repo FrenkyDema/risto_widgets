@@ -262,4 +262,5 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter,dart,android
+# End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter,dart,android!/example/pubspec.lock
+!/pubspec.lock

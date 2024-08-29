@@ -16,7 +16,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  expandable: 5.0.1
+  expandable: ^5.0.1
 
   risto_widgets:
     # When depending on this package from a real application you should use:
