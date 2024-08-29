@@ -1,4 +1,4 @@
-# Contributing to `qrcode_barcode_scanner`
+# Contributing to `risto_widgets`
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -29,7 +29,7 @@ In short, when you submit code changes, your submissions are understood to be un
 
 ## Report bugs using Github's [issues](https://github.com/FrenkyDema/qrcode_barcode_scanner/issues/new/choose)
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/FrenkyDema/qrcode_barcode_scanner/issues/new?assignees=FrenkyDema&labels=bug&template=bug_report.md&title=%5BBUG%5D); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/FrenkyDema/risto_widgets/issues/new?assignees=FrenkyDema&labels=bug&template=bug_report.md&title=%5BBUG%5D); it's that easy!
 
 **Great Bug Reports** tend to have:
 
