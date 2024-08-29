@@ -36,6 +36,9 @@ google-services.json
 # Android Profiling
 *.hprof
 
+# macOS specific files
+.DS_Store
+
 ### Android Patch ###
 gen-external-apklibs
 
