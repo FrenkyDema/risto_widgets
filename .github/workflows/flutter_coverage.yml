@@ -1,6 +1,6 @@
 name: Flutter Coverage
 
-on: [push, pull_request]
+on: [push, pull_request, release]
 
 jobs:
   test:
@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all branches to ensure 'main' is available
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -43,13 +45,14 @@ jobs:
           git restore --staged pubspec.lock example/pubspec.lock
           git restore pubspec.lock example/pubspec.lock
 
-      - name: Commit Coverage Files on Main Branch
+      - name: Commit Coverage Files on Default Branch
         run: |
           git add coverage/
           git commit -m "Add coverage report"
 
-      - name: Fetch gh-pages Branch
+      - name: Fetch Default Branch and gh-pages Branch
         run: |
+          git fetch origin $(git rev-parse --abbrev-ref HEAD)  # Fetch the branch that triggered the action
           git fetch origin gh-pages
 
       - name: Switch to gh-pages Branch
@@ -59,7 +62,7 @@ jobs:
 
       - name: Copy Coverage Files to gh-pages Branch
         run: |
-          git checkout main -- coverage/
+          git checkout $(git rev-parse --abbrev-ref HEAD) -- coverage/  # Check out the coverage from the current branch
           git add coverage/
           git commit -m "Update coverage report on gh-pages"
           git push origin gh-pages
