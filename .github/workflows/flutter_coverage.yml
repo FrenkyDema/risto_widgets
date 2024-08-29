@@ -32,11 +32,19 @@ jobs:
           echo "Checking coverage/index.html exists..."
           cat coverage/index.html || echo "Coverage report not generated!"
 
-      - name: Force Add Coverage Files to Git
+      - name: Commit Coverage Files
         run: |
+          echo "Configuring git..."
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add -f coverage/*
+          echo "Checking current status..."
+          git status
+          echo "Adding coverage files..."
+          git add coverage/*
+          echo "Committing files..."
+          git commit -m "Add coverage report"
+          echo "Pushing to gh-pages branch..."
+          git push origin gh-pages
 
       - name: Generate Coverage Badge
         run: |
