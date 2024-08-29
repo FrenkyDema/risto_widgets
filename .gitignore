@@ -52,7 +52,7 @@ gen-external-apklibs
 .dart_tool/
 .packages
 # If you're building an application, you may want to check-in your pubspec.lock
-pubspec.lock
+*.lock
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
@@ -263,7 +263,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter,dart,android!/example/pubspec.lock
-!/pubspec.lock
 example/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux
 example/linux/flutter/ephemeral/.plugin_symlinks/risto_widgets
 example/macos/Flutter/ephemeral/Flutter-Generated.xcconfig

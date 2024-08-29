@@ -1,5 +1,5 @@
 name: risto_widgets
-description: "A new Flutter project."
+description: "A Flutter library with customizable UI widgets for buttons, expandable list tiles, and more."
 version: 0.0.1
 homepage: "https://github.com/FrenkyDema/risto_widgets"
 
