@@ -10,7 +10,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Fetch all branches to ensure 'main' is available
+          fetch-depth: 0  # Ensure all branches are fetched
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -45,14 +45,13 @@ jobs:
           git restore --staged pubspec.lock example/pubspec.lock
           git restore pubspec.lock example/pubspec.lock
 
-      - name: Commit Coverage Files on Default Branch
+      - name: Commit Coverage Files on Main Branch
         run: |
           git add coverage/
           git commit -m "Add coverage report"
 
-      - name: Fetch Default Branch and gh-pages Branch
+      - name: Fetch gh-pages Branch
         run: |
-          git fetch origin $(git rev-parse --abbrev-ref HEAD)  # Fetch the branch that triggered the action
           git fetch origin gh-pages
 
       - name: Switch to gh-pages Branch
@@ -62,7 +61,7 @@ jobs:
 
       - name: Copy Coverage Files to gh-pages Branch
         run: |
-          git checkout $(git rev-parse --abbrev-ref HEAD) -- coverage/  # Check out the coverage from the current branch
+          git checkout HEAD@{1} -- coverage/  # Check out coverage files from the previous commit (before branch switch)
           git add coverage/
           git commit -m "Update coverage report on gh-pages"
           git push origin gh-pages
