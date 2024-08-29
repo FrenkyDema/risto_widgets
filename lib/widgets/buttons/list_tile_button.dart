@@ -267,18 +267,18 @@ class ExpandableListTileButton extends StatefulWidget {
   });
 
   // Constructor for ListTile button style
-  const ExpandableListTileButton.listTile({
-    super.key,
-    required this.controller,
-    required this.expanded,
-    this.buttonBody,
-    this.subtitle,
-    this.buttonLeading,
-    this.backgroundColor,
-    this.expandedColor = Colors.white,
-    this.trailing,
-    this.onPressed
-  })  : customHeader = null,
+  const ExpandableListTileButton.listTile(
+      {super.key,
+      required this.controller,
+      required this.expanded,
+      this.buttonBody,
+      this.subtitle,
+      this.buttonLeading,
+      this.backgroundColor,
+      this.expandedColor = Colors.white,
+      this.trailing,
+      this.onPressed})
+      : customHeader = null,
         icon = null,
         size = null,
         iconColor = null,

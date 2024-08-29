@@ -26,7 +26,7 @@ void main() {
 
     // Tap the button and verify the counter increments.
     await tester.tap(find.byType(CustomActionButton));
-    await tester.pump();  // Rebuild the widget with the new state.
+    await tester.pump(); // Rebuild the widget with the new state.
 
     expect(counter, 1);
   });

@@ -25,7 +25,7 @@ void main() {
 
     // Tap the ListTileButton and verify it triggers the onPressed callback.
     await tester.tap(find.byType(ListTileButton));
-    await tester.pump();  // Rebuild the widget with the new state.
+    await tester.pump(); // Rebuild the widget with the new state.
 
     expect(buttonPressed, true);
   });

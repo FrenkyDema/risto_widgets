@@ -55,7 +55,7 @@ class OpenCustomSheet extends StatelessWidget {
         return body();
       },
     ).then(
-          (Object? value) {
+      (Object? value) {
         try {
           onClose?.call(value) ?? () {};
         } catch (e) {
@@ -71,21 +71,21 @@ class OpenCustomSheet extends StatelessWidget {
   }
 
   static void openConfirmSheet(
-      BuildContext context, {
-        required Widget body,
-        void Function(dynamic value)? onClose,
-        bool? expand,
-        double? initialChildSize,
-        double? minChildSize,
-        double? maxChildSize,
-        bool? scrollable,
-        Color? backgroundColor,
-        Color? handleColor,
-        Color? buttonColor,
-        Color? buttonTextColor,
-        EdgeInsetsGeometry? padding,
-        double? buttonSpacing,
-      }) {
+    BuildContext context, {
+    required Widget body,
+    void Function(dynamic value)? onClose,
+    bool? expand,
+    double? initialChildSize,
+    double? minChildSize,
+    double? maxChildSize,
+    bool? scrollable,
+    Color? backgroundColor,
+    Color? handleColor,
+    Color? buttonColor,
+    Color? buttonTextColor,
+    EdgeInsetsGeometry? padding,
+    double? buttonSpacing,
+  }) {
     OpenCustomSheet(
       scrollable: scrollable,
       expand: expand,
@@ -96,7 +96,7 @@ class OpenCustomSheet extends StatelessWidget {
       body: ({scrollController}) => Container(
         decoration: BoxDecoration(
           borderRadius:
-          const BorderRadiusDirectional.vertical(top: Radius.circular(10)),
+              const BorderRadiusDirectional.vertical(top: Radius.circular(10)),
           color: backgroundColor ?? Theme.of(context).cardColor,
         ),
         padding: padding ?? const EdgeInsets.only(bottom: 16.0),
@@ -120,7 +120,8 @@ class OpenCustomSheet extends StatelessWidget {
               child: Center(child: body),
             ),
             DoubleListTileButtons(
-              padding: padding ?? const EdgeInsets.symmetric(vertical: 10, horizontal: 16.0),
+              padding: padding ??
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 16.0),
               space: buttonSpacing ?? 16.0,
               firstButton: ListTileButton(
                 onPressed: () => Navigator.pop(context, false),

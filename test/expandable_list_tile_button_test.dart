@@ -33,14 +33,14 @@ void main() {
 
     // Tap the button to expand.
     await tester.tap(find.text('Expandable ListTile Button'));
-    await tester.pumpAndSettle();  // Wait for animations to complete.
+    await tester.pumpAndSettle(); // Wait for animations to complete.
 
     // Verify that the controller's expanded state has changed.
     expect(controller.expanded, true);
 
     // Tap the button again to collapse.
     await tester.tap(find.text('Expandable ListTile Button'));
-    await tester.pumpAndSettle();  // Wait for animations to complete.
+    await tester.pumpAndSettle(); // Wait for animations to complete.
 
     // Verify that the controller's expanded state has changed back.
     expect(controller.expanded, false);

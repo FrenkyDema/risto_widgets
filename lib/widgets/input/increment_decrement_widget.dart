@@ -45,7 +45,8 @@ class IncrementDecrementWidget extends StatelessWidget {
                 Icons.remove,
                 color: quantity > minValue
                     ? iconColor ?? Theme.of(context).iconTheme.color
-                    : (iconColor ?? Theme.of(context).iconTheme.color)?.withOpacity(0.2),
+                    : (iconColor ?? Theme.of(context).iconTheme.color)
+                        ?.withOpacity(0.2),
               ),
             ),
           ),
@@ -74,7 +75,8 @@ class IncrementDecrementWidget extends StatelessWidget {
                 Icons.add,
                 color: quantity < maxQuantity
                     ? iconColor ?? Theme.of(context).iconTheme.color
-                    : (iconColor ?? Theme.of(context).iconTheme.color)?.withOpacity(0.2),
+                    : (iconColor ?? Theme.of(context).iconTheme.color)
+                        ?.withOpacity(0.2),
               ),
             ),
           ),
