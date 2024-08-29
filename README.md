@@ -27,4 +27,4 @@ We welcome contributions! Please see our [Contributing guide](https://github.com
 
 ## License
 
-This project is licensed under the MIT License - see the [License](https://github.com/FrenkyDema/risto_widgets/blob/main/License.md) file for details.
+This project is licensed under the MIT License - see the [License](https://github.com/FrenkyDema/risto_widgets/blob/main/LICENSE) file for details.
