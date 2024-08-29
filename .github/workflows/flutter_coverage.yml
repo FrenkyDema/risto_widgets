@@ -25,9 +25,11 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Verify Coverage Directory
+      - name: Debug Coverage Directory
         run: |
+          echo "Checking coverage directory..."
           ls -la coverage
+          echo "Checking coverage/index.html..."
           cat coverage/index.html || echo "Coverage report not generated!"
 
       - name: Generate Coverage Badge
