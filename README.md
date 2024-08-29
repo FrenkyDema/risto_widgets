@@ -23,7 +23,7 @@ Check out various [Examples](https://github.com/FrenkyDema/risto_widgets/wiki/Ex
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing guide](https://github.com/FrenkyDema/risto_widgets/blob/main/Contributing.md) for more information.
+We welcome contributions! Please see our [Contributing guide](https://github.com/FrenkyDema/risto_widgets/blob/main/.github/CONTRIBUTING.md) for more information.
 
 ## License
 
