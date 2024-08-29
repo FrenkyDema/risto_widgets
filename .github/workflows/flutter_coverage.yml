@@ -25,12 +25,12 @@ jobs:
           sudo apt-get install -y lcov
           genhtml -o coverage coverage/lcov.info
 
-      - name: Debug Coverage Directory
+      - name: Debug Coverage Directory Before Add
         run: |
-          echo "Listing contents of coverage directory..."
+          echo "Listing contents of coverage directory before add..."
           ls -la coverage/
-          echo "Checking coverage/index.html exists..."
-          cat coverage/index.html || echo "Coverage report not generated!"
+          echo "Checking if coverage files exist..."
+          test -f coverage/lcov.info && echo "lcov.info exists" || echo "lcov.info does not exist"
 
       - name: Configure Git User
         run: |
@@ -50,12 +50,12 @@ jobs:
       - name: Add Coverage Files
         run: |
           echo "Adding coverage files..."
-          git add -f coverage/*
+          git add coverage/* || echo "No coverage files to add"
 
       - name: Commit Coverage Files
         run: |
           echo "Committing files..."
-          git commit -m "Add coverage report"
+          git commit -m "Add coverage report" || echo "No changes to commit"
           echo "Pushing to gh-pages branch..."
           git push origin gh-pages
 
