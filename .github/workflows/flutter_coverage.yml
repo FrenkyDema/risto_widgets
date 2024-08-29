@@ -1,4 +1,4 @@
-name: Flutter Test
+name: Flutter Coverage
 
 on: [push, pull_request]
 
@@ -27,9 +27,9 @@ jobs:
 
       - name: Debug Coverage Directory
         run: |
-          echo "Checking coverage directory..."
-          ls -la coverage
-          echo "Checking coverage/index.html..."
+          echo "Listing contents of coverage directory..."
+          ls -la coverage/
+          echo "Checking coverage/index.html exists..."
           cat coverage/index.html || echo "Coverage report not generated!"
 
       - name: Generate Coverage Badge
