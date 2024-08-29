@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Update actions
+
 ## 0.0.3
 
 - Update dependencies
