@@ -58,8 +58,8 @@ jobs:
         run: |
           COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
           echo "Coverage percentage: $COVERAGE_PERCENT"
-          ENCODED_COVERAGE_PERCENT=$(echo $COVERAGE_PERCENT | sed 's/%25/%25/')
-          echo "encoded_coverage=$ENCODED_COVERAGE_PERCENT" >> $GITHUB_ENV
+          ENCODED_COVERAGE_PERCENT=$(echo $COVERAGE_PERCENT | sed 's/%/%25/')
+          echo "Encoded Coverage percentage: $ENCODED_COVERAGE_PERCENT"
           curl -o coverage/coverage-badge.svg "https://img.shields.io/badge/Coverage-${ENCODED_COVERAGE_PERCENT}-brightgreen.svg"
 
       - name: Deploy to GitHub Pages
