@@ -32,6 +32,12 @@ jobs:
           echo "Checking coverage/index.html exists..."
           cat coverage/index.html || echo "Coverage report not generated!"
 
+      - name: Force Add Coverage Files to Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add -f coverage/*
+
       - name: Generate Coverage Badge
         run: |
           COVERAGE_PERCENT=$(lcov --summary coverage/lcov.info | grep -Po '\d+\.\d+%' | head -1)
