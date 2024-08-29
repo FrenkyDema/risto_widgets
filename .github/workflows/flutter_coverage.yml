@@ -37,9 +37,14 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
+      - name: Stash Uncommitted Changes
+        run: |
+          git stash --include-untracked
+
       - name: Fetch and Merge gh-pages Branch
         run: |
           git fetch origin gh-pages
+          git checkout gh-pages
           git merge origin/gh-pages --allow-unrelated-histories
 
       - name: Add Coverage Files
@@ -52,7 +57,7 @@ jobs:
           echo "Committing files..."
           git commit -m "Add coverage report"
           echo "Pushing to gh-pages branch..."
-          git push origin HEAD:refs/heads/gh-pages
+          git push origin gh-pages
 
       - name: Generate Coverage Badge
         run: |
@@ -67,3 +72,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./coverage
+
+      - name: Restore Stash (If Needed)
+        if: always()
+        run: |
+          git stash pop || echo "No stash to pop"
