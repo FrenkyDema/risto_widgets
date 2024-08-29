@@ -40,7 +40,7 @@ jobs:
       - name: Fetch and Merge gh-pages Branch
         run: |
           git fetch origin gh-pages
-          git merge origin/gh-pages
+          git merge origin/gh-pages --allow-unrelated-histories
 
       - name: Add Coverage Files
         run: |
