@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/risto_widgets.svg)](https://pub.dev/packages/risto_widgets)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/risto_widgets/flutter.yml)](https://github.com/FrenkyDema/risto_widgets/actions/workflows/flutter.yml)
-[![Coverage Status](https://codecov.io/gh/frenkydema/risto_widgets/branch/main/graph/badge.svg)](https://codecov.io/gh/frenkydema/risto_widgets)
+[![Coverage Status](https://github.com/FrenkyDema/risto_widgets/raw/gh-pages/coverage-badge.svg)](https://frenkydema.github.io/risto_widgets/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
