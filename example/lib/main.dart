@@ -238,6 +238,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: Colors.white),
             ),
             icon: Icons.account_circle,
+            iconColor: Colors.white,
             trailing: const Icon(Icons.arrow_drop_down, color: Colors.white),
           ),
           const SizedBox(height: 20),

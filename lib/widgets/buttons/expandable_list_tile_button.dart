@@ -10,6 +10,7 @@ class ExpandableListTileButton extends StatefulWidget {
   final double elevation;
   final Widget? leading;
   final IconData? icon;
+  final Color? iconColor;
   final Widget? trailing;
   final Widget Function(Function tapAction)? customHeader;
 
@@ -23,6 +24,7 @@ class ExpandableListTileButton extends StatefulWidget {
     this.elevation = 4.0,
     this.leading,
     this.icon,
+    this.iconColor,
     this.trailing,
     this.customHeader,
   });
@@ -54,6 +56,7 @@ class ExpandableListTileButton extends StatefulWidget {
   factory ExpandableListTileButton.iconListTile({
     required Widget expanded,
     IconData? icon,
+    Color? iconColor,
     double collapsedHeight = 60.0,
     Color? backgroundColor,
     Color? expandedColor,
@@ -69,6 +72,7 @@ class ExpandableListTileButton extends StatefulWidget {
       expandedColor: expandedColor,
       elevation: elevation,
       icon: icon,
+      iconColor: iconColor,
       trailing: trailing,
       customHeader: null,
     );
@@ -179,15 +183,28 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
   }
 
   Widget _buildDefaultHeader(BuildContext context) {
-    return ListTileButton(
-      onPressed: _toggleExpansion,
-      leading: widget.leading,
-      body: widget.buttonBody,
-      trailing: Icon(
-        _isExpanded ? Icons.expand_less : Icons.expand_more,
-        color: Colors.white,
-      ),
-      backgroundColor: widget.backgroundColor ?? Colors.blueGrey,
-    );
+    return widget.icon != null
+        ? IconListTileButton(
+            icon: widget.icon!,
+            iconColor: widget.iconColor,
+            title: widget.buttonBody!,
+            size: widget.collapsedHeight,
+            onPressed: _toggleExpansion,
+            trailing: Icon(
+              _isExpanded ? Icons.expand_less : Icons.expand_more,
+              color: Colors.white,
+            ),
+            backgroundColor: widget.backgroundColor ?? Colors.blueGrey,
+          )
+        : ListTileButton(
+            onPressed: _toggleExpansion,
+            leading: widget.leading,
+            body: widget.buttonBody,
+            trailing: Icon(
+              _isExpanded ? Icons.expand_less : Icons.expand_more,
+              color: Colors.white,
+            ),
+            backgroundColor: widget.backgroundColor ?? Colors.blueGrey,
+          );
   }
 }
