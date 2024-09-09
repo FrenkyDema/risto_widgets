@@ -7,10 +7,12 @@ class ExpandableListTileButton extends StatefulWidget {
   final double collapsedHeight;
   final Color? backgroundColor;
   final Color? expandedColor;
+  final Color? iconColor;
+  final Color? trailingIconColor;
+  final Color? borderColor;
   final double elevation;
   final Widget? leading;
   final IconData? icon;
-  final Color? iconColor;
   final Widget? trailing;
   final Widget Function(Function tapAction)? customHeader;
 
@@ -21,10 +23,12 @@ class ExpandableListTileButton extends StatefulWidget {
     this.collapsedHeight = 60.0,
     this.backgroundColor,
     this.expandedColor,
+    this.iconColor,
+    this.trailingIconColor,
+    this.borderColor,
     this.elevation = 4.0,
     this.leading,
     this.icon,
-    this.iconColor,
     this.trailing,
     this.customHeader,
   });
@@ -36,6 +40,9 @@ class ExpandableListTileButton extends StatefulWidget {
     double collapsedHeight = 60.0,
     Color? backgroundColor,
     Color? expandedColor,
+    Color? iconColor,
+    Color? trailingIconColor,
+    Color? borderColor,
     double elevation = 4.0,
     Widget? leading,
     Widget? trailing,
@@ -46,6 +53,9 @@ class ExpandableListTileButton extends StatefulWidget {
       collapsedHeight: collapsedHeight,
       backgroundColor: backgroundColor,
       expandedColor: expandedColor,
+      iconColor: iconColor,
+      trailingIconColor: trailingIconColor,
+      borderColor: borderColor,
       elevation: elevation,
       leading: leading,
       trailing: trailing,
@@ -60,6 +70,8 @@ class ExpandableListTileButton extends StatefulWidget {
     double collapsedHeight = 60.0,
     Color? backgroundColor,
     Color? expandedColor,
+    Color? trailingIconColor,
+    Color? borderColor,
     double elevation = 4.0,
     Widget? trailing,
     Widget? buttonBody,
@@ -70,9 +82,11 @@ class ExpandableListTileButton extends StatefulWidget {
       collapsedHeight: collapsedHeight,
       backgroundColor: backgroundColor,
       expandedColor: expandedColor,
-      elevation: elevation,
       icon: icon,
       iconColor: iconColor,
+      trailingIconColor: trailingIconColor,
+      borderColor: borderColor,
+      elevation: elevation,
       trailing: trailing,
       customHeader: null,
     );
@@ -84,6 +98,9 @@ class ExpandableListTileButton extends StatefulWidget {
     double collapsedHeight = 60.0,
     Color? backgroundColor,
     Color? expandedColor,
+    Color? iconColor,
+    Color? trailingIconColor,
+    Color? borderColor,
     double elevation = 4.0,
   }) {
     return ExpandableListTileButton(
@@ -91,6 +108,9 @@ class ExpandableListTileButton extends StatefulWidget {
       collapsedHeight: collapsedHeight,
       backgroundColor: backgroundColor,
       expandedColor: expandedColor,
+      iconColor: iconColor,
+      trailingIconColor: trailingIconColor,
+      borderColor: borderColor,
       elevation: elevation,
       customHeader: customHeader,
     );
@@ -167,10 +187,13 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
               decoration: BoxDecoration(
                 color: widget.expandedColor ??
                     theme.colorScheme.secondary.withOpacity(0.3),
-                // Use theme color
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
+                ),
+                border: Border.all(
+                  color: widget.borderColor ??
+                      theme.dividerColor, // Optional border color
                 ),
               ),
               padding: const EdgeInsets.only(top: 30),
@@ -191,16 +214,16 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
         ? IconListTileButton(
             icon: widget.icon!,
             iconColor: widget.iconColor ?? theme.iconTheme.color,
-            // Use theme color for icons
             title: widget.buttonBody!,
             size: widget.collapsedHeight,
             onPressed: _toggleExpansion,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
-              color: theme.iconTheme.color, // Use theme color for trailing icon
+              color: widget.trailingIconColor ??
+                  theme.iconTheme.color, // Use custom or theme color
             ),
             backgroundColor: widget.backgroundColor ??
-                theme.cardColor, // Use theme card color
+                theme.cardColor, // Use custom or theme color
           )
         : ListTileButton(
             onPressed: _toggleExpansion,
@@ -208,10 +231,11 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
             body: widget.buttonBody,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
-              color: theme.iconTheme.color, // Use theme color for trailing icon
+              color: widget.trailingIconColor ??
+                  theme.iconTheme.color, // Custom or theme color
             ),
             backgroundColor: widget.backgroundColor ??
-                theme.cardColor, // Use theme card color
+                theme.cardColor, // Custom or theme color
           );
   }
 }
