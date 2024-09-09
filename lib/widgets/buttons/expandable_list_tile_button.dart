@@ -152,6 +152,8 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Get the current theme
+
     return Stack(
       children: [
         // Expanded body below header
@@ -163,7 +165,9 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: widget.expandedColor ?? Colors.blue[300],
+                color: widget.expandedColor ??
+                    theme.colorScheme.secondary.withOpacity(0.3),
+                // Use theme color
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
@@ -177,24 +181,26 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
         // Header
         widget.customHeader != null
             ? widget.customHeader!(_toggleExpansion)
-            : _buildDefaultHeader(context),
+            : _buildDefaultHeader(context, theme),
       ],
     );
   }
 
-  Widget _buildDefaultHeader(BuildContext context) {
+  Widget _buildDefaultHeader(BuildContext context, ThemeData theme) {
     return widget.icon != null
         ? IconListTileButton(
             icon: widget.icon!,
-            iconColor: widget.iconColor,
+            iconColor: widget.iconColor ?? theme.iconTheme.color,
+            // Use theme color for icons
             title: widget.buttonBody!,
             size: widget.collapsedHeight,
             onPressed: _toggleExpansion,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
-              color: Colors.white,
+              color: theme.iconTheme.color, // Use theme color for trailing icon
             ),
-            backgroundColor: widget.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: widget.backgroundColor ??
+                theme.cardColor, // Use theme card color
           )
         : ListTileButton(
             onPressed: _toggleExpansion,
@@ -202,9 +208,10 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
             body: widget.buttonBody,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
-              color: Colors.white,
+              color: theme.iconTheme.color, // Use theme color for trailing icon
             ),
-            backgroundColor: widget.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: widget.backgroundColor ??
+                theme.cardColor, // Use theme card color
           );
   }
 }
