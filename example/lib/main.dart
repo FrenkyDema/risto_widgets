@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:risto_widgets/risto_widgets.dart';
 
@@ -196,54 +195,78 @@ class _HomePageState extends State<HomePage> {
 
   // Expandable Widget Page
   Widget _buildExpandablePage(BuildContext context) {
-    return PaddedChildrenList(
-      children: [
-        Text(
-          'Expandable List Tile Button',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        ExpandableListTileButton.listTile(
-          controller: ExpandableController(),
-          backgroundColor: Colors.blueGrey,
-          expandedColor: Colors.grey,
-          expanded: Container(
-            width: double.infinity,
-            color: Colors.grey,
-            padding: const EdgeInsets.all(16.0),
-            child: const Text('Expanded content goes here'),
+    return Material(
+      color: Colors.black12,
+      child: PaddedChildrenList(
+        children: [
+          Text(
+            'Expandable List Tile Button',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-          buttonBody: const Text('Expandable ListTile Button'),
-        ),
-        ExpandableListTileButton.iconListTile(
-          padding: const EdgeInsets.only(top: 10),
-          controller: ExpandableController(),
-          backgroundColor: Colors.blueGrey,
-          expandedColor: Colors.grey,
-          expanded: Container(
-            width: double.infinity,
-            color: Colors.grey,
-            padding: const EdgeInsets.all(16.0),
-            child: const Text('Expanded content goes here'),
+          const SizedBox(height: 10),
+          // Add some space between title and first item
+
+          // Standard Expandable List Tile Button
+          ExpandableListTileButton.listTile(
+            backgroundColor: Colors.blueGrey[600],
+            expandedColor: Colors.blue[300],
+            expanded: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: const Text('Expanded content goes here'),
+            ),
+            buttonBody: const Text(
+              'Expandable ListTile Button',
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: const Icon(Icons.arrow_drop_down, color: Colors.white),
           ),
-          title: const Text('Expandable IconListTile Button'),
-          icon: Icons.account_circle,
-        ),
-        ExpandableListTileButton.customHeader(
-          controller: ExpandableController(),
-          backgroundColor: Colors.blueGrey,
-          expandedColor: Colors.grey,
-          expanded: Container(
-            width: double.infinity,
-            color: Colors.grey,
-            padding: const EdgeInsets.all(16.0),
-            child: const Text('Expanded content goes here'),
+          const SizedBox(height: 20),
+          // Space between items
+
+          // Icon List Tile Button with Expandable
+          ExpandableListTileButton.iconListTile(
+            backgroundColor: Colors.blueGrey[600],
+            expandedColor: Colors.blue[300],
+            expanded: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: const Text('Expanded content goes here'),
+            ),
+            buttonBody: const Text(
+              'Expandable IconListTile Button',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icons.account_circle,
+            trailing: const Icon(Icons.arrow_drop_down, color: Colors.white),
           ),
-          customHeader: const CustomActionButton(
-              margin: EdgeInsets.only(top: 10),
-              backgroundColor: Colors.blueGrey,
-              child: Center(child: Text('Expandable CustomHeader Button'))),
-        ),
-      ],
+          const SizedBox(height: 20),
+          // Space between items
+
+          // Custom Header with Expandable Content
+          ExpandableListTileButton.custom(
+            backgroundColor: Colors.blueGrey[600],
+            expandedColor: Colors.blue[300],
+            expanded: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: const Text('Expanded content goes here'),
+            ),
+            customHeader: (tapAction) => CustomActionButton(
+              backgroundColor: Colors.blueGrey[600],
+              margin: EdgeInsets.zero,
+              onPressed: () => tapAction.call(),
+              child: const Center(
+                child: Text(
+                  'Expandable CustomHeader Button',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          // Space after the last item
+        ],
+      ),
     );
   }
 
