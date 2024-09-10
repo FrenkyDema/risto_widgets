@@ -35,6 +35,14 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Custom Widgets Demo'),
       ),
       body: CustomBottomNavBar(
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.blue,
+        elevation: 8.0,
+        itemPadding: const EdgeInsets.all(5),
+        navbarPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         items: [
           NavigationItem(
             page: _buildIncrementDecrementPage(context),
@@ -65,10 +73,6 @@ class _HomePageState extends State<HomePage> {
             label: 'Custom Sheets',
           ),
         ],
-        backgroundColor: Colors.white24,
-        selectedItemColor: Colors.lightBlue,
-        unselectedItemColor: Colors.blue,
-        elevation: 8.0,
       ),
     );
   }
