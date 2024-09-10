@@ -18,6 +18,15 @@ class CustomBottomNavBar extends StatefulWidget {
   final Color? selectedItemColor;
   final Color? unselectedItemColor;
   final double? elevation;
+  final BottomNavigationBarType? type;
+  final double? selectedFontSize;
+  final double? unselectedFontSize;
+  final bool? showSelectedLabels;
+  final bool? showUnselectedLabels;
+  final IconThemeData? selectedIconTheme;
+  final IconThemeData? unselectedIconTheme;
+  final EdgeInsetsGeometry? itemPadding;
+  final EdgeInsetsGeometry? margin;
 
   const CustomBottomNavBar({
     super.key,
@@ -25,7 +34,16 @@ class CustomBottomNavBar extends StatefulWidget {
     this.backgroundColor,
     this.selectedItemColor,
     this.unselectedItemColor,
-    this.elevation = 8.0, // Default elevation
+    this.elevation,
+    this.type,
+    this.selectedFontSize,
+    this.unselectedFontSize,
+    this.showSelectedLabels,
+    this.showUnselectedLabels,
+    this.selectedIconTheme,
+    this.unselectedIconTheme,
+    this.itemPadding,
+    this.margin,
   });
 
   @override
@@ -46,32 +64,69 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavBarTheme = Theme.of(context).bottomNavigationBarTheme;
+
     return Scaffold(
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: widget.items.map((e) => e.page).toList(),
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        clipBehavior: Clip.hardEdge,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
-          backgroundColor: widget.backgroundColor ??
-              Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-          selectedItemColor:
-              widget.selectedItemColor ?? Theme.of(context).primaryColor,
-          unselectedItemColor: widget.unselectedItemColor ??
-              Theme.of(context).unselectedWidgetColor,
-          elevation: widget.elevation,
-          items: widget.items.map((item) {
-            return BottomNavigationBarItem(
-              icon: item.icon,
-              label: item.label,
-            );
-          }).toList(),
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+      bottomNavigationBar: Card(
+        margin: widget.margin ?? const EdgeInsets.all(0),
+        elevation: widget.elevation ?? bottomNavBarTheme.elevation ?? 8.0,
+        color: widget.backgroundColor ??
+            bottomNavBarTheme.backgroundColor ??
+            Theme.of(context).colorScheme.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          clipBehavior: Clip.hardEdge,
+          child: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            type: widget.type ??
+                bottomNavBarTheme.type ??
+                BottomNavigationBarType.shifting,
+            selectedItemColor: widget.selectedItemColor ??
+                bottomNavBarTheme.selectedItemColor ??
+                Theme.of(context).colorScheme.primary,
+            unselectedItemColor: widget.unselectedItemColor ??
+                bottomNavBarTheme.unselectedItemColor ??
+                Theme.of(context).unselectedWidgetColor,
+            selectedFontSize: widget.selectedFontSize ??
+                bottomNavBarTheme.selectedLabelStyle?.fontSize ??
+                14.0,
+            unselectedFontSize: widget.unselectedFontSize ??
+                bottomNavBarTheme.unselectedLabelStyle?.fontSize ??
+                12.0,
+            showSelectedLabels: widget.showSelectedLabels ??
+                bottomNavBarTheme.showSelectedLabels ??
+                true,
+            showUnselectedLabels: widget.showUnselectedLabels ??
+                bottomNavBarTheme.showUnselectedLabels ??
+                true,
+            selectedIconTheme: widget.selectedIconTheme ??
+                bottomNavBarTheme.selectedIconTheme ??
+                const IconThemeData(size: 24.0),
+            unselectedIconTheme: widget.unselectedIconTheme ??
+                bottomNavBarTheme.unselectedIconTheme ??
+                const IconThemeData(size: 20.0),
+            items: widget.items.map((item) {
+              return BottomNavigationBarItem(
+                icon: Container(
+                  padding: widget.itemPadding ?? EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  child: item.icon,
+                ),
+                label: item.label,
+              );
+            }).toList(),
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );
