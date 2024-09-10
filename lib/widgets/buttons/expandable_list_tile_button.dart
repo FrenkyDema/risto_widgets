@@ -192,8 +192,7 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
                   bottomRight: Radius.circular(10),
                 ),
                 border: Border.all(
-                  color: widget.borderColor ??
-                      theme.dividerColor, // Optional border color
+                  color: widget.borderColor ?? Colors.transparent,
                 ),
               ),
               padding: const EdgeInsets.only(top: 30),
