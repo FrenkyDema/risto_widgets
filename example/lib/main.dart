@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.blue,
         elevation: 8.0,
         itemPadding: const EdgeInsets.all(5),
-        navbarPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         items: [
           NavigationItem(
             page: _buildIncrementDecrementPage(context),

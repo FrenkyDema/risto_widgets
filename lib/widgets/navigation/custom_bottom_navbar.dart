@@ -26,7 +26,6 @@ class CustomBottomNavBar extends StatefulWidget {
   final IconThemeData? selectedIconTheme;
   final IconThemeData? unselectedIconTheme;
   final EdgeInsetsGeometry? itemPadding;
-  final EdgeInsetsGeometry? navbarPadding;
   final EdgeInsetsGeometry? margin;
 
   const CustomBottomNavBar({
@@ -44,7 +43,6 @@ class CustomBottomNavBar extends StatefulWidget {
     this.selectedIconTheme,
     this.unselectedIconTheme,
     this.itemPadding,
-    this.navbarPadding,
     this.margin,
   });
 
