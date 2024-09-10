@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   risto_widgets: 5fcc8922b1d76a6d5a022ae0cc28afe37da1a0d6
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
