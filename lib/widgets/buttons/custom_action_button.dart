@@ -1,49 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ActionButtonWrapper extends StatelessWidget {
-  final EdgeInsetsGeometry _margin;
-  final double _height;
-  final double _width;
-  final Widget child;
-
-  ActionButtonWrapper({
-    super.key,
-    EdgeInsetsGeometry? margin,
-    double paddingValue = 16.0, // Default value
-    double? height,
-    double? width,
-    required this.child,
-  })  : _margin = margin ??
-            EdgeInsets.only(
-              bottom: 8,
-              right: paddingValue,
-              left: paddingValue,
-            ),
-        _height = height ?? 60,
-        _width = width ?? double.infinity;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: _margin,
-      width: _width,
-      height: _height,
-      child: child,
-    );
-  }
-}
+import 'action_wrapper.dart';
 
 class CustomActionButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? borderColor;
-  final Color? disabledForegroundColor;
-  final void Function()? onPressed;
-  final Widget? child;
-
+  final Color? foregroundColor;
+  final Color? splashColor; // Added splash color
+  final InteractiveInkFeatureFactory? splashFactory;
   final double? elevation;
   final double? borderRadius;
+  final EdgeInsetsGeometry? padding;
+  final BorderSide? side;
+  final ShapeBorder? shape;
 
-  // wrapper
+  final void Function()? onPressed;
+  final Widget? child;
+  final double? size; // For circular button
   final EdgeInsetsGeometry? margin;
   final double? height;
   final double? width;
@@ -55,33 +28,164 @@ class CustomActionButton extends StatelessWidget {
     this.height,
     this.backgroundColor,
     this.borderColor,
-    this.disabledForegroundColor,
+    this.foregroundColor,
+    this.splashColor,
+    this.splashFactory,
     this.elevation,
     this.onPressed,
     this.borderRadius,
+    this.padding,
+    this.side,
+    this.shape,
     required this.child,
+    this.size, // for circular button
   });
+
+  // Factory for a flat button with splash effect but no elevation
+  factory CustomActionButton.flat({
+    required void Function()? onPressed,
+    required Widget child,
+    Color? backgroundColor,
+    Color? splashColor,
+    Color? borderColor,
+    double borderRadius = 10.0,
+    InteractiveInkFeatureFactory? splashFactory,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
+  }) {
+    return CustomActionButton(
+      onPressed: onPressed,
+      backgroundColor: backgroundColor ?? Colors.transparent,
+      splashFactory: splashFactory ?? InkRipple.splashFactory,
+      splashColor: splashColor ?? Colors.grey.withOpacity(0.2),
+      borderColor: borderColor ?? Colors.transparent,
+      borderRadius: borderRadius,
+      width: width,
+      height: height,
+      margin: margin,
+      padding: padding,
+      child: child,
+    );
+  }
+
+  // Factory for a raised button with elevation but no splash effect
+  factory CustomActionButton.raised({
+    required void Function()? onPressed,
+    required Widget child,
+    Color? backgroundColor,
+    Color? borderColor,
+    double borderRadius = 10.0,
+    double elevation = 6.0,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? margin,
+  }) {
+    return CustomActionButton(
+      onPressed: onPressed,
+      backgroundColor: backgroundColor,
+      elevation: elevation,
+      splashFactory: NoSplash.splashFactory,
+      splashColor: Colors.transparent,
+      borderColor: borderColor,
+      borderRadius: borderRadius,
+      width: width,
+      height: height,
+      margin: margin,
+      child: child,
+    );
+  }
+
+  // Factory for a minimal button with no elevation or splash
+  factory CustomActionButton.minimal({
+    required void Function()? onPressed,
+    required Widget child,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? margin,
+  }) {
+    return CustomActionButton(
+      onPressed: onPressed,
+      backgroundColor: Colors.transparent,
+      borderColor: Colors.transparent,
+      width: width,
+      height: height,
+      margin: margin,
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final isCircular = size != null && borderRadius == size! / 2;
+
     return ActionButtonWrapper(
       width: width,
       height: height,
       margin: margin,
+      borderRadius: BorderRadius.circular(borderRadius ?? 10),
+      backgroundColor: backgroundColor,
       child: onPressed != null
           ? ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor:
-                    backgroundColor ?? Theme.of(context).primaryColor,
-                splashFactory: Theme.of(context).splashFactory,
-                backgroundColor:
-                    backgroundColor ?? Theme.of(context).primaryColor,
-                padding: EdgeInsets.zero,
-                side: BorderSide(color: borderColor ?? Colors.transparent),
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(borderRadius ?? 10))),
-                elevation: elevation,
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(
+                  foregroundColor ?? Theme.of(context).primaryColor,
+                ),
+                backgroundColor: WidgetStateProperty.all(
+                  backgroundColor ?? Theme.of(context).primaryColor,
+                ),
+                padding: WidgetStateProperty.all(
+                  padding ?? EdgeInsets.zero,
+                ),
+                side: WidgetStateProperty.all(
+                  side ?? BorderSide(color: borderColor ?? Colors.transparent),
+                ),
+                shape: WidgetStateProperty.all(
+                  shape is OutlinedBorder
+                      ? shape as OutlinedBorder
+                      : isCircular
+                          ? const CircleBorder()
+                          : RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(borderRadius ?? 10),
+                              ),
+                            ),
+                ),
+                splashFactory: splashFactory,
+                surfaceTintColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed)) {
+                      return splashColor; // Splash effect only for flat
+                    }
+                    return null;
+                  },
+                ),
+                overlayColor: onPressed != null && elevation == null
+                    ? WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed)) {
+                            return splashColor; // Splash effect only for flat
+                          }
+                          return null;
+                        },
+                      )
+                    : null,
+                // No overlay for raised and minimal
+                elevation: elevation != null
+                    ? WidgetStateProperty.resolveWith(
+                        (states) {
+                          switch (states.firstOrNull) {
+                            case WidgetState.pressed:
+                              return elevation! + 6;
+
+                            default:
+                              return elevation;
+                          }
+                        },
+                      ) // Elevation for raised
+                    : WidgetStateProperty.all(
+                        0), // No elevation for flat/minimal
               ),
               onPressed: onPressed,
               child: child,
