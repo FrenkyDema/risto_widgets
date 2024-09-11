@@ -78,34 +78,90 @@ class _HomePageState extends State<HomePage> {
 
   // Increment/Decrement Page
   Widget _buildIncrementDecrementPage(BuildContext context) {
-    int quantity = 1;
-
     return StatefulBuilder(
       builder: (context, setState) {
+        int quantity1 = 1;
+        int quantity2 = 5;
+        int quantity3 = 8;
+
         return PaddedChildrenList(
           children: [
             Text(
               'Increment/Decrement Widget',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            IncrementDecrementWidget(
-              quantity: quantity,
-              maxQuantity: 10,
-              minValue: 1,
-              onIncrement: () {
-                setState(() {
-                  if (quantity < 10) quantity++;
-                });
+            const SizedBox(height: 16),
+
+            // Flat Example
+            StatefulBuilder(
+              builder: (context, setState) {
+                return IncrementDecrementWidget.flat(
+                  quantity: quantity1,
+                  maxQuantity: 10,
+                  minValue: 1,
+                  onIncrement: () {
+                    setState(() {
+                      if (quantity1 < 10) quantity1++;
+                    });
+                  },
+                  onDecrement: () {
+                    setState(() {
+                      if (quantity1 > 1) quantity1--;
+                    });
+                  },
+                  backgroundColor: Colors.grey[200],
+                  iconColor: Colors.blue,
+                );
               },
-              onDecrement: () {
-                setState(() {
-                  if (quantity > 1) quantity--;
-                });
+            ),
+
+            const SizedBox(height: 16),
+
+            // Raised Example
+            StatefulBuilder(
+              builder: (context, setState) {
+                return IncrementDecrementWidget.raised(
+                  quantity: quantity2,
+                  maxQuantity: 15,
+                  minValue: 0,
+                  onIncrement: () {
+                    setState(() {
+                      if (quantity2 < 15) quantity2++;
+                    });
+                  },
+                  onDecrement: () {
+                    setState(() {
+                      if (quantity2 > 0) quantity2--;
+                    });
+                  },
+                  backgroundColor: Colors.lightGreen[100],
+                  iconColor: Colors.green,
+                );
               },
-              backgroundColor: Colors.grey[200],
-              iconColor: Colors.blue,
-              elevation: 4.0,
-              margin: const EdgeInsets.all(8.0),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Minimal Example
+            StatefulBuilder(
+              builder: (context, setState) {
+                return IncrementDecrementWidget.minimal(
+                  quantity: quantity3,
+                  maxQuantity: 20,
+                  minValue: 5,
+                  onIncrement: () {
+                    setState(() {
+                      if (quantity3 < 20) quantity3++;
+                    });
+                  },
+                  onDecrement: () {
+                    setState(() {
+                      if (quantity3 > 5) quantity3--;
+                    });
+                  },
+                  iconColor: Colors.red,
+                );
+              },
             ),
           ],
         );
@@ -122,10 +178,12 @@ class _HomePageState extends State<HomePage> {
         return PaddedChildrenList(
           children: [
             Text(
-              'Custom Action Button',
+              'Custom Action Buttons',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            CustomActionButton(
+            const SizedBox(height: 16),
+            // Raised Button Example
+            CustomActionButton.raised(
               onPressed: () {
                 setState(() {
                   counter++;
@@ -135,8 +193,33 @@ class _HomePageState extends State<HomePage> {
               borderColor: Colors.blueAccent,
               elevation: 4.0,
               borderRadius: 8.0,
-              child: Text('Custom Action Button ($counter)',
+              child: Text('Raised Button ($counter)',
                   style: const TextStyle(color: Colors.white)),
+            ),
+            const SizedBox(height: 16),
+            // Flat Button Example
+            CustomActionButton.flat(
+              onPressed: () {
+                setState(() {
+                  counter++;
+                });
+              },
+              backgroundColor: Colors.green,
+              borderColor: Colors.transparent,
+              borderRadius: 8.0,
+              child: Text('Flat Button ($counter)',
+                  style: const TextStyle(color: Colors.white)),
+            ),
+            const SizedBox(height: 16),
+            // Minimal Button Example
+            CustomActionButton.minimal(
+              onPressed: () {
+                setState(() {
+                  counter++;
+                });
+              },
+              child: Text('Minimal Button ($counter)',
+                  style: const TextStyle(color: Colors.black)),
             ),
           ],
         );
