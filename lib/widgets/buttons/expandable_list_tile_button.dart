@@ -214,7 +214,6 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
             icon: widget.icon!,
             iconColor: widget.iconColor ?? theme.iconTheme.color,
             title: widget.buttonBody!,
-            size: widget.collapsedHeight,
             onPressed: _toggleExpansion,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
