@@ -409,8 +409,6 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
     final Color effectiveIconColor =
         _iconColor(context, isEnabled) ?? Theme.of(context).iconTheme.color!;
 
-    final bool isSquare =
-        (widget.buttonHeight ?? -2) == (widget.buttonWidth ?? -1);
 
     Widget button = CustomActionButton.longPress(
       margin: effectiveMargin,
