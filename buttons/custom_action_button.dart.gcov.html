@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">122</td>
-            <td class="headerCovTableEntry">124</td>
-            <td class="headerCovTableEntryHi">98.4 %</td>
+            <td class="headerCovTableEntry">140</td>
+            <td class="headerCovTableEntryMed">87.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-09-25 10:55:19</td>
+            <td class="headerValue">2024-09-25 15:09:45</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -449,6 +449,55 @@
 <a name="387"><span class="lineNum">     387 </span><span class="lineCov">          3 :     super.dispose();</span></a>
 <a name="388"><span class="lineNum">     388 </span>            :   }</a>
 <a name="389"><span class="lineNum">     389 </span>            : }</a>
+<a name="390"><span class="lineNum">     390 </span>            : </a>
+<a name="391"><span class="lineNum">     391 </span>            : class CustomIconText extends StatelessWidget {</a>
+<a name="392"><span class="lineNum">     392 </span>            :   final IconData icon;</a>
+<a name="393"><span class="lineNum">     393 </span>            :   final String text;</a>
+<a name="394"><span class="lineNum">     394 </span>            :   final Color? color;</a>
+<a name="395"><span class="lineNum">     395 </span>            :   final MainAxisAlignment mainAxisAlignment;</a>
+<a name="396"><span class="lineNum">     396 </span>            :   final TextStyle? textStyle;</a>
+<a name="397"><span class="lineNum">     397 </span>            :   final double? iconSize;</a>
+<a name="398"><span class="lineNum">     398 </span>            :   final double spacing;</a>
+<a name="399"><span class="lineNum">     399 </span>            : </a>
+<a name="400"><span class="lineNum">     400 </span><span class="lineNoCov">          0 :   const CustomIconText({</span></a>
+<a name="401"><span class="lineNum">     401 </span>            :     super.key,</a>
+<a name="402"><span class="lineNum">     402 </span>            :     required this.icon,</a>
+<a name="403"><span class="lineNum">     403 </span>            :     required this.text,</a>
+<a name="404"><span class="lineNum">     404 </span>            :     this.color,</a>
+<a name="405"><span class="lineNum">     405 </span>            :     this.mainAxisAlignment = MainAxisAlignment.center,</a>
+<a name="406"><span class="lineNum">     406 </span>            :     this.textStyle,</a>
+<a name="407"><span class="lineNum">     407 </span>            :     this.iconSize,</a>
+<a name="408"><span class="lineNum">     408 </span>            :     this.spacing = 8.0,</a>
+<a name="409"><span class="lineNum">     409 </span>            :   });</a>
+<a name="410"><span class="lineNum">     410 </span>            : </a>
+<a name="411"><span class="lineNum">     411 </span><span class="lineNoCov">          0 :   @override</span></a>
+<a name="412"><span class="lineNum">     412 </span>            :   Widget build(BuildContext context) {</a>
+<a name="413"><span class="lineNum">     413 </span><span class="lineNoCov">          0 :     final TextStyle effectiveTextStyle = textStyle ??</span></a>
+<a name="414"><span class="lineNum">     414 </span><span class="lineNoCov">          0 :         Theme.of(context).textTheme.bodyMedium!.copyWith(</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineNoCov">          0 :             color: color ?? Theme.of(context).textTheme.bodyMedium!.color);</span></a>
+<a name="416"><span class="lineNum">     416 </span>            : </a>
+<a name="417"><span class="lineNum">     417 </span><span class="lineNoCov">          0 :     return Row(</span></a>
+<a name="418"><span class="lineNum">     418 </span>            :       mainAxisSize: MainAxisSize.min,</a>
+<a name="419"><span class="lineNum">     419 </span><span class="lineNoCov">          0 :       mainAxisAlignment: mainAxisAlignment,</span></a>
+<a name="420"><span class="lineNum">     420 </span>            :       crossAxisAlignment: CrossAxisAlignment.center,</a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineNoCov">          0 :       children: [</span></a>
+<a name="422"><span class="lineNum">     422 </span><span class="lineNoCov">          0 :         Icon(</span></a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineNoCov">          0 :           icon,</span></a>
+<a name="424"><span class="lineNum">     424 </span><span class="lineNoCov">          0 :           size: iconSize ?? effectiveTextStyle.fontSize,</span></a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineNoCov">          0 :           color: color ?? Theme.of(context).iconTheme.color,</span></a>
+<a name="426"><span class="lineNum">     426 </span>            :         ),</a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineNoCov">          0 :         SizedBox(width: spacing),</span></a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineNoCov">          0 :         Flexible(</span></a>
+<a name="429"><span class="lineNum">     429 </span><span class="lineNoCov">          0 :           child: Text(</span></a>
+<a name="430"><span class="lineNum">     430 </span><span class="lineNoCov">          0 :             text,</span></a>
+<a name="431"><span class="lineNum">     431 </span>            :             style: effectiveTextStyle,</a>
+<a name="432"><span class="lineNum">     432 </span>            :             overflow: TextOverflow.ellipsis,</a>
+<a name="433"><span class="lineNum">     433 </span>            :           ),</a>
+<a name="434"><span class="lineNum">     434 </span>            :         ),</a>
+<a name="435"><span class="lineNum">     435 </span>            :       ],</a>
+<a name="436"><span class="lineNum">     436 </span>            :     );</a>
+<a name="437"><span class="lineNum">     437 </span>            :   }</a>
+<a name="438"><span class="lineNum">     438 </span>            : }</a>
 </pre>
       </td>
     </tr>
