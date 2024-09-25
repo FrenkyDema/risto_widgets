@@ -119,14 +119,9 @@ class __IncrementDecrementTestWidgetState
       quantity: quantity,
       maxQuantity: 10,
       minValue: 1,
-      onIncrement: () {
+      onChanged: (newQuantity) {
         setState(() {
-          quantity++;
-        });
-      },
-      onDecrement: () {
-        setState(() {
-          quantity--;
+          quantity = newQuantity;
         });
       },
     );
