@@ -58,7 +58,7 @@ void main() {
               color: Colors.grey[200],
               child: const Text('Expanded content goes here'),
             ),
-            customHeader: (tapAction) => GestureDetector(
+            customHeader: (tapAction, isExpanded) => GestureDetector(
               onTap: () => tapAction.call(),
               child: Container(
                 padding: const EdgeInsets.all(16.0),

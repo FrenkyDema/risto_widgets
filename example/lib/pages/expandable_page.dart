@@ -27,7 +27,6 @@ class ExpandablePage extends StatelessWidget {
             'Expandable ListTile Button',
             style: TextStyle(color: Colors.white),
           ),
-          trailing: const Icon(Icons.arrow_drop_down, color: Colors.white),
         ),
         const SizedBox(height: 20),
 
@@ -46,7 +45,6 @@ class ExpandablePage extends StatelessWidget {
           ),
           icon: Icons.account_circle,
           iconColor: Colors.white,
-          trailing: const Icon(Icons.arrow_drop_down, color: Colors.white),
         ),
         const SizedBox(height: 20),
 
@@ -59,7 +57,7 @@ class ExpandablePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: const Text('Expanded content goes here'),
           ),
-          customHeader: (tapAction) => CustomActionButton(
+          customHeader: (tapAction, isExpanded) => CustomActionButton(
             backgroundColor: Colors.blueGrey[600],
             margin: EdgeInsets.zero,
             onPressed: () => tapAction.call(),
