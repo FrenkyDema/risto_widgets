@@ -7,7 +7,7 @@ class ListTileButton extends StatelessWidget {
   final Widget? subtitle;
   final Widget? leading;
   final Widget? trailing;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
   final Color? borderColor;
   final double borderRadius;
@@ -15,10 +15,12 @@ class ListTileButton extends StatelessWidget {
   final Color? backgroundColor;
   final ListTileTitleAlignment? bodyAlignment;
   final double? elevation;
+  final double? leadingSizeFactor;
+  final double? minHeight;
 
   const ListTileButton({
     super.key,
-    this.padding = EdgeInsets.zero,
+    this.padding,
     this.contentPadding,
     this.borderColor,
     this.backgroundColor,
@@ -32,6 +34,8 @@ class ListTileButton extends StatelessWidget {
     this.onLongPress,
     this.bodyAlignment,
     this.elevation,
+    this.leadingSizeFactor,
+    this.minHeight = 56.0,
   });
 
   @override
@@ -48,18 +52,44 @@ class ListTileButton extends StatelessWidget {
           onTap: onPressed,
           onLongPress: onLongPress,
           child: Padding(
-            padding: padding,
-            child: ListTile(
-              titleAlignment: bodyAlignment,
-              visualDensity: visualDensity ?? VisualDensity.compact,
-              contentPadding: contentPadding ??
-                  const EdgeInsets.symmetric(horizontal: 16.0),
-              minVerticalPadding: 0,
-              minLeadingWidth: 0,
-              leading: leading,
-              title: body,
-              subtitle: subtitle,
-              trailing: trailing,
+            padding: padding ?? const EdgeInsets.all(8),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: minHeight ?? 56.0,
+              ),
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    if (leading != null)
+                      SizedBox(
+                        width: (leadingSizeFactor != null &&
+                                leadingSizeFactor! * 24 > 48)
+                            ? leadingSizeFactor! * 24
+                            : 48,
+                        height: double.infinity,
+                        child: leading,
+                      ),
+                    Expanded(
+                      child: ListTile(
+                        titleAlignment: bodyAlignment,
+                        visualDensity: visualDensity ?? VisualDensity.compact,
+                        contentPadding:
+                            contentPadding ?? const EdgeInsets.only(left: 8),
+                        minVerticalPadding: 0,
+                        minLeadingWidth: 0,
+                        title: body,
+                        subtitle: subtitle,
+                      ),
+                    ),
+                    if (trailing != null)
+                      Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        height: double.infinity,
+                        child: trailing,
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -78,7 +108,7 @@ class IconListTileButton extends StatelessWidget {
   final Color? borderColor;
   final double? elevation;
   final double sizeFactor;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
   final void Function()? onPressed;
 
@@ -92,7 +122,7 @@ class IconListTileButton extends StatelessWidget {
     this.backgroundColor,
     this.borderColor,
     this.sizeFactor = 1.0,
-    this.padding = EdgeInsets.zero,
+    this.padding,
     this.contentPadding,
     this.onPressed,
     this.elevation,
@@ -107,8 +137,9 @@ class IconListTileButton extends StatelessWidget {
       leading: Icon(
         icon,
         color: iconColor ?? Theme.of(context).iconTheme.color,
-        size: 24.0 * sizeFactor, // Adjust icon size using sizeFactor
+        size: 24.0 * sizeFactor,
       ),
+      leadingSizeFactor: sizeFactor,
       padding: padding,
       contentPadding: contentPadding,
       bodyAlignment: ListTileTitleAlignment.threeLine,
