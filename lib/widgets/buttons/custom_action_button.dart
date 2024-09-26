@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+enum ButtonType { elevated, flat, minimal, longPress }
+
 class CustomActionButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final Widget child;
 
-  // Additional parameters for customization
   final VoidCallback? onLongPress;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -23,14 +24,12 @@ class CustomActionButton extends StatefulWidget {
   final Color? disabledBackgroundColor;
   final Color? disabledForegroundColor;
 
-  // Internal flags to determine button type
-  final bool _isMinimal;
-  final bool _isFlat;
-  final bool _isLongPress;
+  final ButtonType? buttonType;
 
   const CustomActionButton({
     super.key,
     required this.child,
+    this.buttonType,
     this.onPressed,
     this.onLongPress,
     this.backgroundColor,
@@ -47,14 +46,8 @@ class CustomActionButton extends StatefulWidget {
     this.splashFactory,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
-    bool isMinimal = false,
-    bool isFlat = false,
-    bool isLongPress = false,
-  })  : _isMinimal = isMinimal,
-        _isFlat = isFlat,
-        _isLongPress = isLongPress;
+  });
 
-  // Factory for an elevated button
   factory CustomActionButton.elevated({
     required VoidCallback? onPressed,
     required Widget child,
@@ -74,6 +67,7 @@ class CustomActionButton extends StatefulWidget {
     Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.elevated,
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
@@ -93,7 +87,6 @@ class CustomActionButton extends StatefulWidget {
     );
   }
 
-  // Factory for a flat button
   factory CustomActionButton.flat({
     required VoidCallback? onPressed,
     required Widget child,
@@ -112,6 +105,7 @@ class CustomActionButton extends StatefulWidget {
     Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.flat,
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
@@ -126,12 +120,10 @@ class CustomActionButton extends StatefulWidget {
       height: height,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledForegroundColor: disabledForegroundColor,
-      isFlat: true,
       child: child,
     );
   }
 
-  // Factory for a minimal button
   factory CustomActionButton.minimal({
     required VoidCallback? onPressed,
     required Widget child,
@@ -143,6 +135,7 @@ class CustomActionButton extends StatefulWidget {
     Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.minimal,
       onPressed: onPressed,
       padding: padding,
       margin: margin,
@@ -150,12 +143,10 @@ class CustomActionButton extends StatefulWidget {
       height: height,
       shape: shape,
       disabledForegroundColor: disabledForegroundColor,
-      isMinimal: true,
       child: child,
     );
   }
 
-  // Factory for a long press button
   factory CustomActionButton.longPress({
     required VoidCallback? onPressed,
     required VoidCallback onLongPress,
@@ -176,6 +167,7 @@ class CustomActionButton extends StatefulWidget {
     Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.longPress,
       onPressed: onPressed,
       onLongPress: onLongPress,
       backgroundColor: backgroundColor,
@@ -192,7 +184,6 @@ class CustomActionButton extends StatefulWidget {
       splashFactory: splashFactory,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledForegroundColor: disabledForegroundColor,
-      isLongPress: true,
       child: child,
     );
   }
@@ -208,7 +199,7 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     _longPressTimer = Timer.periodic(
       const Duration(milliseconds: 100),
       (timer) {
-        widget.onLongPress!();
+        widget.onLongPress?.call();
       },
     );
   }
@@ -223,14 +214,16 @@ class _CustomActionButtonState extends State<CustomActionButton> {
       return _buildDisabledButton(context);
     }
 
-    if (widget._isMinimal) {
-      return _buildMinimalButton(context);
-    } else if (widget._isFlat) {
-      return _buildFlatButton(context);
-    } else if (widget._isLongPress) {
-      return _buildLongPressButton(context);
-    } else {
-      return _buildElevatedButton(context);
+    switch (widget.buttonType) {
+      case ButtonType.minimal:
+        return _buildMinimalButton(context);
+      case ButtonType.flat:
+        return _buildFlatButton(context);
+      case ButtonType.longPress:
+        return _buildLongPressButton(context);
+      case ButtonType.elevated:
+      default:
+        return _buildElevatedButton(context);
     }
   }
 
