@@ -23,9 +23,13 @@ class ExpandablePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: const Text('Expanded content goes here'),
           ),
-          buttonBody: const Text(
+          title: const Text(
             'Expandable ListTile Button',
             style: TextStyle(color: Colors.white),
+          ),
+          subtitle: const Text(
+            'Subtitle Text',
+            style: TextStyle(color: Colors.white70),
           ),
         ),
         const SizedBox(height: 20),
@@ -39,12 +43,17 @@ class ExpandablePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: const Text('Expanded content goes here'),
           ),
-          buttonBody: const Text(
+          title: const Text(
             'Expandable IconListTile Button',
             style: TextStyle(color: Colors.white),
           ),
+          subtitle: const Text(
+            'Subtitle Text',
+            style: TextStyle(color: Colors.white70),
+          ),
           icon: Icons.account_circle,
           iconColor: Colors.white,
+          sizeFactor: 2,
         ),
         const SizedBox(height: 20),
 

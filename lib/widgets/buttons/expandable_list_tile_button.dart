@@ -4,7 +4,8 @@ import 'list_tile_button.dart';
 
 class ExpandableListTileButton extends StatefulWidget {
   final Widget expanded;
-  final Widget? buttonBody;
+  final Widget? title;
+  final Widget? subtitle;
   final Color? backgroundColor;
   final Color? expandedColor;
   final Color? iconColor;
@@ -18,7 +19,8 @@ class ExpandableListTileButton extends StatefulWidget {
   const ExpandableListTileButton({
     super.key,
     required this.expanded,
-    this.buttonBody,
+    this.title,
+    this.subtitle,
     this.backgroundColor,
     this.expandedColor,
     this.iconColor,
@@ -32,7 +34,8 @@ class ExpandableListTileButton extends StatefulWidget {
 
   factory ExpandableListTileButton.listTile({
     required Widget expanded,
-    Widget? buttonBody,
+    required Widget title,
+    Widget? subtitle,
     Color? backgroundColor,
     Color? expandedColor,
     Color? trailingIconColor,
@@ -42,7 +45,8 @@ class ExpandableListTileButton extends StatefulWidget {
   }) {
     return ExpandableListTileButton(
       expanded: expanded,
-      buttonBody: buttonBody,
+      title: title,
+      subtitle: subtitle,
       backgroundColor: backgroundColor,
       expandedColor: expandedColor,
       trailingIconColor: trailingIconColor,
@@ -52,7 +56,8 @@ class ExpandableListTileButton extends StatefulWidget {
       customHeader: (toggleExpansion, isExpanded) => ListTileButton(
         onPressed: () => toggleExpansion.call(),
         leading: leading,
-        body: buttonBody,
+        body: title,
+        subtitle: subtitle,
         trailing: Icon(
           isExpanded ? Icons.expand_less : Icons.expand_more,
           color: trailingIconColor,
@@ -65,17 +70,20 @@ class ExpandableListTileButton extends StatefulWidget {
   factory ExpandableListTileButton.iconListTile({
     required Widget expanded,
     required IconData icon,
-    Widget? buttonBody,
+    required Widget title,
+    Widget? subtitle,
     Color? backgroundColor,
     Color? expandedColor,
     Color? iconColor,
     Color? trailingIconColor,
     Color? borderColor,
     double elevation = 4.0,
+    double sizeFactor = 1.0,
   }) {
     return ExpandableListTileButton(
       expanded: expanded,
-      buttonBody: buttonBody,
+      title: title,
+      subtitle: subtitle,
       backgroundColor: backgroundColor,
       expandedColor: expandedColor,
       icon: icon,
@@ -85,7 +93,8 @@ class ExpandableListTileButton extends StatefulWidget {
       elevation: elevation,
       customHeader: (toggleExpansion, isExpanded) => IconListTileButton(
         icon: icon,
-        title: buttonBody!,
+        title: title,
+        subtitle: subtitle,
         trailing: Icon(
           isExpanded ? Icons.expand_less : Icons.expand_more,
           color: trailingIconColor,
@@ -93,6 +102,7 @@ class ExpandableListTileButton extends StatefulWidget {
         onPressed: () => toggleExpansion.call(),
         backgroundColor: backgroundColor,
         iconColor: iconColor,
+        sizeFactor: sizeFactor,
       ),
     );
   }
@@ -246,7 +256,8 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
         ? IconListTileButton(
             icon: widget.icon!,
             iconColor: widget.iconColor ?? theme.iconTheme.color,
-            title: widget.buttonBody!,
+            title: widget.title!,
+            subtitle: widget.subtitle,
             onPressed: _toggleExpansion,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -257,7 +268,8 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
         : ListTileButton(
             onPressed: _toggleExpansion,
             leading: widget.leading,
-            body: widget.buttonBody,
+            body: widget.title,
+            subtitle: widget.subtitle,
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
               color: widget.trailingIconColor ?? theme.iconTheme.color,

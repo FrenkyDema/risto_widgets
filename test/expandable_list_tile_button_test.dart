@@ -17,7 +17,7 @@ void main() {
               color: Colors.grey[200],
               child: const Text('Expanded content goes here'),
             ),
-            buttonBody: const Text('Expandable ListTile Button'),
+            title: const Text('Expandable ListTile Button'),
             backgroundColor: Colors.white,
           ),
         ),
