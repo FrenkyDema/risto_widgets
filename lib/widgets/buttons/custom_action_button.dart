@@ -30,8 +30,8 @@ class CustomActionButton extends StatefulWidget {
 
   const CustomActionButton({
     super.key,
-    required this.onPressed,
     required this.child,
+    this.onPressed,
     this.onLongPress,
     this.backgroundColor,
     this.foregroundColor,
