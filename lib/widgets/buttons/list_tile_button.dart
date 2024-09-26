@@ -157,6 +157,7 @@ class RoundedContainer extends StatelessWidget {
   final double borderRadius;
   final Widget child;
   final double? elevation;
+  final EdgeInsetsGeometry? padding;
 
   const RoundedContainer({
     super.key,
@@ -165,6 +166,8 @@ class RoundedContainer extends StatelessWidget {
     this.borderRadius = 10,
     required this.child,
     this.elevation,
+    this.padding,
+
   });
 
   @override
@@ -174,6 +177,7 @@ class RoundedContainer extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       color: backgroundColor ?? Theme.of(context).cardColor,
       child: Container(
+        padding: padding,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           border: borderColor != null
