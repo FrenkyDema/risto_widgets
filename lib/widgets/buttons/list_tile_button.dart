@@ -84,6 +84,7 @@ class ListTileButton extends StatelessWidget {
                     if (trailing != null)
                       Container(
                         margin: const EdgeInsets.only(right: 12),
+                        alignment: Alignment.center,
                         height: double.infinity,
                         child: trailing,
                       ),

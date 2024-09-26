@@ -38,6 +38,18 @@ class ListTileButtonPage extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
+        ListTileButton(
+          body: const Text('List Tile Button with icon'),
+          backgroundColor: Colors.white,
+          subtitle: const Text('Subtitle Text'),
+          trailing: Icon(
+            Icons.error,
+            size: 18,
+            color: Theme.of(context).iconTheme.color,
+          ),
+        ),
+        const SizedBox(height: 16),
+
         // IconListTileButton with Elevation
         IconListTileButton(
           title: const Text('Icon List Tile with Elevation'),
