@@ -6,25 +6,31 @@ enum ButtonType { elevated, flat, minimal, longPress }
 
 class CustomActionButton extends StatefulWidget {
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
+
   final Widget child;
 
-  final VoidCallback? onLongPress;
+  final ButtonType? buttonType;
+
   final Color? backgroundColor;
   final Color? foregroundColor;
-  final double? elevation;
-  final double? borderRadius;
-  final BorderSide? side;
-  final OutlinedBorder? shape;
-  final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
-  final double? width;
-  final double? height;
   final Color? splashColor;
-  final InteractiveInkFeatureFactory? splashFactory;
   final Color? disabledBackgroundColor;
   final Color? disabledForegroundColor;
+  final Color? borderColor;
 
-  final ButtonType? buttonType;
+  final double? elevation;
+  final double? borderRadius;
+  final double? width;
+  final double? height;
+
+  final BorderSide? side;
+  final OutlinedBorder? shape;
+
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+
+  final InteractiveInkFeatureFactory? splashFactory;
 
   const CustomActionButton({
     super.key,
@@ -34,18 +40,19 @@ class CustomActionButton extends StatefulWidget {
     this.onLongPress,
     this.backgroundColor,
     this.foregroundColor,
+    this.splashColor,
+    this.disabledBackgroundColor,
+    this.disabledForegroundColor,
+    this.borderColor,
     this.elevation,
     this.borderRadius,
+    this.width,
+    this.height,
     this.side,
     this.shape,
     this.padding,
     this.margin,
-    this.width,
-    this.height,
-    this.splashColor,
     this.splashFactory,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
   });
 
   factory CustomActionButton.elevated({
@@ -53,36 +60,38 @@ class CustomActionButton extends StatefulWidget {
     required Widget child,
     Color? backgroundColor,
     Color? foregroundColor,
+    Color? splashColor,
+    Color? disabledBackgroundColor,
+    Color? disabledForegroundColor,
+    Color? borderColor,
     double elevation = 2.0,
     double borderRadius = 8.0,
     BorderSide? side,
     OutlinedBorder? shape,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
     double? width,
     double? height,
-    Color? splashColor,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
     InteractiveInkFeatureFactory? splashFactory,
-    Color? disabledBackgroundColor,
-    Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
       buttonType: ButtonType.elevated,
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
+      splashColor: splashColor,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledForegroundColor: disabledForegroundColor,
+      borderColor: borderColor,
       elevation: elevation,
       borderRadius: borderRadius,
       side: side,
       shape: shape,
-      padding: padding,
-      margin: margin,
       width: width,
       height: height,
-      splashColor: splashColor,
+      padding: padding,
+      margin: margin,
       splashFactory: splashFactory,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
       child: child,
     );
   }
@@ -92,34 +101,36 @@ class CustomActionButton extends StatefulWidget {
     required Widget child,
     Color? backgroundColor,
     Color? foregroundColor,
-    double borderRadius = 8.0,
     Color? splashColor,
-    InteractiveInkFeatureFactory? splashFactory,
-    BorderSide? side,
-    OutlinedBorder? shape,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
-    double? width,
-    double? height,
     Color? disabledBackgroundColor,
     Color? disabledForegroundColor,
+    Color? borderColor,
+    double borderRadius = 8.0,
+    BorderSide? side,
+    OutlinedBorder? shape,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    InteractiveInkFeatureFactory? splashFactory,
   }) {
     return CustomActionButton(
       buttonType: ButtonType.flat,
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
-      borderRadius: borderRadius,
       splashColor: splashColor,
-      splashFactory: splashFactory,
-      side: side,
-      shape: shape,
-      padding: padding,
-      margin: margin,
-      width: width,
-      height: height,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledForegroundColor: disabledForegroundColor,
+      borderColor: borderColor,
+      borderRadius: borderRadius,
+      side: side,
+      shape: shape,
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      splashFactory: splashFactory,
       child: child,
     );
   }
@@ -127,22 +138,24 @@ class CustomActionButton extends StatefulWidget {
   factory CustomActionButton.minimal({
     required VoidCallback? onPressed,
     required Widget child,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
+    Color? disabledForegroundColor,
+    Color? borderColor,
     double? width,
     double? height,
     OutlinedBorder? shape,
-    Color? disabledForegroundColor,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
   }) {
     return CustomActionButton(
       buttonType: ButtonType.minimal,
       onPressed: onPressed,
-      padding: padding,
-      margin: margin,
+      disabledForegroundColor: disabledForegroundColor,
+      borderColor: borderColor,
       width: width,
       height: height,
       shape: shape,
-      disabledForegroundColor: disabledForegroundColor,
+      padding: padding,
+      margin: margin,
       child: child,
     );
   }
@@ -153,18 +166,19 @@ class CustomActionButton extends StatefulWidget {
     required Widget child,
     Color? backgroundColor,
     Color? foregroundColor,
+    Color? splashColor,
+    Color? disabledBackgroundColor,
+    Color? disabledForegroundColor,
+    Color? borderColor,
     double elevation = 2.0,
     double borderRadius = 8.0,
     BorderSide? side,
     OutlinedBorder? shape,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
     double? width,
     double? height,
-    Color? splashColor,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
     InteractiveInkFeatureFactory? splashFactory,
-    Color? disabledBackgroundColor,
-    Color? disabledForegroundColor,
   }) {
     return CustomActionButton(
       buttonType: ButtonType.longPress,
@@ -172,18 +186,19 @@ class CustomActionButton extends StatefulWidget {
       onLongPress: onLongPress,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
+      splashColor: splashColor,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledForegroundColor: disabledForegroundColor,
+      borderColor: borderColor,
       elevation: elevation,
       borderRadius: borderRadius,
       side: side,
       shape: shape,
-      padding: padding,
-      margin: margin,
       width: width,
       height: height,
-      splashColor: splashColor,
+      padding: padding,
+      margin: margin,
       splashFactory: splashFactory,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
       child: child,
     );
   }
@@ -262,7 +277,9 @@ class _CustomActionButtonState extends State<CustomActionButton> {
       shape: widget.shape ??
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
-            side: widget.side ?? BorderSide.none,
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 2)
+                : BorderSide.none,
           ),
       elevation: widget.elevation ?? 2.0,
     ).copyWith(
@@ -293,7 +310,9 @@ class _CustomActionButtonState extends State<CustomActionButton> {
       shape: widget.shape ??
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
-            side: widget.side ?? BorderSide.none,
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 2)
+                : BorderSide.none,
           ),
     ).copyWith(
       overlayColor: WidgetStateProperty.all(
@@ -347,7 +366,9 @@ class _CustomActionButtonState extends State<CustomActionButton> {
       shape: widget.shape ??
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
-            side: widget.side ?? BorderSide.none,
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 2)
+                : BorderSide.none,
           ),
       elevation: widget.elevation ?? 2.0,
     ).copyWith(
@@ -378,54 +399,5 @@ class _CustomActionButtonState extends State<CustomActionButton> {
   void dispose() {
     _longPressTimer?.cancel();
     super.dispose();
-  }
-}
-
-class CustomIconText extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final Color? color;
-  final MainAxisAlignment mainAxisAlignment;
-  final TextStyle? textStyle;
-  final double? iconSize;
-  final double spacing;
-
-  const CustomIconText({
-    super.key,
-    required this.icon,
-    required this.text,
-    this.color,
-    this.mainAxisAlignment = MainAxisAlignment.center,
-    this.textStyle,
-    this.iconSize,
-    this.spacing = 8.0,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle effectiveTextStyle = textStyle ??
-        Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: color ?? Theme.of(context).textTheme.bodyMedium!.color);
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: mainAxisAlignment,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: iconSize ?? effectiveTextStyle.fontSize,
-          color: color ?? Theme.of(context).iconTheme.color,
-        ),
-        SizedBox(width: spacing),
-        Flexible(
-          child: Text(
-            text,
-            style: effectiveTextStyle,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
   }
 }
