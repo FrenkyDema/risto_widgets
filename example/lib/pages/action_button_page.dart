@@ -77,6 +77,15 @@ class _ActionButtonPageState extends State<ActionButtonPage> {
           borderRadius: 8.0,
           child: Text('Long Press Button ($counter)'),
         ),
+        const SizedBox(height: 16),
+
+        CustomActionButton(
+          elevation: 4.0,
+          child: Text(
+            'Disabled Press Button ($counter)',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
       ],
     );
   }
