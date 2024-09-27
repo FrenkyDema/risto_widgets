@@ -174,20 +174,22 @@ class RoundedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: elevation ?? 0,
-      borderRadius: BorderRadius.circular(borderRadius),
-      color: backgroundColor ?? Theme.of(context).cardColor,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          border: borderColor != null
-              ? Border.all(color: borderColor!, width: 2)
-              : null,
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Material(
+        elevation: elevation ?? 0,
+        borderRadius: BorderRadius.circular(borderRadius),
+        color: backgroundColor ?? Theme.of(context).cardColor,
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: borderColor != null
+                ? Border.all(color: borderColor!, width: 2)
+                : null,
+          ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }
