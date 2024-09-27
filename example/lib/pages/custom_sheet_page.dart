@@ -13,7 +13,6 @@ class CustomSheetPage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 16),
-
         ElevatedButton(
           onPressed: () {
             OpenCustomSheet.openConfirmSheet(
@@ -37,11 +36,11 @@ class CustomSheetPage extends StatelessWidget {
           child: const Text('Open Confirm Sheet'),
         ),
         const SizedBox(height: 16),
-
         ElevatedButton(
           onPressed: () {
             OpenCustomSheet.scrollableSheet(
               context,
+              expand: false,
               initialChildSize: 0.5,
               minChildSize: 0.25,
               maxChildSize: 1.0,
@@ -59,7 +58,6 @@ class CustomSheetPage extends StatelessWidget {
           child: const Text('Open Scrollable Sheet'),
         ),
         const SizedBox(height: 16),
-
         ElevatedButton(
           onPressed: () {
             OpenCustomSheet(

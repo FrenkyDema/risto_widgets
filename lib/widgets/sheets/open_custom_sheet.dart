@@ -11,15 +11,14 @@ class OpenCustomSheet extends StatelessWidget {
   final Function(dynamic)? onClose;
   final Widget Function({ScrollController? scrollController}) body;
 
-  // Sheet configuration
   final bool scrollable;
   final bool expand;
   final double initialChildSize;
   final double minChildSize;
   final double maxChildSize;
 
-  // New properties for customization
   final Color? backgroundColor;
+  final Color? handleColor;
   final ShapeBorder? sheetShape;
   final EdgeInsetsGeometry? sheetPadding;
 
@@ -35,13 +34,12 @@ class OpenCustomSheet extends StatelessWidget {
     this.minChildSize = 0.25,
     this.maxChildSize = 1.0,
     this.scrollable = false,
-    // Initialize new properties
     this.backgroundColor,
+    this.handleColor,
     this.sheetShape,
     this.sheetPadding,
   });
 
-  // Updated OpenCustomSheet with more customization options
   factory OpenCustomSheet.scrollableSheet(
     BuildContext context, {
     required Widget Function({ScrollController? scrollController}) body,
@@ -52,9 +50,10 @@ class OpenCustomSheet extends StatelessWidget {
     double maxChildSize = 1.0,
     Color? barrierColor,
     Color? backgroundColor,
+    Color? handleColor,
     bool barrierDismissible = true,
-    ShapeBorder? sheetShape, // Customizable shape
-    EdgeInsetsGeometry? sheetPadding, // Padding for the content
+    ShapeBorder? sheetShape,
+    EdgeInsetsGeometry? sheetPadding,
   }) {
     return OpenCustomSheet(
       scrollable: true,
@@ -76,23 +75,33 @@ class OpenCustomSheet extends StatelessWidget {
     BuildContext context, {
     required Widget body,
     Color? backgroundColor,
+    Color? handleColor,
     ShapeBorder? sheetShape,
     EdgeInsetsGeometry? sheetPadding,
   }) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: sheetShape ??
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            ),
-        color: backgroundColor ?? Theme.of(context).cardColor,
+    return MediaQuery.removePadding(
+      context: context,
+      removeBottom: true,
+      child: Container(
+        decoration: ShapeDecoration(
+          shape: sheetShape ??
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+          color: backgroundColor ?? Theme.of(context).cardColor,
+        ),
+        padding: sheetPadding ?? const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (handleColor != Colors.transparent) _buildHandle(handleColor),
+            Expanded(child: body),
+          ],
+        ),
       ),
-      padding: sheetPadding ?? const EdgeInsets.all(16.0),
-      child: body,
     );
   }
 
-  // Factory constructor for opening a confirm sheet
   factory OpenCustomSheet.openConfirmSheet(
     BuildContext context, {
     required Widget body,
@@ -104,6 +113,7 @@ class OpenCustomSheet extends StatelessWidget {
     bool scrollable = false,
     Color? backgroundColor,
     Color? handleColor,
+    bool barrierDismissible = true,
     Color? firstButtonColor,
     Color? secondButtonColor,
     Color? firstButtonTextColor,
@@ -119,6 +129,7 @@ class OpenCustomSheet extends StatelessWidget {
       maxChildSize: maxChildSize,
       onClose: onClose,
       backgroundColor: backgroundColor,
+      barrierDismissible: barrierDismissible,
       body: ({scrollController}) => _buildSheetContent(
         context,
         body: body,
@@ -148,7 +159,7 @@ class OpenCustomSheet extends StatelessWidget {
   }) {
     return MediaQuery.removePadding(
       context: context,
-      removeBottom: true, // This will remove the bottom padding
+      removeBottom: true,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
@@ -187,7 +198,6 @@ class OpenCustomSheet extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      // Add bottom padding to fill the safe area
       child: DoubleListTileButtons(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         space: buttonSpacing ?? 8,
@@ -195,7 +205,7 @@ class OpenCustomSheet extends StatelessWidget {
           margin: EdgeInsets.zero,
           width: double.infinity,
           onPressed: () => Navigator.pop(context, false),
-          backgroundColor: firstButtonColor ?? Theme.of(context).cardColor,
+          backgroundColor: firstButtonColor ?? Colors.red,
           child: Text(
             'Close',
             style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -207,7 +217,7 @@ class OpenCustomSheet extends StatelessWidget {
           onPressed: () => Navigator.pop(context, true),
           margin: EdgeInsets.zero,
           width: double.infinity,
-          backgroundColor: secondButtonColor ?? Theme.of(context).primaryColor,
+          backgroundColor: secondButtonColor ?? Colors.green,
           child: Text(
             'Confirm',
             style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -240,8 +250,8 @@ class OpenCustomSheet extends StatelessWidget {
 
   void show(BuildContext context) {
     showModalBottomSheet(
-      isDismissible: barrierDismissible,
       backgroundColor: Colors.transparent,
+      isDismissible: barrierDismissible,
       barrierColor: barrierColor,
       barrierLabel: barrierLabel,
       isScrollControlled: scrollable,
@@ -255,12 +265,16 @@ class OpenCustomSheet extends StatelessWidget {
             minChildSize: minChildSize,
             maxChildSize: maxChildSize,
             builder: (context, scrollController) {
-              return _buildScrollableSheetContent(
-                context,
-                body: body(scrollController: scrollController),
-                backgroundColor: backgroundColor,
-                sheetShape: sheetShape,
-                sheetPadding: sheetPadding,
+              return GestureDetector(
+                onVerticalDragUpdate: (details) {},
+                child: _buildScrollableSheetContent(
+                  context,
+                  body: body(scrollController: scrollController),
+                  backgroundColor: backgroundColor,
+                  handleColor: handleColor,
+                  sheetShape: sheetShape,
+                  sheetPadding: sheetPadding,
+                ),
               );
             },
           );
