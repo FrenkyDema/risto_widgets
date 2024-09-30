@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">68</td>
-            <td class="headerCovTableEntry">90</td>
-            <td class="headerCovTableEntryMed">75.6 %</td>
+            <td class="headerCovTableEntry">73</td>
+            <td class="headerCovTableEntry">85</td>
+            <td class="headerCovTableEntryMed">85.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-09-30 09:51:38</td>
+            <td class="headerValue">2024-09-30 14:51:44</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -66,7 +66,7 @@
 <a name="4"><span class="lineNum">       4 </span>            : </a>
 <a name="5"><span class="lineNum">       5 </span>            : import '../buttons/custom_action_button.dart';</a>
 <a name="6"><span class="lineNum">       6 </span>            : </a>
-<a name="7"><span class="lineNum">       7 </span>            : typedef ValueUpdate&lt;T&gt; = T Function(T updateValue);</a>
+<a name="7"><span class="lineNum">       7 </span>            : typedef ValueUpdate = dynamic Function(int updateValue);</a>
 <a name="8"><span class="lineNum">       8 </span>            : </a>
 <a name="9"><span class="lineNum">       9 </span>            : class IncrementDecrementWidget extends StatefulWidget {</a>
 <a name="10"><span class="lineNum">      10 </span>            :   // Quantity properties</a>
@@ -75,7 +75,7 @@
 <a name="13"><span class="lineNum">      13 </span>            :   final int? minValue;</a>
 <a name="14"><span class="lineNum">      14 </span>            : </a>
 <a name="15"><span class="lineNum">      15 </span>            :   // Callback functions</a>
-<a name="16"><span class="lineNum">      16 </span>            :   final ValueUpdate&lt;int&gt;? onChanged;</a>
+<a name="16"><span class="lineNum">      16 </span>            :   final ValueUpdate? onChanged;</a>
 <a name="17"><span class="lineNum">      17 </span>            : </a>
 <a name="18"><span class="lineNum">      18 </span>            :   // Customization properties</a>
 <a name="19"><span class="lineNum">      19 </span>            :   final Color? backgroundColor;</a>
@@ -144,7 +144,7 @@
 <a name="82"><span class="lineNum">      82 </span>            :     required int quantity,</a>
 <a name="83"><span class="lineNum">      83 </span>            :     int? maxQuantity,</a>
 <a name="84"><span class="lineNum">      84 </span>            :     int? minValue,</a>
-<a name="85"><span class="lineNum">      85 </span>            :     ValueUpdate&lt;int&gt;? onChanged,</a>
+<a name="85"><span class="lineNum">      85 </span>            :     ValueUpdate? onChanged,</a>
 <a name="86"><span class="lineNum">      86 </span>            :     Color? backgroundColor,</a>
 <a name="87"><span class="lineNum">      87 </span>            :     Color? iconColor,</a>
 <a name="88"><span class="lineNum">      88 </span>            :     EdgeInsetsGeometry? margin,</a>
@@ -198,7 +198,7 @@
 <a name="136"><span class="lineNum">     136 </span>            :     required int quantity,</a>
 <a name="137"><span class="lineNum">     137 </span>            :     int? maxQuantity,</a>
 <a name="138"><span class="lineNum">     138 </span>            :     int? minValue,</a>
-<a name="139"><span class="lineNum">     139 </span>            :     ValueUpdate&lt;int&gt;? onChanged,</a>
+<a name="139"><span class="lineNum">     139 </span>            :     ValueUpdate? onChanged,</a>
 <a name="140"><span class="lineNum">     140 </span>            :     Color? backgroundColor,</a>
 <a name="141"><span class="lineNum">     141 </span>            :     Color? iconColor,</a>
 <a name="142"><span class="lineNum">     142 </span>            :     double? elevation,</a>
@@ -251,7 +251,7 @@
 <a name="189"><span class="lineNum">     189 </span>            :     required int quantity,</a>
 <a name="190"><span class="lineNum">     190 </span>            :     int? maxQuantity,</a>
 <a name="191"><span class="lineNum">     191 </span>            :     int? minValue,</a>
-<a name="192"><span class="lineNum">     192 </span>            :     ValueUpdate&lt;int&gt;? onChanged,</a>
+<a name="192"><span class="lineNum">     192 </span>            :     ValueUpdate? onChanged,</a>
 <a name="193"><span class="lineNum">     193 </span>            :     Color? iconColor,</a>
 <a name="194"><span class="lineNum">     194 </span>            :     EdgeInsetsGeometry? margin,</a>
 <a name="195"><span class="lineNum">     195 </span>            :     EdgeInsetsGeometry? valuePadding,</a>
@@ -298,7 +298,7 @@
 <a name="236"><span class="lineNum">     236 </span>            :     required int quantity,</a>
 <a name="237"><span class="lineNum">     237 </span>            :     int? maxQuantity,</a>
 <a name="238"><span class="lineNum">     238 </span>            :     int? minValue,</a>
-<a name="239"><span class="lineNum">     239 </span>            :     ValueUpdate&lt;int&gt;? onChanged,</a>
+<a name="239"><span class="lineNum">     239 </span>            :     ValueUpdate? onChanged,</a>
 <a name="240"><span class="lineNum">     240 </span>            :     Color? backgroundColor,</a>
 <a name="241"><span class="lineNum">     241 </span>            :     Color? iconColor,</a>
 <a name="242"><span class="lineNum">     242 </span>            :     double? elevation,</a>
@@ -357,179 +357,183 @@
 <a name="295"><span class="lineNum">     295 </span>            : </a>
 <a name="296"><span class="lineNum">     296 </span>            : class _IncrementDecrementWidgetState extends State&lt;IncrementDecrementWidget&gt; {</a>
 <a name="297"><span class="lineNum">     297 </span>            :   late int _currentQuantity;</a>
-<a name="298"><span class="lineNum">     298 </span>            :   Timer? _timer;</a>
-<a name="299"><span class="lineNum">     299 </span>            : </a>
-<a name="300"><span class="lineNum">     300 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="301"><span class="lineNum">     301 </span>            :   void initState() {</a>
-<a name="302"><span class="lineNum">     302 </span><span class="lineCov">          1 :     super.initState();</span></a>
-<a name="303"><span class="lineNum">     303 </span><span class="lineCov">          3 :     _currentQuantity = widget.quantity;</span></a>
-<a name="304"><span class="lineNum">     304 </span>            :   }</a>
-<a name="305"><span class="lineNum">     305 </span>            : </a>
-<a name="306"><span class="lineNum">     306 </span><span class="lineCov">          1 :   void _increment() {</span></a>
-<a name="307"><span class="lineNum">     307 </span><span class="lineCov">          6 :     if (widget.maxQuantity == null || _currentQuantity &lt; widget.maxQuantity!) {</span></a>
-<a name="308"><span class="lineNum">     308 </span><span class="lineCov">          2 :       setState(() {</span></a>
-<a name="309"><span class="lineNum">     309 </span><span class="lineCov">          1 :         _currentQuantity =</span></a>
-<a name="310"><span class="lineNum">     310 </span><span class="lineCov">          5 :             widget.onChanged?.call(++_currentQuantity) ?? widget.quantity;</span></a>
-<a name="311"><span class="lineNum">     311 </span>            :       });</a>
-<a name="312"><span class="lineNum">     312 </span>            :     }</a>
-<a name="313"><span class="lineNum">     313 </span>            :   }</a>
-<a name="314"><span class="lineNum">     314 </span>            : </a>
-<a name="315"><span class="lineNum">     315 </span><span class="lineCov">          1 :   void _decrement() {</span></a>
-<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          6 :     if (widget.minValue == null || _currentQuantity &gt; widget.minValue!) {</span></a>
-<a name="317"><span class="lineNum">     317 </span><span class="lineCov">          2 :       setState(() {</span></a>
-<a name="318"><span class="lineNum">     318 </span><span class="lineCov">          1 :         _currentQuantity =</span></a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          5 :             widget.onChanged?.call(--_currentQuantity) ?? widget.quantity;</span></a>
-<a name="320"><span class="lineNum">     320 </span>            :       });</a>
-<a name="321"><span class="lineNum">     321 </span>            :     }</a>
-<a name="322"><span class="lineNum">     322 </span>            :   }</a>
-<a name="323"><span class="lineNum">     323 </span>            : </a>
-<a name="324"><span class="lineNum">     324 </span><span class="lineNoCov">          0 :   void _startLongPress(bool isIncrement) {</span></a>
-<a name="325"><span class="lineNum">     325 </span><span class="lineNoCov">          0 :     _timer = Timer.periodic(widget.longPressInterval, (_) {</span></a>
-<a name="326"><span class="lineNum">     326 </span>            :       if (isIncrement) {</a>
-<a name="327"><span class="lineNum">     327 </span><span class="lineNoCov">          0 :         _increment();</span></a>
-<a name="328"><span class="lineNum">     328 </span>            :       } else {</a>
-<a name="329"><span class="lineNum">     329 </span><span class="lineNoCov">          0 :         _decrement();</span></a>
-<a name="330"><span class="lineNum">     330 </span>            :       }</a>
-<a name="331"><span class="lineNum">     331 </span>            :     });</a>
-<a name="332"><span class="lineNum">     332 </span>            :   }</a>
-<a name="333"><span class="lineNum">     333 </span>            : </a>
-<a name="334"><span class="lineNum">     334 </span><span class="lineNoCov">          0 :   void _stopLongPress() {</span></a>
-<a name="335"><span class="lineNum">     335 </span><span class="lineNoCov">          0 :     _timer?.cancel();</span></a>
-<a name="336"><span class="lineNum">     336 </span>            :   }</a>
-<a name="337"><span class="lineNum">     337 </span>            : </a>
-<a name="338"><span class="lineNum">     338 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="339"><span class="lineNum">     339 </span>            :   void dispose() {</a>
-<a name="340"><span class="lineNum">     340 </span><span class="lineCov">          1 :     _timer?.cancel();</span></a>
-<a name="341"><span class="lineNum">     341 </span><span class="lineCov">          1 :     super.dispose();</span></a>
-<a name="342"><span class="lineNum">     342 </span>            :   }</a>
-<a name="343"><span class="lineNum">     343 </span>            : </a>
-<a name="344"><span class="lineNum">     344 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="345"><span class="lineNum">     345 </span>            :   Widget build(BuildContext context) {</a>
-<a name="346"><span class="lineNum">     346 </span>            :     final Color effectiveBackgroundColor =</a>
-<a name="347"><span class="lineNum">     347 </span><span class="lineCov">          4 :         widget.backgroundColor ?? Theme.of(context).cardColor;</span></a>
-<a name="348"><span class="lineNum">     348 </span>            :     final EdgeInsetsGeometry valuePadding =</a>
-<a name="349"><span class="lineNum">     349 </span><span class="lineCov">          2 :         widget.valuePadding ?? const EdgeInsets.symmetric(horizontal: 10);</span></a>
-<a name="350"><span class="lineNum">     350 </span>            :     final EdgeInsetsGeometry buttonMargin =</a>
-<a name="351"><span class="lineNum">     351 </span><span class="lineCov">          2 :         widget.buttonMargin ?? EdgeInsets.zero;</span></a>
-<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          2 :     final double? effectiveWidth = widget.width;</span></a>
-<a name="353"><span class="lineNum">     353 </span>            :     final MainAxisAlignment effectiveAlignment =</a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          2 :         widget.alignment ?? MainAxisAlignment.spaceBetween;</span></a>
-<a name="355"><span class="lineNum">     355 </span>            : </a>
-<a name="356"><span class="lineNum">     356 </span><span class="lineCov">          1 :     return SizedBox(</span></a>
-<a name="357"><span class="lineNum">     357 </span>            :       width: effectiveWidth,</a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineCov">          1 :       child: Row(</span></a>
-<a name="359"><span class="lineNum">     359 </span>            :         mainAxisAlignment: effectiveAlignment,</a>
-<a name="360"><span class="lineNum">     360 </span><span class="lineCov">          1 :         children: &lt;Widget&gt;[</span></a>
-<a name="361"><span class="lineNum">     361 </span><span class="lineCov">          1 :           _buildActionButton(</span></a>
-<a name="362"><span class="lineNum">     362 </span>            :             context,</a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          2 :             widget.decrementIcon ?? const Icon(Icons.remove),</span></a>
-<a name="364"><span class="lineNum">     364 </span>            :             onPressed:</a>
-<a name="365"><span class="lineNum">     365 </span><span class="lineCov">          6 :                 (widget.minValue == null || _currentQuantity &gt; widget.minValue!)</span></a>
-<a name="366"><span class="lineNum">     366 </span><span class="lineCov">          1 :                     ? _decrement</span></a>
-<a name="367"><span class="lineNum">     367 </span>            :                     : null,</a>
-<a name="368"><span class="lineNum">     368 </span>            :             isEnabled:</a>
-<a name="369"><span class="lineNum">     369 </span><span class="lineCov">          6 :                 widget.minValue == null || _currentQuantity &gt; widget.minValue!,</span></a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineNoCov">          0 :             onLongPressStart: () =&gt; _startLongPress(false),</span></a>
-<a name="371"><span class="lineNum">     371 </span><span class="lineCov">          1 :             onLongPressEnd: _stopLongPress,</span></a>
-<a name="372"><span class="lineNum">     372 </span>            :             effectiveBackgroundColor: effectiveBackgroundColor,</a>
-<a name="373"><span class="lineNum">     373 </span>            :             effectiveMargin: buttonMargin,</a>
-<a name="374"><span class="lineNum">     374 </span><span class="lineCov">          2 :             effectiveWidth: widget.buttonWidth,</span></a>
-<a name="375"><span class="lineNum">     375 </span><span class="lineCov">          2 :             effectiveHeight: widget.buttonHeight,</span></a>
-<a name="376"><span class="lineNum">     376 </span>            :           ),</a>
-<a name="377"><span class="lineNum">     377 </span><span class="lineCov">          1 :           _buildQuantityDisplay(context, valuePadding),</span></a>
-<a name="378"><span class="lineNum">     378 </span><span class="lineCov">          1 :           _buildActionButton(</span></a>
-<a name="379"><span class="lineNum">     379 </span>            :             context,</a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineCov">          2 :             widget.incrementIcon ?? const Icon(Icons.add),</span></a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">          2 :             onPressed: (widget.maxQuantity == null ||</span></a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineCov">          4 :                     _currentQuantity &lt; widget.maxQuantity!)</span></a>
-<a name="383"><span class="lineNum">     383 </span><span class="lineCov">          1 :                 ? _increment</span></a>
-<a name="384"><span class="lineNum">     384 </span>            :                 : null,</a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineCov">          2 :             isEnabled: widget.maxQuantity == null ||</span></a>
-<a name="386"><span class="lineNum">     386 </span><span class="lineCov">          4 :                 _currentQuantity &lt; widget.maxQuantity!,</span></a>
-<a name="387"><span class="lineNum">     387 </span><span class="lineNoCov">          0 :             onLongPressStart: () =&gt; _startLongPress(true),</span></a>
-<a name="388"><span class="lineNum">     388 </span><span class="lineCov">          1 :             onLongPressEnd: _stopLongPress,</span></a>
-<a name="389"><span class="lineNum">     389 </span>            :             effectiveBackgroundColor: effectiveBackgroundColor,</a>
-<a name="390"><span class="lineNum">     390 </span>            :             effectiveMargin: buttonMargin,</a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">          2 :             effectiveWidth: widget.buttonWidth,</span></a>
-<a name="392"><span class="lineNum">     392 </span><span class="lineCov">          2 :             effectiveHeight: widget.buttonHeight,</span></a>
-<a name="393"><span class="lineNum">     393 </span>            :           ),</a>
-<a name="394"><span class="lineNum">     394 </span>            :         ],</a>
-<a name="395"><span class="lineNum">     395 </span>            :       ),</a>
-<a name="396"><span class="lineNum">     396 </span>            :     );</a>
-<a name="397"><span class="lineNum">     397 </span>            :   }</a>
-<a name="398"><span class="lineNum">     398 </span>            : </a>
-<a name="399"><span class="lineNum">     399 </span><span class="lineCov">          1 :   Widget _buildActionButton(</span></a>
-<a name="400"><span class="lineNum">     400 </span>            :     BuildContext context,</a>
-<a name="401"><span class="lineNum">     401 </span>            :     Widget icon, {</a>
-<a name="402"><span class="lineNum">     402 </span>            :     required VoidCallback? onPressed,</a>
-<a name="403"><span class="lineNum">     403 </span>            :     required bool isEnabled,</a>
-<a name="404"><span class="lineNum">     404 </span>            :     required VoidCallback onLongPressStart,</a>
-<a name="405"><span class="lineNum">     405 </span>            :     required VoidCallback onLongPressEnd,</a>
-<a name="406"><span class="lineNum">     406 </span>            :     required Color effectiveBackgroundColor,</a>
-<a name="407"><span class="lineNum">     407 </span>            :     required EdgeInsetsGeometry effectiveMargin,</a>
-<a name="408"><span class="lineNum">     408 </span>            :     double? effectiveWidth,</a>
-<a name="409"><span class="lineNum">     409 </span>            :     double? effectiveHeight,</a>
-<a name="410"><span class="lineNum">     410 </span>            :   }) {</a>
-<a name="411"><span class="lineNum">     411 </span>            :     final Color effectiveIconColor =</a>
-<a name="412"><span class="lineNum">     412 </span><span class="lineCov">          1 :         _iconColor(context, isEnabled) ?? Theme.of(context).iconTheme.color!;</span></a>
-<a name="413"><span class="lineNum">     413 </span>            : </a>
-<a name="414"><span class="lineNum">     414 </span><span class="lineCov">          1 :     Widget button = CustomActionButton.longPress(</span></a>
-<a name="415"><span class="lineNum">     415 </span>            :       margin: effectiveMargin,</a>
-<a name="416"><span class="lineNum">     416 </span>            :       width: effectiveWidth,</a>
-<a name="417"><span class="lineNum">     417 </span>            :       height: effectiveHeight,</a>
-<a name="418"><span class="lineNum">     418 </span>            :       backgroundColor: effectiveBackgroundColor,</a>
-<a name="419"><span class="lineNum">     419 </span><span class="lineCov">          2 :       shape: widget.buttonShape ??</span></a>
-<a name="420"><span class="lineNum">     420 </span><span class="lineCov">          1 :           RoundedRectangleBorder(</span></a>
-<a name="421"><span class="lineNum">     421 </span><span class="lineCov">          3 :             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10.0),</span></a>
-<a name="422"><span class="lineNum">     422 </span>            :           ),</a>
-<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          2 :       elevation: widget.elevation ?? 0,</span></a>
-<a name="424"><span class="lineNum">     424 </span><span class="lineCov">          2 :       padding: widget.buttonPadding,</span></a>
-<a name="425"><span class="lineNum">     425 </span>            :       onPressed: onPressed,</a>
-<a name="426"><span class="lineNum">     426 </span><span class="lineNoCov">          0 :       onLongPress: () {</span></a>
-<a name="427"><span class="lineNum">     427 </span>            :         // debugPrint(&quot;LONG PRESSED!&quot;);</a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineNoCov">          0 :         onPressed?.call();</span></a>
-<a name="429"><span class="lineNum">     429 </span>            :       },</a>
-<a name="430"><span class="lineNum">     430 </span><span class="lineCov">          1 :       child: IconTheme(</span></a>
-<a name="431"><span class="lineNum">     431 </span><span class="lineCov">          1 :         data: IconThemeData(color: effectiveIconColor),</span></a>
-<a name="432"><span class="lineNum">     432 </span>            :         child: icon,</a>
-<a name="433"><span class="lineNum">     433 </span>            :       ),</a>
-<a name="434"><span class="lineNum">     434 </span>            :     );</a>
-<a name="435"><span class="lineNum">     435 </span>            : </a>
-<a name="436"><span class="lineNum">     436 </span>            :     if (effectiveWidth == null || effectiveHeight == null) {</a>
-<a name="437"><span class="lineNum">     437 </span><span class="lineCov">          1 :       return Expanded(child: button);</span></a>
-<a name="438"><span class="lineNum">     438 </span>            :     } else {</a>
-<a name="439"><span class="lineNum">     439 </span><span class="lineNoCov">          0 :       return SizedBox(</span></a>
-<a name="440"><span class="lineNum">     440 </span>            :         width: effectiveWidth,</a>
-<a name="441"><span class="lineNum">     441 </span>            :         height: effectiveHeight,</a>
-<a name="442"><span class="lineNum">     442 </span>            :         child: button,</a>
-<a name="443"><span class="lineNum">     443 </span>            :       );</a>
-<a name="444"><span class="lineNum">     444 </span>            :     }</a>
-<a name="445"><span class="lineNum">     445 </span>            :   }</a>
-<a name="446"><span class="lineNum">     446 </span>            : </a>
-<a name="447"><span class="lineNum">     447 </span><span class="lineCov">          1 :   Widget _buildQuantityDisplay(</span></a>
-<a name="448"><span class="lineNum">     448 </span>            :     BuildContext context,</a>
-<a name="449"><span class="lineNum">     449 </span>            :     EdgeInsetsGeometry padding,</a>
-<a name="450"><span class="lineNum">     450 </span>            :   ) {</a>
-<a name="451"><span class="lineNum">     451 </span><span class="lineCov">          1 :     return Expanded(</span></a>
-<a name="452"><span class="lineNum">     452 </span>            :       flex: 0,</a>
-<a name="453"><span class="lineNum">     453 </span><span class="lineCov">          1 :       child: Container(</span></a>
-<a name="454"><span class="lineNum">     454 </span>            :         alignment: Alignment.center,</a>
-<a name="455"><span class="lineNum">     455 </span>            :         padding: padding,</a>
-<a name="456"><span class="lineNum">     456 </span><span class="lineCov">          1 :         child: Text(</span></a>
-<a name="457"><span class="lineNum">     457 </span><span class="lineCov">          2 :           _currentQuantity.toString(),</span></a>
-<a name="458"><span class="lineNum">     458 </span><span class="lineCov">          2 :           style: widget.quantityTextStyle ??</span></a>
-<a name="459"><span class="lineNum">     459 </span><span class="lineCov">          3 :               Theme.of(context).textTheme.titleLarge,</span></a>
-<a name="460"><span class="lineNum">     460 </span>            :         ),</a>
-<a name="461"><span class="lineNum">     461 </span>            :       ),</a>
-<a name="462"><span class="lineNum">     462 </span>            :     );</a>
-<a name="463"><span class="lineNum">     463 </span>            :   }</a>
-<a name="464"><span class="lineNum">     464 </span>            : </a>
-<a name="465"><span class="lineNum">     465 </span><span class="lineCov">          1 :   Color? _iconColor(BuildContext context, bool isEnabled) {</span></a>
-<a name="466"><span class="lineNum">     466 </span>            :     final Color defaultColor =</a>
-<a name="467"><span class="lineNum">     467 </span><span class="lineCov">          5 :         widget.iconColor ?? Theme.of(context).iconTheme.color!;</span></a>
-<a name="468"><span class="lineNum">     468 </span><span class="lineCov">          1 :     return isEnabled ? defaultColor : defaultColor.withOpacity(0.2);</span></a>
-<a name="469"><span class="lineNum">     469 </span>            :   }</a>
-<a name="470"><span class="lineNum">     470 </span>            : }</a>
+<a name="298"><span class="lineNum">     298 </span>            : </a>
+<a name="299"><span class="lineNum">     299 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="300"><span class="lineNum">     300 </span>            :   void initState() {</a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineCov">          1 :     super.initState();</span></a>
+<a name="302"><span class="lineNum">     302 </span><span class="lineCov">          3 :     _currentQuantity = widget.quantity;</span></a>
+<a name="303"><span class="lineNum">     303 </span>            :   }</a>
+<a name="304"><span class="lineNum">     304 </span>            : </a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          1 :   Future&lt;void&gt; _increment() async {</span></a>
+<a name="306"><span class="lineNum">     306 </span><span class="lineCov">          6 :     if (widget.maxQuantity == null || _currentQuantity &lt; widget.maxQuantity!) {</span></a>
+<a name="307"><span class="lineNum">     307 </span><span class="lineCov">          2 :       int updatedQuantity = _currentQuantity + 1;</span></a>
+<a name="308"><span class="lineNum">     308 </span>            :       int newQuantity = updatedQuantity;</a>
+<a name="309"><span class="lineNum">     309 </span>            : </a>
+<a name="310"><span class="lineNum">     310 </span><span class="lineCov">          2 :       if (widget.onChanged != null) {</span></a>
+<a name="311"><span class="lineNum">     311 </span><span class="lineCov">          3 :         var result = widget.onChanged!(updatedQuantity);</span></a>
+<a name="312"><span class="lineNum">     312 </span>            : </a>
+<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          1 :         if (result is Future&lt;int?&gt;) {</span></a>
+<a name="314"><span class="lineNum">     314 </span>            :           newQuantity = await result ?? updatedQuantity;</a>
+<a name="315"><span class="lineNum">     315 </span><span class="lineCov">          1 :         } else if (result is int?) {</span></a>
+<a name="316"><span class="lineNum">     316 </span>            :           newQuantity = result ?? updatedQuantity;</a>
+<a name="317"><span class="lineNum">     317 </span>            :         }</a>
+<a name="318"><span class="lineNum">     318 </span>            :         // If result is void (null), use updatedQuantity</a>
+<a name="319"><span class="lineNum">     319 </span>            :       }</a>
+<a name="320"><span class="lineNum">     320 </span>            : </a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          2 :       setState(() {</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          1 :         _currentQuantity = newQuantity;</span></a>
+<a name="323"><span class="lineNum">     323 </span>            :       });</a>
+<a name="324"><span class="lineNum">     324 </span>            :     }</a>
+<a name="325"><span class="lineNum">     325 </span>            :   }</a>
+<a name="326"><span class="lineNum">     326 </span>            : </a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          1 :   Future&lt;void&gt; _decrement() async {</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">          6 :     if (widget.minValue == null || _currentQuantity &gt; widget.minValue!) {</span></a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          2 :       int updatedQuantity = _currentQuantity - 1;</span></a>
+<a name="330"><span class="lineNum">     330 </span>            :       int newQuantity = updatedQuantity;</a>
+<a name="331"><span class="lineNum">     331 </span>            : </a>
+<a name="332"><span class="lineNum">     332 </span><span class="lineCov">          2 :       if (widget.onChanged != null) {</span></a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">          3 :         var result = widget.onChanged!(updatedQuantity);</span></a>
+<a name="334"><span class="lineNum">     334 </span>            : </a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineCov">          1 :         if (result is Future&lt;int?&gt;) {</span></a>
+<a name="336"><span class="lineNum">     336 </span>            :           newQuantity = await result ?? updatedQuantity;</a>
+<a name="337"><span class="lineNum">     337 </span><span class="lineCov">          1 :         } else if (result is int?) {</span></a>
+<a name="338"><span class="lineNum">     338 </span>            :           newQuantity = result ?? updatedQuantity;</a>
+<a name="339"><span class="lineNum">     339 </span>            :         }</a>
+<a name="340"><span class="lineNum">     340 </span>            :         // If result is void (null), use updatedQuantity</a>
+<a name="341"><span class="lineNum">     341 </span>            :       }</a>
+<a name="342"><span class="lineNum">     342 </span>            : </a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineCov">          2 :       setState(() {</span></a>
+<a name="344"><span class="lineNum">     344 </span><span class="lineCov">          1 :         _currentQuantity = newQuantity;</span></a>
+<a name="345"><span class="lineNum">     345 </span>            :       });</a>
+<a name="346"><span class="lineNum">     346 </span>            :     }</a>
+<a name="347"><span class="lineNum">     347 </span>            :   }</a>
+<a name="348"><span class="lineNum">     348 </span>            : </a>
+<a name="349"><span class="lineNum">     349 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="350"><span class="lineNum">     350 </span>            :   Widget build(BuildContext context) {</a>
+<a name="351"><span class="lineNum">     351 </span>            :     final Color effectiveBackgroundColor =</a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          4 :         widget.backgroundColor ?? Theme.of(context).cardColor;</span></a>
+<a name="353"><span class="lineNum">     353 </span>            :     final EdgeInsetsGeometry valuePadding =</a>
+<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          2 :         widget.valuePadding ?? const EdgeInsets.symmetric(horizontal: 10);</span></a>
+<a name="355"><span class="lineNum">     355 </span>            :     final EdgeInsetsGeometry buttonMargin =</a>
+<a name="356"><span class="lineNum">     356 </span><span class="lineCov">          2 :         widget.buttonMargin ?? EdgeInsets.zero;</span></a>
+<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          2 :     final double? effectiveWidth = widget.width;</span></a>
+<a name="358"><span class="lineNum">     358 </span>            :     final MainAxisAlignment effectiveAlignment =</a>
+<a name="359"><span class="lineNum">     359 </span><span class="lineCov">          2 :         widget.alignment ?? MainAxisAlignment.spaceBetween;</span></a>
+<a name="360"><span class="lineNum">     360 </span>            : </a>
+<a name="361"><span class="lineNum">     361 </span><span class="lineCov">          1 :     return SizedBox(</span></a>
+<a name="362"><span class="lineNum">     362 </span>            :       width: effectiveWidth,</a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          1 :       child: Row(</span></a>
+<a name="364"><span class="lineNum">     364 </span>            :         mainAxisAlignment: effectiveAlignment,</a>
+<a name="365"><span class="lineNum">     365 </span><span class="lineCov">          1 :         children: &lt;Widget&gt;[</span></a>
+<a name="366"><span class="lineNum">     366 </span><span class="lineCov">          1 :           _buildActionButton(</span></a>
+<a name="367"><span class="lineNum">     367 </span>            :             context,</a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          2 :             widget.decrementIcon ?? const Icon(Icons.remove),</span></a>
+<a name="369"><span class="lineNum">     369 </span>            :             onPressed:</a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineCov">          6 :                 (widget.minValue == null || _currentQuantity &gt; widget.minValue!)</span></a>
+<a name="371"><span class="lineNum">     371 </span><span class="lineCov">          1 :                     ? _decrement</span></a>
+<a name="372"><span class="lineNum">     372 </span>            :                     : null,</a>
+<a name="373"><span class="lineNum">     373 </span>            :             isEnabled:</a>
+<a name="374"><span class="lineNum">     374 </span><span class="lineCov">          6 :                 widget.minValue == null || _currentQuantity &gt; widget.minValue!,</span></a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">          1 :             onLongPress: _decrement,</span></a>
+<a name="376"><span class="lineNum">     376 </span>            :             effectiveBackgroundColor: effectiveBackgroundColor,</a>
+<a name="377"><span class="lineNum">     377 </span>            :             effectiveMargin: buttonMargin,</a>
+<a name="378"><span class="lineNum">     378 </span><span class="lineCov">          2 :             effectiveWidth: widget.buttonWidth,</span></a>
+<a name="379"><span class="lineNum">     379 </span><span class="lineCov">          2 :             effectiveHeight: widget.buttonHeight,</span></a>
+<a name="380"><span class="lineNum">     380 </span>            :           ),</a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">          1 :           _buildQuantityDisplay(context, valuePadding),</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineCov">          1 :           _buildActionButton(</span></a>
+<a name="383"><span class="lineNum">     383 </span>            :             context,</a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineCov">          2 :             widget.incrementIcon ?? const Icon(Icons.add),</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">          2 :             onPressed: (widget.maxQuantity == null ||</span></a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineCov">          4 :                     _currentQuantity &lt; widget.maxQuantity!)</span></a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineCov">          1 :                 ? _increment</span></a>
+<a name="388"><span class="lineNum">     388 </span>            :                 : null,</a>
+<a name="389"><span class="lineNum">     389 </span><span class="lineCov">          2 :             isEnabled: widget.maxQuantity == null ||</span></a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">          4 :                 _currentQuantity &lt; widget.maxQuantity!,</span></a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineCov">          1 :             onLongPress: _increment,</span></a>
+<a name="392"><span class="lineNum">     392 </span>            :             effectiveBackgroundColor: effectiveBackgroundColor,</a>
+<a name="393"><span class="lineNum">     393 </span>            :             effectiveMargin: buttonMargin,</a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">          2 :             effectiveWidth: widget.buttonWidth,</span></a>
+<a name="395"><span class="lineNum">     395 </span><span class="lineCov">          2 :             effectiveHeight: widget.buttonHeight,</span></a>
+<a name="396"><span class="lineNum">     396 </span>            :           ),</a>
+<a name="397"><span class="lineNum">     397 </span>            :         ],</a>
+<a name="398"><span class="lineNum">     398 </span>            :       ),</a>
+<a name="399"><span class="lineNum">     399 </span>            :     );</a>
+<a name="400"><span class="lineNum">     400 </span>            :   }</a>
+<a name="401"><span class="lineNum">     401 </span>            : </a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineCov">          1 :   Widget _buildActionButton(</span></a>
+<a name="403"><span class="lineNum">     403 </span>            :     BuildContext context,</a>
+<a name="404"><span class="lineNum">     404 </span>            :     Widget icon, {</a>
+<a name="405"><span class="lineNum">     405 </span>            :     required VoidCallback? onPressed,</a>
+<a name="406"><span class="lineNum">     406 </span>            :     required bool isEnabled,</a>
+<a name="407"><span class="lineNum">     407 </span>            :     required VoidCallback onLongPress,</a>
+<a name="408"><span class="lineNum">     408 </span>            :     required Color effectiveBackgroundColor,</a>
+<a name="409"><span class="lineNum">     409 </span>            :     required EdgeInsetsGeometry effectiveMargin,</a>
+<a name="410"><span class="lineNum">     410 </span>            :     double? effectiveWidth,</a>
+<a name="411"><span class="lineNum">     411 </span>            :     double? effectiveHeight,</a>
+<a name="412"><span class="lineNum">     412 </span>            :   }) {</a>
+<a name="413"><span class="lineNum">     413 </span>            :     final Color effectiveIconColor =</a>
+<a name="414"><span class="lineNum">     414 </span><span class="lineCov">          1 :         _iconColor(context, isEnabled) ?? Theme.of(context).iconTheme.color!;</span></a>
+<a name="415"><span class="lineNum">     415 </span>            : </a>
+<a name="416"><span class="lineNum">     416 </span>            :     // **KEY MODIFICATION:**</a>
+<a name="417"><span class="lineNum">     417 </span>            :     // When the button is disabled, set onLongPress to null to prevent the timer from running.</a>
+<a name="418"><span class="lineNum">     418 </span>            :     final VoidCallback? effectiveOnLongPress = isEnabled ? onLongPress : null;</a>
+<a name="419"><span class="lineNum">     419 </span>            : </a>
+<a name="420"><span class="lineNum">     420 </span><span class="lineCov">          1 :     Widget button = CustomActionButton.longPress(</span></a>
+<a name="421"><span class="lineNum">     421 </span>            :       margin: effectiveMargin,</a>
+<a name="422"><span class="lineNum">     422 </span>            :       width: effectiveWidth,</a>
+<a name="423"><span class="lineNum">     423 </span>            :       height: effectiveHeight,</a>
+<a name="424"><span class="lineNum">     424 </span>            :       backgroundColor: effectiveBackgroundColor,</a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineCov">          2 :       shape: widget.buttonShape ??</span></a>
+<a name="426"><span class="lineNum">     426 </span><span class="lineCov">          1 :           RoundedRectangleBorder(</span></a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          3 :             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10.0),</span></a>
+<a name="428"><span class="lineNum">     428 </span>            :           ),</a>
+<a name="429"><span class="lineNum">     429 </span><span class="lineCov">          2 :       elevation: widget.elevation ?? 0,</span></a>
+<a name="430"><span class="lineNum">     430 </span><span class="lineCov">          2 :       padding: widget.buttonPadding,</span></a>
+<a name="431"><span class="lineNum">     431 </span>            :       onPressed: onPressed,</a>
+<a name="432"><span class="lineNum">     432 </span>            :       onLongPress: effectiveOnLongPress,</a>
+<a name="433"><span class="lineNum">     433 </span>            :       // Pass null if disabled</a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineCov">          1 :       child: IconTheme(</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          1 :         data: IconThemeData(color: effectiveIconColor),</span></a>
+<a name="436"><span class="lineNum">     436 </span>            :         child: icon,</a>
+<a name="437"><span class="lineNum">     437 </span>            :       ),</a>
+<a name="438"><span class="lineNum">     438 </span>            :     );</a>
+<a name="439"><span class="lineNum">     439 </span>            : </a>
+<a name="440"><span class="lineNum">     440 </span>            :     if (effectiveWidth == null || effectiveHeight == null) {</a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">          1 :       return Expanded(child: button);</span></a>
+<a name="442"><span class="lineNum">     442 </span>            :     } else {</a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineNoCov">          0 :       return SizedBox(</span></a>
+<a name="444"><span class="lineNum">     444 </span>            :         width: effectiveWidth,</a>
+<a name="445"><span class="lineNum">     445 </span>            :         height: effectiveHeight,</a>
+<a name="446"><span class="lineNum">     446 </span>            :         child: button,</a>
+<a name="447"><span class="lineNum">     447 </span>            :       );</a>
+<a name="448"><span class="lineNum">     448 </span>            :     }</a>
+<a name="449"><span class="lineNum">     449 </span>            :   }</a>
+<a name="450"><span class="lineNum">     450 </span>            : </a>
+<a name="451"><span class="lineNum">     451 </span><span class="lineCov">          1 :   Widget _buildQuantityDisplay(</span></a>
+<a name="452"><span class="lineNum">     452 </span>            :     BuildContext context,</a>
+<a name="453"><span class="lineNum">     453 </span>            :     EdgeInsetsGeometry padding,</a>
+<a name="454"><span class="lineNum">     454 </span>            :   ) {</a>
+<a name="455"><span class="lineNum">     455 </span><span class="lineCov">          1 :     return Expanded(</span></a>
+<a name="456"><span class="lineNum">     456 </span>            :       flex: 0,</a>
+<a name="457"><span class="lineNum">     457 </span><span class="lineCov">          1 :       child: Container(</span></a>
+<a name="458"><span class="lineNum">     458 </span>            :         alignment: Alignment.center,</a>
+<a name="459"><span class="lineNum">     459 </span>            :         padding: padding,</a>
+<a name="460"><span class="lineNum">     460 </span><span class="lineCov">          1 :         child: Text(</span></a>
+<a name="461"><span class="lineNum">     461 </span><span class="lineCov">          2 :           _currentQuantity.toString(),</span></a>
+<a name="462"><span class="lineNum">     462 </span><span class="lineCov">          2 :           style: widget.quantityTextStyle ??</span></a>
+<a name="463"><span class="lineNum">     463 </span><span class="lineCov">          3 :               Theme.of(context).textTheme.titleLarge,</span></a>
+<a name="464"><span class="lineNum">     464 </span>            :         ),</a>
+<a name="465"><span class="lineNum">     465 </span>            :       ),</a>
+<a name="466"><span class="lineNum">     466 </span>            :     );</a>
+<a name="467"><span class="lineNum">     467 </span>            :   }</a>
+<a name="468"><span class="lineNum">     468 </span>            : </a>
+<a name="469"><span class="lineNum">     469 </span><span class="lineCov">          1 :   Color? _iconColor(BuildContext context, bool isEnabled) {</span></a>
+<a name="470"><span class="lineNum">     470 </span>            :     final Color defaultColor =</a>
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">          5 :         widget.iconColor ?? Theme.of(context).iconTheme.color!;</span></a>
+<a name="472"><span class="lineNum">     472 </span><span class="lineCov">          1 :     return isEnabled ? defaultColor : defaultColor.withOpacity(0.2);</span></a>
+<a name="473"><span class="lineNum">     473 </span>            :   }</a>
+<a name="474"><span class="lineNum">     474 </span>            : }</a>
 </pre>
       </td>
     </tr>
