@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">74</td>
-            <td class="headerCovTableEntry">80</td>
-            <td class="headerCovTableEntryHi">92.5 %</td>
+            <td class="headerCovTableEntry">76</td>
+            <td class="headerCovTableEntry">82</td>
+            <td class="headerCovTableEntryHi">92.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-09-27 08:57:27</td>
+            <td class="headerValue">2024-09-30 09:31:37</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -97,7 +97,7 @@
 <a name="35"><span class="lineNum">      35 </span>            :     this.bodyAlignment,</a>
 <a name="36"><span class="lineNum">      36 </span>            :     this.elevation,</a>
 <a name="37"><span class="lineNum">      37 </span>            :     this.leadingSizeFactor,</a>
-<a name="38"><span class="lineNum">      38 </span>            :     this.minHeight = 56.0,</a>
+<a name="38"><span class="lineNum">      38 </span>            :     this.minHeight,</a>
 <a name="39"><span class="lineNum">      39 </span>            :   });</a>
 <a name="40"><span class="lineNum">      40 </span>            : </a>
 <a name="41"><span class="lineNum">      41 </span><span class="lineCov">          2 :   @override</span></a>
@@ -117,7 +117,7 @@
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">          2 :             padding: padding ?? const EdgeInsets.all(8),</span></a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          2 :             child: ConstrainedBox(</span></a>
 <a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :               constraints: BoxConstraints(</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          2 :                 minHeight: minHeight ?? 56.0,</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          2 :                 minHeight: minHeight ?? 50.0,</span></a>
 <a name="59"><span class="lineNum">      59 </span>            :               ),</a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          2 :               child: IntrinsicHeight(</span></a>
 <a name="61"><span class="lineNum">      61 </span><span class="lineCov">          2 :                 child: Row(</span></a>
@@ -221,77 +221,81 @@
 <a name="159"><span class="lineNum">     159 </span>            :   final Widget child;</a>
 <a name="160"><span class="lineNum">     160 </span>            :   final double? elevation;</a>
 <a name="161"><span class="lineNum">     161 </span>            :   final EdgeInsetsGeometry? padding;</a>
-<a name="162"><span class="lineNum">     162 </span>            : </a>
-<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          2 :   const RoundedContainer({</span></a>
-<a name="164"><span class="lineNum">     164 </span>            :     super.key,</a>
-<a name="165"><span class="lineNum">     165 </span>            :     this.borderColor,</a>
-<a name="166"><span class="lineNum">     166 </span>            :     this.backgroundColor,</a>
-<a name="167"><span class="lineNum">     167 </span>            :     this.borderRadius = 10,</a>
-<a name="168"><span class="lineNum">     168 </span>            :     required this.child,</a>
-<a name="169"><span class="lineNum">     169 </span>            :     this.elevation,</a>
-<a name="170"><span class="lineNum">     170 </span>            :     this.padding,</a>
-<a name="171"><span class="lineNum">     171 </span>            : </a>
-<a name="172"><span class="lineNum">     172 </span>            :   });</a>
-<a name="173"><span class="lineNum">     173 </span>            : </a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineCov">          2 :   @override</span></a>
-<a name="175"><span class="lineNum">     175 </span>            :   Widget build(BuildContext context) {</a>
-<a name="176"><span class="lineNum">     176 </span><span class="lineCov">          2 :     return Material(</span></a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineCov">          2 :       elevation: elevation ?? 0,</span></a>
-<a name="178"><span class="lineNum">     178 </span><span class="lineCov">          4 :       borderRadius: BorderRadius.circular(borderRadius),</span></a>
-<a name="179"><span class="lineNum">     179 </span><span class="lineCov">          4 :       color: backgroundColor ?? Theme.of(context).cardColor,</span></a>
-<a name="180"><span class="lineNum">     180 </span><span class="lineCov">          2 :       child: Container(</span></a>
-<a name="181"><span class="lineNum">     181 </span><span class="lineCov">          2 :         padding: padding,</span></a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          2 :         decoration: BoxDecoration(</span></a>
-<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          4 :           borderRadius: BorderRadius.circular(borderRadius),</span></a>
-<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          2 :           border: borderColor != null</span></a>
-<a name="185"><span class="lineNum">     185 </span><span class="lineNoCov">          0 :               ? Border.all(color: borderColor!, width: 2)</span></a>
-<a name="186"><span class="lineNum">     186 </span>            :               : null,</a>
-<a name="187"><span class="lineNum">     187 </span>            :         ),</a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineCov">          2 :         child: child,</span></a>
-<a name="189"><span class="lineNum">     189 </span>            :       ),</a>
-<a name="190"><span class="lineNum">     190 </span>            :     );</a>
-<a name="191"><span class="lineNum">     191 </span>            :   }</a>
-<a name="192"><span class="lineNum">     192 </span>            : }</a>
-<a name="193"><span class="lineNum">     193 </span>            : </a>
-<a name="194"><span class="lineNum">     194 </span>            : class DoubleListTileButtons extends StatelessWidget {</a>
-<a name="195"><span class="lineNum">     195 </span>            :   final Widget firstButton;</a>
-<a name="196"><span class="lineNum">     196 </span>            :   final Widget secondButton;</a>
-<a name="197"><span class="lineNum">     197 </span>            :   final EdgeInsetsGeometry padding;</a>
-<a name="198"><span class="lineNum">     198 </span>            :   final bool expanded;</a>
-<a name="199"><span class="lineNum">     199 </span>            :   final double? space;</a>
-<a name="200"><span class="lineNum">     200 </span>            : </a>
-<a name="201"><span class="lineNum">     201 </span><span class="lineCov">          2 :   const DoubleListTileButtons({</span></a>
-<a name="202"><span class="lineNum">     202 </span>            :     super.key,</a>
-<a name="203"><span class="lineNum">     203 </span>            :     required this.firstButton,</a>
-<a name="204"><span class="lineNum">     204 </span>            :     required this.secondButton,</a>
-<a name="205"><span class="lineNum">     205 </span>            :     this.padding = EdgeInsets.zero,</a>
-<a name="206"><span class="lineNum">     206 </span>            :     this.expanded = true,</a>
-<a name="207"><span class="lineNum">     207 </span>            :     this.space,</a>
-<a name="208"><span class="lineNum">     208 </span>            :   });</a>
-<a name="209"><span class="lineNum">     209 </span>            : </a>
-<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          2 :   @override</span></a>
-<a name="211"><span class="lineNum">     211 </span>            :   Widget build(BuildContext context) {</a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          2 :     return Padding(</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          2 :       padding: padding,</span></a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          2 :       child: Row(</span></a>
-<a name="215"><span class="lineNum">     215 </span>            :         mainAxisSize: MainAxisSize.min,</a>
-<a name="216"><span class="lineNum">     216 </span>            :         mainAxisAlignment: MainAxisAlignment.spaceEvenly,</a>
-<a name="217"><span class="lineNum">     217 </span>            :         crossAxisAlignment: CrossAxisAlignment.center,</a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          2 :         children: expanded</span></a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineCov">          2 :             ? [</span></a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          4 :                 Expanded(child: firstButton),</span></a>
-<a name="221"><span class="lineNum">     221 </span><span class="lineCov">          4 :                 SizedBox(width: space),</span></a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineCov">          4 :                 Expanded(child: secondButton),</span></a>
-<a name="223"><span class="lineNum">     223 </span>            :               ]</a>
-<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :             : [</span></a>
-<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :                 firstButton,</span></a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 :                 SizedBox(width: space),</span></a>
-<a name="227"><span class="lineNum">     227 </span><span class="lineNoCov">          0 :                 secondButton,</span></a>
-<a name="228"><span class="lineNum">     228 </span>            :               ],</a>
-<a name="229"><span class="lineNum">     229 </span>            :       ),</a>
-<a name="230"><span class="lineNum">     230 </span>            :     );</a>
-<a name="231"><span class="lineNum">     231 </span>            :   }</a>
-<a name="232"><span class="lineNum">     232 </span>            : }</a>
+<a name="162"><span class="lineNum">     162 </span>            :   final EdgeInsetsGeometry? margin;</a>
+<a name="163"><span class="lineNum">     163 </span>            : </a>
+<a name="164"><span class="lineNum">     164 </span><span class="lineCov">          2 :   const RoundedContainer({</span></a>
+<a name="165"><span class="lineNum">     165 </span>            :     super.key,</a>
+<a name="166"><span class="lineNum">     166 </span>            :     this.borderColor,</a>
+<a name="167"><span class="lineNum">     167 </span>            :     this.backgroundColor,</a>
+<a name="168"><span class="lineNum">     168 </span>            :     this.borderRadius = 10,</a>
+<a name="169"><span class="lineNum">     169 </span>            :     required this.child,</a>
+<a name="170"><span class="lineNum">     170 </span>            :     this.elevation,</a>
+<a name="171"><span class="lineNum">     171 </span>            :     this.padding,</a>
+<a name="172"><span class="lineNum">     172 </span>            :     this.margin,</a>
+<a name="173"><span class="lineNum">     173 </span>            :   });</a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span><span class="lineCov">          2 :   @override</span></a>
+<a name="176"><span class="lineNum">     176 </span>            :   Widget build(BuildContext context) {</a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineCov">          2 :     return Padding(</span></a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineCov">          2 :       padding: margin ?? EdgeInsets.zero,</span></a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">          2 :       child: Material(</span></a>
+<a name="180"><span class="lineNum">     180 </span><span class="lineCov">          2 :         elevation: elevation ?? 0,</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineCov">          4 :         borderRadius: BorderRadius.circular(borderRadius),</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          4 :         color: backgroundColor ?? Theme.of(context).cardColor,</span></a>
+<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          2 :         child: Container(</span></a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          2 :           padding: padding,</span></a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          2 :           decoration: BoxDecoration(</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          4 :             borderRadius: BorderRadius.circular(borderRadius),</span></a>
+<a name="187"><span class="lineNum">     187 </span><span class="lineCov">          2 :             border: borderColor != null</span></a>
+<a name="188"><span class="lineNum">     188 </span><span class="lineNoCov">          0 :                 ? Border.all(color: borderColor!, width: 2)</span></a>
+<a name="189"><span class="lineNum">     189 </span>            :                 : null,</a>
+<a name="190"><span class="lineNum">     190 </span>            :           ),</a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineCov">          2 :           child: child,</span></a>
+<a name="192"><span class="lineNum">     192 </span>            :         ),</a>
+<a name="193"><span class="lineNum">     193 </span>            :       ),</a>
+<a name="194"><span class="lineNum">     194 </span>            :     );</a>
+<a name="195"><span class="lineNum">     195 </span>            :   }</a>
+<a name="196"><span class="lineNum">     196 </span>            : }</a>
+<a name="197"><span class="lineNum">     197 </span>            : </a>
+<a name="198"><span class="lineNum">     198 </span>            : class DoubleListTileButtons extends StatelessWidget {</a>
+<a name="199"><span class="lineNum">     199 </span>            :   final Widget firstButton;</a>
+<a name="200"><span class="lineNum">     200 </span>            :   final Widget secondButton;</a>
+<a name="201"><span class="lineNum">     201 </span>            :   final EdgeInsetsGeometry padding;</a>
+<a name="202"><span class="lineNum">     202 </span>            :   final bool expanded;</a>
+<a name="203"><span class="lineNum">     203 </span>            :   final double? space;</a>
+<a name="204"><span class="lineNum">     204 </span>            : </a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineCov">          2 :   const DoubleListTileButtons({</span></a>
+<a name="206"><span class="lineNum">     206 </span>            :     super.key,</a>
+<a name="207"><span class="lineNum">     207 </span>            :     required this.firstButton,</a>
+<a name="208"><span class="lineNum">     208 </span>            :     required this.secondButton,</a>
+<a name="209"><span class="lineNum">     209 </span>            :     this.padding = EdgeInsets.zero,</a>
+<a name="210"><span class="lineNum">     210 </span>            :     this.expanded = true,</a>
+<a name="211"><span class="lineNum">     211 </span>            :     this.space,</a>
+<a name="212"><span class="lineNum">     212 </span>            :   });</a>
+<a name="213"><span class="lineNum">     213 </span>            : </a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          2 :   @override</span></a>
+<a name="215"><span class="lineNum">     215 </span>            :   Widget build(BuildContext context) {</a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          2 :     return Padding(</span></a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineCov">          2 :       padding: padding,</span></a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          2 :       child: Row(</span></a>
+<a name="219"><span class="lineNum">     219 </span>            :         mainAxisSize: MainAxisSize.min,</a>
+<a name="220"><span class="lineNum">     220 </span>            :         mainAxisAlignment: MainAxisAlignment.spaceEvenly,</a>
+<a name="221"><span class="lineNum">     221 </span>            :         crossAxisAlignment: CrossAxisAlignment.center,</a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineCov">          2 :         children: expanded</span></a>
+<a name="223"><span class="lineNum">     223 </span><span class="lineCov">          2 :             ? [</span></a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          4 :                 Expanded(child: firstButton),</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          4 :                 SizedBox(width: space),</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">          4 :                 Expanded(child: secondButton),</span></a>
+<a name="227"><span class="lineNum">     227 </span>            :               ]</a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 :             : [</span></a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineNoCov">          0 :                 firstButton,</span></a>
+<a name="230"><span class="lineNum">     230 </span><span class="lineNoCov">          0 :                 SizedBox(width: space),</span></a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :                 secondButton,</span></a>
+<a name="232"><span class="lineNum">     232 </span>            :               ],</a>
+<a name="233"><span class="lineNum">     233 </span>            :       ),</a>
+<a name="234"><span class="lineNum">     234 </span>            :     );</a>
+<a name="235"><span class="lineNum">     235 </span>            :   }</a>
+<a name="236"><span class="lineNum">     236 </span>            : }</a>
 </pre>
       </td>
     </tr>
