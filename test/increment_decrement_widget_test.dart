@@ -123,6 +123,7 @@ class __IncrementDecrementTestWidgetState
         setState(() {
           quantity = newQuantity;
         });
+        return quantity;
       },
     );
   }

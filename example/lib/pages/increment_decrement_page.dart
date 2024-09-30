@@ -33,6 +33,7 @@ class _IncrementDecrementPageState extends State<IncrementDecrementPage> {
             setState(() {
               quantity1 = newQuantity;
             });
+            return newQuantity;
           },
           backgroundColor: Colors.grey[200],
           iconColor: Colors.blue,
@@ -49,6 +50,7 @@ class _IncrementDecrementPageState extends State<IncrementDecrementPage> {
             setState(() {
               quantity2 = newQuantity;
             });
+            return newQuantity;
           },
           backgroundColor: Colors.lightGreen[100],
           iconColor: Colors.green,
@@ -65,6 +67,7 @@ class _IncrementDecrementPageState extends State<IncrementDecrementPage> {
             setState(() {
               quantity3 = newQuantity;
             });
+            return newQuantity;
           },
           iconColor: Colors.red,
         ),
@@ -79,6 +82,7 @@ class _IncrementDecrementPageState extends State<IncrementDecrementPage> {
             setState(() {
               quantity4 = newQuantity;
             });
+            return newQuantity;
           },
           backgroundColor: Colors.orange[100],
           iconColor: Colors.orange,

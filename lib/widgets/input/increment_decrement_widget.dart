@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../buttons/custom_action_button.dart';
 
+typedef ValueUpdate<T> = T Function(T updateValue);
+
 class IncrementDecrementWidget extends StatefulWidget {
   // Quantity properties
   final int quantity;
@@ -11,7 +13,7 @@ class IncrementDecrementWidget extends StatefulWidget {
   final int? minValue;
 
   // Callback functions
-  final ValueChanged<int>? onChanged;
+  final ValueUpdate<int>? onChanged;
 
   // Customization properties
   final Color? backgroundColor;
@@ -80,7 +82,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueChanged<int>? onChanged,
+    ValueUpdate<int>? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     EdgeInsetsGeometry? margin,
@@ -134,7 +136,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueChanged<int>? onChanged,
+    ValueUpdate<int>? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     double? elevation,
@@ -187,7 +189,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueChanged<int>? onChanged,
+    ValueUpdate<int>? onChanged,
     Color? iconColor,
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? valuePadding,
@@ -234,7 +236,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueChanged<int>? onChanged,
+    ValueUpdate<int>? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     double? elevation,
@@ -304,18 +306,18 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
   void _increment() {
     if (widget.maxQuantity == null || _currentQuantity < widget.maxQuantity!) {
       setState(() {
-        _currentQuantity++;
+        _currentQuantity =
+            widget.onChanged?.call(++_currentQuantity) ?? widget.quantity;
       });
-      widget.onChanged?.call(_currentQuantity);
     }
   }
 
   void _decrement() {
     if (widget.minValue == null || _currentQuantity > widget.minValue!) {
       setState(() {
-        _currentQuantity--;
+        _currentQuantity =
+            widget.onChanged?.call(--_currentQuantity) ?? widget.quantity;
       });
-      widget.onChanged?.call(_currentQuantity);
     }
   }
 
@@ -408,7 +410,6 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
   }) {
     final Color effectiveIconColor =
         _iconColor(context, isEnabled) ?? Theme.of(context).iconTheme.color!;
-
 
     Widget button = CustomActionButton.longPress(
       margin: effectiveMargin,
