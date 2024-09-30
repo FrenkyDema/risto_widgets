@@ -7,22 +7,20 @@ class ListTileButton extends StatelessWidget {
   final Widget? subtitle;
   final Widget? leading;
   final Widget? trailing;
-  final double? height;
-  final double? minTileHeight;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
   final Color? borderColor;
-  final double trailingSize;
   final double borderRadius;
   final VisualDensity? visualDensity;
   final Color? backgroundColor;
-  final double? sizeFactor;
-
   final ListTileTitleAlignment? bodyAlignment;
+  final double? elevation;
+  final double? leadingSizeFactor;
+  final double? minHeight;
 
   const ListTileButton({
     super.key,
-    this.padding = EdgeInsets.zero,
+    this.padding,
     this.contentPadding,
     this.borderColor,
     this.backgroundColor,
@@ -30,64 +28,71 @@ class ListTileButton extends StatelessWidget {
     required this.body,
     this.subtitle,
     this.trailing,
-    this.height,
-    this.minTileHeight,
     this.onPressed,
-    this.trailingSize = 30,
     this.borderRadius = 10,
     this.visualDensity,
     this.onLongPress,
     this.bodyAlignment,
-    this.sizeFactor,
+    this.elevation,
+    this.leadingSizeFactor,
+    this.minHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return RoundedContainer(
-      borderColor: borderColor ?? Colors.transparent,
-      backgroundColor: backgroundColor ?? Theme.of(context).cardColor,
-      height: height,
+      borderColor: borderColor,
+      backgroundColor: backgroundColor,
+      elevation: elevation,
       borderRadius: borderRadius,
-      padding: padding,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Theme.of(context).splashColor,
-          splashFactory: Theme.of(context).splashFactory,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: EdgeInsets.zero,
-          disabledBackgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(borderRadius),
+          onTap: onPressed,
+          onLongPress: onLongPress,
+          child: Padding(
+            padding: padding ?? const EdgeInsets.all(8),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: minHeight ?? 50.0,
+              ),
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    if (leading != null)
+                      SizedBox(
+                        width: (leadingSizeFactor != null &&
+                                leadingSizeFactor! * 24 > 48)
+                            ? leadingSizeFactor! * 24
+                            : 48,
+                        height: double.infinity,
+                        child: leading,
+                      ),
+                    Expanded(
+                      child: ListTile(
+                        titleAlignment: bodyAlignment,
+                        visualDensity: visualDensity ?? VisualDensity.compact,
+                        contentPadding:
+                            contentPadding ?? const EdgeInsets.only(left: 8),
+                        minVerticalPadding: 0,
+                        minLeadingWidth: 0,
+                        title: body,
+                        subtitle: subtitle,
+                      ),
+                    ),
+                    if (trailing != null)
+                      Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        alignment: Alignment.center,
+                        height: double.infinity,
+                        child: trailing,
+                      ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-        onPressed: onPressed,
-        onLongPress: onLongPress,
-        child: ListTile(
-          titleAlignment: bodyAlignment,
-          visualDensity: visualDensity,
-          minVerticalPadding: height != null ? 0 : null,
-          contentPadding:
-              contentPadding ?? const EdgeInsets.symmetric(horizontal: 16.0),
-          // Replace with dynamic padding if needed
-          minLeadingWidth: 0,
-          leading: leading != null
-              ? SizedBox.square(
-                  dimension: (height ?? 30) * (sizeFactor ?? 0.5),
-                  child: leading,
-                )
-              : null,
-          title: body,
-          subtitle: subtitle,
-          minTileHeight: height,
-          trailing: trailing != null
-              ? SizedBox.square(
-                  dimension: trailingSize,
-                  child: Center(
-                    child: trailing,
-                  ),
-                )
-              : null,
         ),
       ),
     );
@@ -102,9 +107,9 @@ class IconListTileButton extends StatelessWidget {
   final Color? iconColor;
   final Color? backgroundColor;
   final Color? borderColor;
-  final double size;
-  final double? sizeFactor;
-  final EdgeInsetsGeometry padding;
+  final double? elevation;
+  final double sizeFactor;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
   final void Function()? onPressed;
 
@@ -114,42 +119,35 @@ class IconListTileButton extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.trailing,
-    required this.size,
     this.iconColor,
     this.backgroundColor,
     this.borderColor,
-    this.sizeFactor,
-    this.padding = EdgeInsets.zero,
+    this.sizeFactor = 1.0,
+    this.padding,
     this.contentPadding,
     this.onPressed,
+    this.elevation,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTileButton(
       borderColor: borderColor,
-      backgroundColor: backgroundColor ?? Theme.of(context).cardColor,
+      backgroundColor: backgroundColor,
       body: title,
-      leading: AspectRatio(
-        aspectRatio: 1,
-        child: FittedBox(
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          child: Icon(
-            icon,
-            color: iconColor ?? Theme.of(context).iconTheme.color,
-          ),
-        ),
+      leading: Icon(
+        icon,
+        color: iconColor ?? Theme.of(context).iconTheme.color,
+        size: 24.0 * sizeFactor,
       ),
-      height: size,
+      leadingSizeFactor: sizeFactor,
       padding: padding,
       contentPadding: contentPadding,
-      sizeFactor: sizeFactor,
-      visualDensity: const VisualDensity(horizontal: 2, vertical: 2),
       bodyAlignment: ListTileTitleAlignment.threeLine,
       subtitle: subtitle,
       trailing: trailing,
       onPressed: onPressed,
+      elevation: elevation,
     );
   }
 }
@@ -157,41 +155,49 @@ class IconListTileButton extends StatelessWidget {
 class RoundedContainer extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
-  final double? height;
   final double borderRadius;
-  final EdgeInsetsGeometry padding;
   final Widget child;
+  final double? elevation;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   const RoundedContainer({
     super.key,
     this.borderColor,
     this.backgroundColor,
-    this.height,
-    this.padding = EdgeInsets.zero,
     this.borderRadius = 10,
     required this.child,
+    this.elevation,
+    this.padding,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-        border: Border.fromBorderSide(
-            BorderSide(color: borderColor ?? Colors.transparent, width: 2)),
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Material(
+        elevation: elevation ?? 0,
+        borderRadius: BorderRadius.circular(borderRadius),
         color: backgroundColor ?? Theme.of(context).cardColor,
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: borderColor != null
+                ? Border.all(color: borderColor!, width: 2)
+                : null,
+          ),
+          child: child,
+        ),
       ),
-      height: height,
-      margin: padding,
-      padding: EdgeInsets.zero,
-      child: child,
     );
   }
 }
 
 class DoubleListTileButtons extends StatelessWidget {
-  final ListTileButton firstButton;
-  final ListTileButton secondButton;
+  final Widget firstButton;
+  final Widget secondButton;
   final EdgeInsetsGeometry padding;
   final bool expanded;
   final double? space;
@@ -217,7 +223,7 @@ class DoubleListTileButtons extends StatelessWidget {
             ? [
                 Expanded(child: firstButton),
                 SizedBox(width: space),
-                Expanded(child: secondButton)
+                Expanded(child: secondButton),
               ]
             : [
                 firstButton,

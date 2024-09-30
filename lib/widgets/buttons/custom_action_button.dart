@@ -1,227 +1,414 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import 'action_wrapper.dart';
+enum ButtonType { elevated, flat, minimal, longPress }
 
-class CustomActionButton extends StatelessWidget {
+class CustomActionButton extends StatefulWidget {
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
+
+  final Widget child;
+
+  final ButtonType? buttonType;
+
   final Color? backgroundColor;
-  final Color? borderColor;
   final Color? foregroundColor;
-  final Color? splashColor; // Added splash color
-  final InteractiveInkFeatureFactory? splashFactory;
+  final Color? shadowColor;
+  final Color? splashColor;
+  final Color? disabledBackgroundColor;
+  final Color? disabledBorderColor;
+  final Color? borderColor;
+
   final double? elevation;
   final double? borderRadius;
-  final EdgeInsetsGeometry? padding;
-  final BorderSide? side;
-  final ShapeBorder? shape;
-
-  final void Function()? onPressed;
-  final Widget? child;
-  final double? size; // For circular button
-  final EdgeInsetsGeometry? margin;
-  final double? height;
   final double? width;
+  final double? height;
+
+  final OutlinedBorder? shape;
+
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+
+  final InteractiveInkFeatureFactory? splashFactory;
 
   const CustomActionButton({
     super.key,
-    this.margin,
+    required this.child,
+    this.buttonType,
+    this.onPressed,
+    this.onLongPress,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.shadowColor,
+    this.splashColor,
+    this.disabledBackgroundColor,
+    this.disabledBorderColor,
+    this.borderColor,
+    this.elevation,
+    this.borderRadius,
     this.width,
     this.height,
-    this.backgroundColor,
-    this.borderColor,
-    this.foregroundColor,
-    this.splashColor,
-    this.splashFactory,
-    this.elevation,
-    this.onPressed,
-    this.borderRadius,
-    this.padding,
-    this.side,
     this.shape,
-    required this.child,
-    this.size, // for circular button
+    this.padding,
+    this.margin,
+    this.splashFactory,
   });
 
-  // Factory for a flat button with splash effect but no elevation
-  factory CustomActionButton.flat({
-    required void Function()? onPressed,
+  factory CustomActionButton.elevated({
+    required VoidCallback? onPressed,
     required Widget child,
     Color? backgroundColor,
+    Color? foregroundColor,
     Color? splashColor,
+    Color? disabledBackgroundColor,
+    Color? disabledForegroundColor,
     Color? borderColor,
-    double borderRadius = 10.0,
-    InteractiveInkFeatureFactory? splashFactory,
+    double elevation = 2.0,
+    double borderRadius = 8.0,
+    BorderSide? side,
+    OutlinedBorder? shape,
     double? width,
     double? height,
-    EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    InteractiveInkFeatureFactory? splashFactory,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.elevated,
       onPressed: onPressed,
-      backgroundColor: backgroundColor ?? Colors.transparent,
-      splashFactory: splashFactory ?? InkRipple.splashFactory,
-      splashColor: splashColor ?? Colors.grey.withOpacity(0.2),
-      borderColor: borderColor ?? Colors.transparent,
+      backgroundColor: backgroundColor,
+      shadowColor: foregroundColor,
+      splashColor: splashColor,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledBorderColor: disabledForegroundColor,
+      borderColor: borderColor,
+      elevation: elevation,
       borderRadius: borderRadius,
+      shape: shape,
       width: width,
       height: height,
-      margin: margin,
       padding: padding,
+      margin: margin,
+      splashFactory: splashFactory,
       child: child,
     );
   }
 
-  // Factory for a raised button with elevation but no splash effect
-  factory CustomActionButton.raised({
-    required void Function()? onPressed,
+  factory CustomActionButton.flat({
+    required VoidCallback? onPressed,
     required Widget child,
     Color? backgroundColor,
+    Color? foregroundColor,
+    Color? splashColor,
+    Color? disabledBackgroundColor,
+    Color? disabledForegroundColor,
     Color? borderColor,
-    double borderRadius = 10.0,
-    double elevation = 6.0,
+    double borderRadius = 8.0,
+    BorderSide? side,
+    OutlinedBorder? shape,
     double? width,
     double? height,
+    EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
+    InteractiveInkFeatureFactory? splashFactory,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.flat,
       onPressed: onPressed,
       backgroundColor: backgroundColor,
-      elevation: elevation,
-      splashFactory: NoSplash.splashFactory,
-      splashColor: Colors.transparent,
+      shadowColor: foregroundColor,
+      splashColor: splashColor,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledBorderColor: disabledForegroundColor,
       borderColor: borderColor,
       borderRadius: borderRadius,
+      shape: shape,
       width: width,
       height: height,
+      padding: padding,
       margin: margin,
+      splashFactory: splashFactory,
       child: child,
     );
   }
 
-  // Factory for a minimal button with no elevation or splash
   factory CustomActionButton.minimal({
-    required void Function()? onPressed,
+    required VoidCallback? onPressed,
     required Widget child,
+    Color? disabledForegroundColor,
+    Color? borderColor,
     double? width,
     double? height,
+    OutlinedBorder? shape,
+    EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
   }) {
     return CustomActionButton(
+      buttonType: ButtonType.minimal,
       onPressed: onPressed,
-      backgroundColor: Colors.transparent,
-      borderColor: Colors.transparent,
+      disabledBorderColor: disabledForegroundColor,
+      borderColor: borderColor,
       width: width,
       height: height,
+      shape: shape,
+      padding: padding,
       margin: margin,
       child: child,
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final isCircular = size != null && borderRadius == size! / 2;
-
-    return ActionButtonWrapper(
+  factory CustomActionButton.longPress({
+    required VoidCallback? onPressed,
+    VoidCallback? onLongPress,
+    required Widget child,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Color? splashColor,
+    Color? disabledBackgroundColor,
+    Color? disabledForegroundColor,
+    Color? borderColor,
+    double elevation = 2.0,
+    double borderRadius = 8.0,
+    BorderSide? side,
+    OutlinedBorder? shape,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    InteractiveInkFeatureFactory? splashFactory,
+  }) {
+    return CustomActionButton(
+      buttonType: ButtonType.longPress,
+      onPressed: onPressed,
+      onLongPress: onLongPress,
+      backgroundColor: backgroundColor,
+      shadowColor: foregroundColor,
+      splashColor: splashColor,
+      disabledBackgroundColor: disabledBackgroundColor,
+      disabledBorderColor: disabledForegroundColor,
+      borderColor: borderColor,
+      elevation: elevation,
+      borderRadius: borderRadius,
+      shape: shape,
       width: width,
       height: height,
+      padding: padding,
       margin: margin,
-      borderRadius: BorderRadius.circular(borderRadius ?? 10),
-      backgroundColor: backgroundColor,
-      child: onPressed != null
-          ? ElevatedButton(
-              style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all(
-                  foregroundColor ?? Theme.of(context).primaryColor,
-                ),
-                backgroundColor: WidgetStateProperty.all(
-                  backgroundColor ?? Theme.of(context).primaryColor,
-                ),
-                padding: WidgetStateProperty.all(
-                  padding ?? EdgeInsets.zero,
-                ),
-                side: WidgetStateProperty.all(
-                  side ?? BorderSide(color: borderColor ?? Colors.transparent),
-                ),
-                shape: WidgetStateProperty.all(
-                  shape is OutlinedBorder
-                      ? shape as OutlinedBorder
-                      : isCircular
-                          ? const CircleBorder()
-                          : RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(borderRadius ?? 10),
-                              ),
-                            ),
-                ),
-                splashFactory: splashFactory,
-                surfaceTintColor: WidgetStateProperty.resolveWith<Color?>(
-                  (Set<WidgetState> states) {
-                    if (states.contains(WidgetState.pressed)) {
-                      return splashColor; // Splash effect only for flat
-                    }
-                    return null;
-                  },
-                ),
-                overlayColor: onPressed != null && elevation == null
-                    ? WidgetStateProperty.resolveWith<Color?>(
-                        (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return splashColor; // Splash effect only for flat
-                          }
-                          return null;
-                        },
-                      )
-                    : null,
-                // No overlay for raised and minimal
-                elevation: elevation != null
-                    ? WidgetStateProperty.resolveWith(
-                        (states) {
-                          switch (states.firstOrNull) {
-                            case WidgetState.pressed:
-                              return elevation! + 6;
-
-                            default:
-                              return elevation;
-                          }
-                        },
-                      ) // Elevation for raised
-                    : WidgetStateProperty.all(
-                        0), // No elevation for flat/minimal
-              ),
-              onPressed: onPressed,
-              child: child,
-            )
-          : CustomActionDisable(
-              backgroundColor:
-                  backgroundColor ?? Theme.of(context).disabledColor,
-              borderColor: borderColor ?? Colors.transparent,
-              child: child,
-            ),
+      splashFactory: splashFactory,
+      child: child,
     );
   }
+
+  @override
+  State<CustomActionButton> createState() => _CustomActionButtonState();
 }
 
-class CustomActionDisable extends StatelessWidget {
-  final Color backgroundColor;
-  final Color borderColor;
-  final Widget? child;
+class _CustomActionButtonState extends State<CustomActionButton> {
+  Timer? _longPressTimer;
 
-  const CustomActionDisable({
-    super.key,
-    required this.backgroundColor,
-    this.borderColor = Colors.transparent,
-    required this.child,
-  });
+  void _handleLongPress() {
+    if (widget.onLongPress != null) {
+      _longPressTimer = Timer.periodic(
+        const Duration(milliseconds: 100),
+        (timer) {
+          widget.onLongPress?.call();
+        },
+      );
+    }
+  }
+
+  void _cancelLongPress() {
+    _longPressTimer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        color: backgroundColor,
-        border: Border.fromBorderSide(BorderSide(color: borderColor)),
-      ),
-      child: child,
+    if (widget.onPressed == null && widget.buttonType != ButtonType.longPress) {
+      return _buildDisabledButton(context);
+    }
+
+    switch (widget.buttonType) {
+      case ButtonType.minimal:
+        return _buildMinimalButton(context);
+      case ButtonType.longPress:
+        return _buildLongPressButton(context);
+      case ButtonType.elevated:
+        return _buildElevatedButton(context);
+      case ButtonType.flat:
+      default:
+        return _buildFlatButton(context);
+    }
+  }
+
+  Widget _buildDisabledButton(BuildContext context) {
+    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      overlayColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
+      shadowColor: widget.shadowColor ?? Colors.black,
+      foregroundColor: widget.foregroundColor ?? Colors.transparent,
+      backgroundColor: widget.disabledBackgroundColor ??
+          widget.backgroundColor ??
+          Theme.of(context).primaryColor,
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+            side: (widget.disabledBorderColor ?? widget.borderColor) != null
+                ? BorderSide(
+                    color: widget.disabledBorderColor ??
+                        widget.borderColor ??
+                        Colors.transparent,
+                    width: 1)
+                : BorderSide.none,
+          ),
+      elevation: widget.elevation,
     );
+
+    return Container(
+      margin: widget.margin,
+      width: widget.width,
+      height: widget.height,
+      child: AbsorbPointer(
+        absorbing: true,
+        child: ElevatedButton(
+          style: buttonStyle,
+          onPressed: () {},
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildElevatedButton(BuildContext context) {
+    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      foregroundColor: widget.shadowColor ?? Colors.black,
+      backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 1)
+                : BorderSide.none,
+          ),
+      elevation: widget.elevation ?? 2.0,
+      overlayColor: widget.splashColor ?? Colors.transparent,
+      splashFactory: widget.splashFactory,
+    );
+
+    return Container(
+      margin: widget.margin,
+      width: widget.width,
+      height: widget.height,
+      child: ElevatedButton(
+        style: buttonStyle,
+        onPressed: widget.onPressed,
+        child: widget.child,
+      ),
+    );
+  }
+
+  Widget _buildFlatButton(BuildContext context) {
+    final ButtonStyle buttonStyle = TextButton.styleFrom(
+      foregroundColor: widget.shadowColor ?? Colors.white,
+      backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
+      overlayColor: widget.splashColor ?? Colors.grey.withOpacity(0.2),
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 1)
+                : BorderSide.none,
+          ),
+      splashFactory: widget.splashFactory ?? InkRipple.splashFactory,
+    );
+
+    return Container(
+      margin: widget.margin,
+      width: widget.width,
+      height: widget.height,
+      child: TextButton(
+        style: buttonStyle,
+        onPressed: widget.onPressed,
+        child: widget.child,
+      ),
+    );
+  }
+
+  Widget _buildMinimalButton(BuildContext context) {
+    final ButtonStyle buttonStyle = TextButton.styleFrom(
+      foregroundColor: Colors.black,
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: widget.shape ?? const RoundedRectangleBorder(),
+      backgroundColor: Colors.transparent,
+      side: widget.borderColor != null
+          ? BorderSide(color: widget.borderColor!, width: 1)
+          : BorderSide.none,
+    ).copyWith(
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
+      splashFactory: NoSplash.splashFactory,
+    );
+
+    return Container(
+      margin: widget.margin,
+      width: widget.width,
+      height: widget.height,
+      child: TextButton(
+        style: buttonStyle,
+        onPressed: widget.onPressed,
+        child: widget.child,
+      ),
+    );
+  }
+
+  Widget _buildLongPressButton(BuildContext context) {
+    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      foregroundColor: widget.shadowColor ?? Colors.white,
+      backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+            side: widget.borderColor != null
+                ? BorderSide(color: widget.borderColor!, width: 1)
+                : BorderSide.none,
+          ),
+      elevation: widget.elevation ?? 2.0,
+    ).copyWith(
+      overlayColor: widget.splashColor != null
+          ? WidgetStateProperty.all(widget.splashColor)
+          : null,
+      splashFactory: widget.splashFactory,
+    );
+
+    return Container(
+      margin: widget.margin,
+      width: widget.width,
+      height: widget.height,
+      child: GestureDetector(
+        onTap: widget.onPressed,
+        onLongPressStart: (_) => _handleLongPress(),
+        onLongPressEnd: (_) => _cancelLongPress(),
+        child: ElevatedButton(
+          style: buttonStyle,
+          onPressed: widget.onPressed,
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _longPressTimer?.cancel();
+    super.dispose();
   }
 }
 
@@ -229,47 +416,47 @@ class CustomIconText extends StatelessWidget {
   final IconData icon;
   final String text;
   final Color? color;
-  final MainAxisAlignment axisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
   final TextStyle? textStyle;
+  final double? iconSize;
+  final double spacing;
 
   const CustomIconText({
     super.key,
     required this.icon,
     required this.text,
     this.color,
-    this.axisAlignment = MainAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.center,
     this.textStyle,
+    this.iconSize,
+    this.spacing = 8.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: axisAlignment,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(right: 10),
-            child: Icon(
-              icon,
-              size: textStyle?.fontSize ?? Theme.of(context).iconTheme.size,
-              color: color ?? Theme.of(context).iconTheme.color,
-            ),
+    final TextStyle effectiveTextStyle = textStyle ??
+        Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: color ?? Theme.of(context).textTheme.bodyMedium!.color);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: iconSize ?? effectiveTextStyle.fontSize,
+          color: color ?? Theme.of(context).iconTheme.color,
+        ),
+        SizedBox(width: spacing),
+        Flexible(
+          child: Text(
+            text,
+            style: effectiveTextStyle,
+            overflow: TextOverflow.ellipsis,
           ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              text,
-              style: textStyle ??
-                  Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: color ??
-                          Theme.of(context).textTheme.bodyLarge!.color),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
