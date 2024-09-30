@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../buttons/custom_action_button.dart';
 
-typedef ValueUpdate<T> = T Function(T updateValue);
+typedef ValueUpdate = dynamic Function(int updateValue);
 
 class IncrementDecrementWidget extends StatefulWidget {
   // Quantity properties
@@ -13,7 +13,7 @@ class IncrementDecrementWidget extends StatefulWidget {
   final int? minValue;
 
   // Callback functions
-  final ValueUpdate<int>? onChanged;
+  final ValueUpdate? onChanged;
 
   // Customization properties
   final Color? backgroundColor;
@@ -82,7 +82,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueUpdate<int>? onChanged,
+    ValueUpdate? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     EdgeInsetsGeometry? margin,
@@ -136,7 +136,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueUpdate<int>? onChanged,
+    ValueUpdate? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     double? elevation,
@@ -189,7 +189,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueUpdate<int>? onChanged,
+    ValueUpdate? onChanged,
     Color? iconColor,
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? valuePadding,
@@ -236,7 +236,7 @@ class IncrementDecrementWidget extends StatefulWidget {
     required int quantity,
     int? maxQuantity,
     int? minValue,
-    ValueUpdate<int>? onChanged,
+    ValueUpdate? onChanged,
     Color? backgroundColor,
     Color? iconColor,
     double? elevation,
@@ -295,7 +295,6 @@ class IncrementDecrementWidget extends StatefulWidget {
 
 class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
   late int _currentQuantity;
-  Timer? _timer;
 
   @override
   void initState() {
@@ -303,42 +302,48 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
     _currentQuantity = widget.quantity;
   }
 
-  void _increment() {
+  Future<void> _increment() async {
     if (widget.maxQuantity == null || _currentQuantity < widget.maxQuantity!) {
-      setState(() {
-        _currentQuantity =
-            widget.onChanged?.call(++_currentQuantity) ?? widget.quantity;
-      });
-    }
-  }
+      int updatedQuantity = _currentQuantity + 1;
+      int newQuantity = updatedQuantity;
 
-  void _decrement() {
-    if (widget.minValue == null || _currentQuantity > widget.minValue!) {
-      setState(() {
-        _currentQuantity =
-            widget.onChanged?.call(--_currentQuantity) ?? widget.quantity;
-      });
-    }
-  }
+      if (widget.onChanged != null) {
+        var result = widget.onChanged!(updatedQuantity);
 
-  void _startLongPress(bool isIncrement) {
-    _timer = Timer.periodic(widget.longPressInterval, (_) {
-      if (isIncrement) {
-        _increment();
-      } else {
-        _decrement();
+        if (result is Future<int?>) {
+          newQuantity = await result ?? updatedQuantity;
+        } else if (result is int?) {
+          newQuantity = result ?? updatedQuantity;
+        }
+        // If result is void (null), use updatedQuantity
       }
-    });
+
+      setState(() {
+        _currentQuantity = newQuantity;
+      });
+    }
   }
 
-  void _stopLongPress() {
-    _timer?.cancel();
-  }
+  Future<void> _decrement() async {
+    if (widget.minValue == null || _currentQuantity > widget.minValue!) {
+      int updatedQuantity = _currentQuantity - 1;
+      int newQuantity = updatedQuantity;
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+      if (widget.onChanged != null) {
+        var result = widget.onChanged!(updatedQuantity);
+
+        if (result is Future<int?>) {
+          newQuantity = await result ?? updatedQuantity;
+        } else if (result is int?) {
+          newQuantity = result ?? updatedQuantity;
+        }
+        // If result is void (null), use updatedQuantity
+      }
+
+      setState(() {
+        _currentQuantity = newQuantity;
+      });
+    }
   }
 
   @override
@@ -367,8 +372,7 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
                     : null,
             isEnabled:
                 widget.minValue == null || _currentQuantity > widget.minValue!,
-            onLongPressStart: () => _startLongPress(false),
-            onLongPressEnd: _stopLongPress,
+            onLongPress: _decrement,
             effectiveBackgroundColor: effectiveBackgroundColor,
             effectiveMargin: buttonMargin,
             effectiveWidth: widget.buttonWidth,
@@ -384,8 +388,7 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
                 : null,
             isEnabled: widget.maxQuantity == null ||
                 _currentQuantity < widget.maxQuantity!,
-            onLongPressStart: () => _startLongPress(true),
-            onLongPressEnd: _stopLongPress,
+            onLongPress: _increment,
             effectiveBackgroundColor: effectiveBackgroundColor,
             effectiveMargin: buttonMargin,
             effectiveWidth: widget.buttonWidth,
@@ -401,8 +404,7 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
     Widget icon, {
     required VoidCallback? onPressed,
     required bool isEnabled,
-    required VoidCallback onLongPressStart,
-    required VoidCallback onLongPressEnd,
+    required VoidCallback onLongPress,
     required Color effectiveBackgroundColor,
     required EdgeInsetsGeometry effectiveMargin,
     double? effectiveWidth,
@@ -410,6 +412,10 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
   }) {
     final Color effectiveIconColor =
         _iconColor(context, isEnabled) ?? Theme.of(context).iconTheme.color!;
+
+    // **KEY MODIFICATION:**
+    // When the button is disabled, set onLongPress to null to prevent the timer from running.
+    final VoidCallback? effectiveOnLongPress = isEnabled ? onLongPress : null;
 
     Widget button = CustomActionButton.longPress(
       margin: effectiveMargin,
@@ -423,10 +429,8 @@ class _IncrementDecrementWidgetState extends State<IncrementDecrementWidget> {
       elevation: widget.elevation ?? 0,
       padding: widget.buttonPadding,
       onPressed: onPressed,
-      onLongPress: () {
-        // debugPrint("LONG PRESSED!");
-        onPressed?.call();
-      },
+      onLongPress: effectiveOnLongPress,
+      // Pass null if disabled
       child: IconTheme(
         data: IconThemeData(color: effectiveIconColor),
         child: icon,
