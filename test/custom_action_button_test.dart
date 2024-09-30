@@ -169,18 +169,22 @@ void main() {
       // Verify the disabled button is present with correct text
       expect(find.text('Disabled Button'), findsOneWidget);
 
-      // Find the ElevatedButton
-      final elevatedButtonFinder = find.byType(ElevatedButton);
-      expect(elevatedButtonFinder, findsOneWidget);
+      // Locate the CustomActionButton widget
+      final customActionButtonFinder = find.byType(CustomActionButton);
+      expect(customActionButtonFinder, findsOneWidget);
 
-      final elevatedButton =
-          tester.widget<ElevatedButton>(elevatedButtonFinder);
+      // Find the specific AbsorbPointer inside the CustomActionButton
+      final absorbPointerFinder = find.descendant(
+          of: customActionButtonFinder, matching: find.byType(AbsorbPointer));
+      expect(absorbPointerFinder, findsOneWidget);
 
-      // Ensure onPressed is null
-      expect(elevatedButton.onPressed, isNull);
+      // Ensure that the AbsorbPointer is absorbing (i.e., button is disabled)
+      final absorbPointerWidget =
+          tester.widget<AbsorbPointer>(absorbPointerFinder);
+      expect(absorbPointerWidget.absorbing, true);
 
       // Try to tap the button
-      await tester.tap(find.byType(CustomActionButton));
+      await tester.tap(customActionButtonFinder, warnIfMissed: false);
       await tester.pump();
 
       // Counter should not have incremented

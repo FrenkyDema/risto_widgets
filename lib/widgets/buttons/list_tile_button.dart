@@ -35,7 +35,7 @@ class ListTileButton extends StatelessWidget {
     this.bodyAlignment,
     this.elevation,
     this.leadingSizeFactor,
-    this.minHeight = 56.0,
+    this.minHeight,
   });
 
   @override
@@ -55,7 +55,7 @@ class ListTileButton extends StatelessWidget {
             padding: padding ?? const EdgeInsets.all(8),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: minHeight ?? 56.0,
+                minHeight: minHeight ?? 50.0,
               ),
               child: IntrinsicHeight(
                 child: Row(
