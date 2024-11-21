@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// Importa correttamente i tuoi widget personalizzati
 import '../buttons/custom_action_button.dart';
 import '../buttons/list_tile_button.dart';
 
@@ -125,30 +124,23 @@ class OpenCustomSheet {
       sheetShape: sheetShape,
       sheetPadding: sheetPadding,
       showDefaultButtons: false,
-      // Non mostrare i pulsanti di conferma/rifiuto
       body: body,
     );
   }
 
-  /// Mostra il foglio modale
   void show(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
-      // Trasparente per gestire la decorazione
       isDismissible: barrierDismissible,
       barrierColor: barrierColor,
       barrierLabel: barrierLabel,
       isScrollControlled: true,
-      // Permette al foglio di espandersi
       useSafeArea: true,
       context: context,
       builder: (context) {
         final mediaQuery = MediaQuery.of(context);
-        final maxHeight =
-            mediaQuery.size.height * 0.9; // Limita l'altezza massima
-
+        final maxHeight = mediaQuery.size.height * 0.9;
         if (scrollable) {
-          // Per sheet scrollabile
           return DraggableScrollableSheet(
             expand: expand,
             initialChildSize: initialChildSize,
@@ -188,7 +180,6 @@ class OpenCustomSheet {
             padding: sheetPadding ?? const EdgeInsets.only(bottom: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              // Adatta alla dimensione del contenuto
               children: [
                 if (handleColor != Colors.transparent)
                   _buildHandle(handleColor),
