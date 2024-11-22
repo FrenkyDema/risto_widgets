@@ -2,36 +2,83 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+/// Types of buttons available in [CustomActionButton].
 enum ButtonType { elevated, flat, minimal, longPress }
 
+/// A customizable button widget that can be configured as elevated, flat,
+/// minimal, or long-press button types. Provides a flexible API to adjust
+/// styles, colors, shapes, and behaviors.
+///
+/// The [CustomActionButton] supports different visual styles through the
+/// [ButtonType] enum and offers factory constructors for convenience.
+///
+/// Example usage:
+/// ```dart
+/// CustomActionButton.elevated(
+///   onPressed: () {},
+///   child: Text('Elevated Button'),
+/// );
+/// ```
 class CustomActionButton extends StatefulWidget {
+  /// The callback that is called when the button is tapped.
   final VoidCallback? onPressed;
+
+  /// The callback that is called when the button is long-pressed.
+  /// Only used when [buttonType] is [ButtonType.longPress].
   final VoidCallback? onLongPress;
 
+  /// The child widget to display inside the button.
   final Widget child;
 
+  /// The type of button to display.
   final ButtonType? buttonType;
 
+  /// The background color of the button.
   final Color? backgroundColor;
+
+  /// The foreground color (text/icon color) of the button.
   final Color? foregroundColor;
+
+  /// The shadow color of the button.
   final Color? shadowColor;
+
+  /// The splash color of the button when tapped.
   final Color? splashColor;
+
+  /// The background color of the button when it is disabled.
   final Color? disabledBackgroundColor;
+
+  /// The border color of the button when it is disabled.
   final Color? disabledBorderColor;
+
+  /// The border color of the button.
   final Color? borderColor;
 
+  /// The elevation of the button.
   final double? elevation;
+
+  /// The border radius of the button.
   final double? borderRadius;
+
+  /// The width of the button.
   final double? width;
+
+  /// The height of the button.
   final double? height;
 
+  /// The shape of the button's material.
   final OutlinedBorder? shape;
 
+  /// The amount of space to surround the child inside the button.
   final EdgeInsetsGeometry? padding;
+
+  /// The external margin around the button.
   final EdgeInsetsGeometry? margin;
 
+  /// The splash factory to define interaction effects.
   final InteractiveInkFeatureFactory? splashFactory;
 
+  /// Creates a [CustomActionButton] with the given parameters.
   const CustomActionButton({
     super.key,
     required this.child,
@@ -55,11 +102,15 @@ class CustomActionButton extends StatefulWidget {
     this.splashFactory,
   });
 
+  /// Creates an elevated button.
+  ///
+  /// The [onPressed] and [child] parameters are required.
   factory CustomActionButton.elevated({
     required VoidCallback? onPressed,
     required Widget child,
     Color? backgroundColor,
     Color? foregroundColor,
+    Color? shadowColor,
     Color? splashColor,
     Color? disabledBackgroundColor,
     Color? disabledForegroundColor,
@@ -77,8 +128,9 @@ class CustomActionButton extends StatefulWidget {
     return CustomActionButton(
       buttonType: ButtonType.elevated,
       onPressed: onPressed,
+      foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
-      shadowColor: foregroundColor,
+      shadowColor: shadowColor,
       splashColor: splashColor,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledBorderColor: disabledForegroundColor,
@@ -95,6 +147,9 @@ class CustomActionButton extends StatefulWidget {
     );
   }
 
+  /// Creates a flat button.
+  ///
+  /// The [onPressed] and [child] parameters are required.
   factory CustomActionButton.flat({
     required VoidCallback? onPressed,
     required Widget child,
@@ -116,8 +171,8 @@ class CustomActionButton extends StatefulWidget {
     return CustomActionButton(
       buttonType: ButtonType.flat,
       onPressed: onPressed,
+      foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
-      shadowColor: foregroundColor,
       splashColor: splashColor,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledBorderColor: disabledForegroundColor,
@@ -133,9 +188,13 @@ class CustomActionButton extends StatefulWidget {
     );
   }
 
+  /// Creates a minimal button.
+  ///
+  /// The [onPressed] and [child] parameters are required.
   factory CustomActionButton.minimal({
     required VoidCallback? onPressed,
     required Widget child,
+    Color? foregroundColor,
     Color? disabledForegroundColor,
     Color? borderColor,
     double? width,
@@ -147,6 +206,7 @@ class CustomActionButton extends StatefulWidget {
     return CustomActionButton(
       buttonType: ButtonType.minimal,
       onPressed: onPressed,
+      foregroundColor: foregroundColor,
       disabledBorderColor: disabledForegroundColor,
       borderColor: borderColor,
       width: width,
@@ -158,12 +218,16 @@ class CustomActionButton extends StatefulWidget {
     );
   }
 
+  /// Creates a long-press button.
+  ///
+  /// The [onPressed], [onLongPress], and [child] parameters are required.
   factory CustomActionButton.longPress({
     required VoidCallback? onPressed,
-    VoidCallback? onLongPress,
+    required VoidCallback? onLongPress,
     required Widget child,
     Color? backgroundColor,
     Color? foregroundColor,
+    Color? shadowColor,
     Color? splashColor,
     Color? disabledBackgroundColor,
     Color? disabledForegroundColor,
@@ -182,8 +246,9 @@ class CustomActionButton extends StatefulWidget {
       buttonType: ButtonType.longPress,
       onPressed: onPressed,
       onLongPress: onLongPress,
+      foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
-      shadowColor: foregroundColor,
+      shadowColor: shadowColor,
       splashColor: splashColor,
       disabledBackgroundColor: disabledBackgroundColor,
       disabledBorderColor: disabledForegroundColor,
@@ -207,6 +272,8 @@ class CustomActionButton extends StatefulWidget {
 class _CustomActionButtonState extends State<CustomActionButton> {
   Timer? _longPressTimer;
 
+  /// Handles the long-press action by repeatedly invoking [widget.onLongPress]
+  /// at a fixed interval.
   void _handleLongPress() {
     if (widget.onLongPress != null) {
       _longPressTimer = Timer.periodic(
@@ -218,6 +285,7 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     }
   }
 
+  /// Cancels the ongoing long-press action.
   void _cancelLongPress() {
     _longPressTimer?.cancel();
   }
@@ -241,15 +309,16 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     }
   }
 
+  /// Builds a disabled button when [onPressed] is null.
   Widget _buildDisabledButton(BuildContext context) {
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       overlayColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
-      shadowColor: widget.shadowColor ?? Colors.black,
       foregroundColor: widget.foregroundColor ?? Colors.transparent,
       backgroundColor: widget.disabledBackgroundColor ??
           widget.backgroundColor ??
           Theme.of(context).primaryColor,
+      shadowColor: widget.shadowColor ?? Colors.black,
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       shape: widget.shape ??
@@ -281,10 +350,12 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     );
   }
 
+  /// Builds an elevated button style.
   Widget _buildElevatedButton(BuildContext context) {
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-      foregroundColor: widget.shadowColor ?? Colors.black,
+      foregroundColor: widget.foregroundColor ?? Colors.white,
       backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
+      shadowColor: widget.shadowColor,
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       shape: widget.shape ??
@@ -311,9 +382,10 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     );
   }
 
+  /// Builds a flat button style.
   Widget _buildFlatButton(BuildContext context) {
     final ButtonStyle buttonStyle = TextButton.styleFrom(
-      foregroundColor: widget.shadowColor ?? Colors.white,
+      foregroundColor: widget.foregroundColor ?? Colors.white,
       backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
       overlayColor: widget.splashColor ?? Colors.grey.withOpacity(0.2),
       padding: widget.padding ??
@@ -340,9 +412,10 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     );
   }
 
+  /// Builds a minimal button style.
   Widget _buildMinimalButton(BuildContext context) {
     final ButtonStyle buttonStyle = TextButton.styleFrom(
-      foregroundColor: Colors.black,
+      foregroundColor: widget.foregroundColor ?? Colors.black,
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       shape: widget.shape ?? const RoundedRectangleBorder(),
@@ -367,10 +440,12 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     );
   }
 
+  /// Builds a button that supports long-press actions.
   Widget _buildLongPressButton(BuildContext context) {
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-      foregroundColor: widget.shadowColor ?? Colors.white,
+      foregroundColor: widget.foregroundColor ?? Colors.white,
       backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
+      shadowColor: widget.shadowColor,
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       shape: widget.shape ??
@@ -411,4 +486,3 @@ class _CustomActionButtonState extends State<CustomActionButton> {
     super.dispose();
   }
 }
-
