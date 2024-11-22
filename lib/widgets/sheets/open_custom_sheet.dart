@@ -55,10 +55,10 @@ class OpenCustomSheet {
     this.cancelButtonText,
     this.padding,
     this.buttonSpacing,
-    this.showDefaultButtons = true,
+    this.showDefaultButtons = false, // Changed default to false
   });
 
-  /// Factory constructor per creare un foglio di conferma
+  /// Factory constructor to create a confirmation sheet
   factory OpenCustomSheet.openConfirmSheet(
     BuildContext context, {
     required Widget body,
@@ -90,11 +90,12 @@ class OpenCustomSheet {
       confirmButtonText: confirmButtonText,
       cancelButtonText: cancelButtonText,
       showDefaultButtons: true,
+      // Enable default buttons for confirm sheet
       body: ({scrollController}) => body,
     );
   }
 
-  /// Factory constructor per creare un foglio scrollabile
+  /// Factory constructor to create a scrollable sheet without default buttons
   factory OpenCustomSheet.scrollableSheet(
     BuildContext context, {
     required Widget Function({ScrollController? scrollController}) body,
@@ -124,6 +125,7 @@ class OpenCustomSheet {
       sheetShape: sheetShape,
       sheetPadding: sheetPadding,
       showDefaultButtons: false,
+      // Disable default buttons for scrollable sheet
       body: body,
     );
   }
@@ -167,7 +169,7 @@ class OpenCustomSheet {
             },
           );
         } else {
-          // Per sheet non scrollabile, ma con scorrimento solo se necessario
+          // For non-scrollable sheet, enable scrolling only if necessary
           return Container(
             constraints: BoxConstraints(
               maxHeight: maxHeight,
@@ -215,7 +217,7 @@ class OpenCustomSheet {
     });
   }
 
-  /// Costruisce i pulsanti di conferma/rifiuto
+  /// Builds the confirmation and cancellation buttons
   static Widget _buildButtons(
     BuildContext context,
     Color? firstButtonColor,
@@ -259,7 +261,7 @@ class OpenCustomSheet {
     );
   }
 
-  /// Costruisce il drag handle
+  /// Builds the drag handle for the sheet
   static Widget _buildHandle(Color? handleColor) {
     return Center(
       child: Container(
