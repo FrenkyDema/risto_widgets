@@ -1,6 +1,7 @@
 library risto_widgets;
 
 export 'widgets/buttons/custom_action_button.dart';
+export 'widgets/buttons/custom_icon_text.dart';
 export 'widgets/buttons/expandable_list_tile_button.dart';
 export 'widgets/buttons/list_tile_button.dart';
 export 'widgets/input/increment_decrement_widget.dart';
