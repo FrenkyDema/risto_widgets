@@ -42,29 +42,29 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _navigationItems.addAll([
-      NavigationItem(
-        page: const IncrementDecrementPage(),
-        icon: const Icon(Icons.home),
+      const NavigationItem(
+        page: IncrementDecrementPage(),
+        icon: Icon(Icons.home),
         label: 'Increment/Decrement',
       ),
-      NavigationItem(
-        page: const ActionButtonPage(),
-        icon: const Icon(Icons.search),
+      const NavigationItem(
+        page: ActionButtonPage(),
+        icon: Icon(Icons.search),
         label: 'Action Buttons',
       ),
-      NavigationItem(
-        page: const ListTileButtonPage(),
-        icon: const Icon(Icons.list),
+      const NavigationItem(
+        page: ListTileButtonPage(),
+        icon: Icon(Icons.list),
         label: 'List Tile Buttons',
       ),
-      NavigationItem(
-        page: const ExpandablePage(),
-        icon: const Icon(Icons.expand),
+      const NavigationItem(
+        page: ExpandablePage(),
+        icon: Icon(Icons.expand),
         label: 'Expandable',
       ),
-      NavigationItem(
-        page: const CustomSheetPage(),
-        icon: const Icon(Icons.open_in_new),
+      const NavigationItem(
+        page: CustomSheetPage(),
+        icon: Icon(Icons.open_in_new),
         label: 'Custom Sheets',
       ),
     ]);
