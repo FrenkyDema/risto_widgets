@@ -11,7 +11,6 @@ class ListTileButton extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
-  final EdgeInsetsGeometry? leadingPadding;
 
   // Content
   final Widget? leading;
@@ -40,7 +39,6 @@ class ListTileButton extends StatelessWidget {
     this.margin,
     this.padding,
     this.contentPadding,
-    this.leadingPadding,
     this.leading,
     this.leadingSizeFactor = 1.0,
     required this.body,
@@ -59,12 +57,17 @@ class ListTileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? leadingWidget;
     if (leading != null) {
-      leadingWidget = Padding(
-        padding: leadingPadding ?? const EdgeInsets.all(8.0),
-        child: Transform.scale(
-          scale: leadingSizeFactor,
-          alignment: Alignment.center,
-          child: leading,
+      leadingWidget = Center(
+        child: SizedBox(
+          key: const Key('leading_wrapper'),
+          // Added Key for testing
+          width: 24.0 * leadingSizeFactor,
+          height: 24.0 * leadingSizeFactor,
+          child: FittedBox(
+            fit: BoxFit.fill,
+            alignment: Alignment.center,
+            child: leading,
+          ),
         ),
       );
     }
