@@ -66,7 +66,7 @@ void main() {
             body: IconListTileButton(
               icon: Icons.star,
               title: const Text('Icon ListTileButton'),
-              sizeFactor: sizeFactor,
+              leadingSizeFactor: sizeFactor,
               onPressed: () {},
             ),
           ),

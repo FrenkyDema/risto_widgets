@@ -1,46 +1,76 @@
+// widgets.dart
+
 import 'package:flutter/material.dart';
 
 class ListTileButton extends StatelessWidget {
-  final void Function()? onPressed;
-  final void Function()? onLongPress;
-  final Widget? body;
-  final Widget? subtitle;
-  final Widget? leading;
-  final Widget? trailing;
+  // Behavior
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
+
+  // Layout
+  final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? leadingPadding;
+
+  // Content
+  final Widget? leading;
+  final double leadingSizeFactor;
+  final Widget? body;
+  final Widget? subtitle;
+  final Widget? trailing;
+
+  // Style
+  final Color? backgroundColor;
   final Color? borderColor;
   final double borderRadius;
-  final VisualDensity? visualDensity;
-  final Color? backgroundColor;
-  final ListTileTitleAlignment? bodyAlignment;
   final double? elevation;
-  final double? leadingSizeFactor;
+
+  // Visual Aspects
+  final VisualDensity? visualDensity;
+  final ListTileTitleAlignment? bodyAlignment;
+
+  // Constraints
   final double? minHeight;
 
   const ListTileButton({
     super.key,
+    this.onPressed,
+    this.onLongPress,
+    this.margin,
     this.padding,
     this.contentPadding,
-    this.borderColor,
-    this.backgroundColor,
+    this.leadingPadding,
     this.leading,
+    this.leadingSizeFactor = 1.0,
     required this.body,
     this.subtitle,
     this.trailing,
-    this.onPressed,
+    this.backgroundColor,
+    this.borderColor,
     this.borderRadius = 10,
-    this.visualDensity,
-    this.onLongPress,
-    this.bodyAlignment,
     this.elevation,
-    this.leadingSizeFactor,
+    this.visualDensity,
+    this.bodyAlignment,
     this.minHeight,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget? leadingWidget;
+    if (leading != null) {
+      leadingWidget = Padding(
+        padding: leadingPadding ?? const EdgeInsets.all(8.0),
+        child: Transform.scale(
+          scale: leadingSizeFactor,
+          alignment: Alignment.center,
+          child: leading,
+        ),
+      );
+    }
+
     return RoundedContainer(
+      margin: margin,
       borderColor: borderColor,
       backgroundColor: backgroundColor,
       elevation: elevation,
@@ -60,15 +90,7 @@ class ListTileButton extends StatelessWidget {
               child: IntrinsicHeight(
                 child: Row(
                   children: [
-                    if (leading != null)
-                      SizedBox(
-                        width: (leadingSizeFactor != null &&
-                                leadingSizeFactor! * 24 > 48)
-                            ? leadingSizeFactor! * 24
-                            : 48,
-                        height: double.infinity,
-                        child: leading,
-                      ),
+                    if (leadingWidget != null) leadingWidget,
                     Expanded(
                       child: ListTile(
                         titleAlignment: bodyAlignment,
@@ -100,18 +122,26 @@ class ListTileButton extends StatelessWidget {
 }
 
 class IconListTileButton extends StatelessWidget {
+  // Behavior
+  final VoidCallback? onPressed;
+
+  // Layout
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? contentPadding;
+
+  // Content
   final IconData icon;
   final Widget title;
   final Widget? subtitle;
   final Widget? trailing;
-  final Color? iconColor;
+
+  // Style
   final Color? backgroundColor;
   final Color? borderColor;
+  final Color? iconColor;
+  final double leadingSizeFactor;
   final double? elevation;
-  final double sizeFactor;
-  final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? contentPadding;
-  final void Function()? onPressed;
 
   const IconListTileButton({
     super.key,
@@ -119,57 +149,64 @@ class IconListTileButton extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.trailing,
-    this.iconColor,
+    this.onPressed,
     this.backgroundColor,
     this.borderColor,
-    this.sizeFactor = 1.0,
+    this.iconColor,
+    this.leadingSizeFactor = 1.0,
+    this.margin,
     this.padding,
     this.contentPadding,
-    this.onPressed,
     this.elevation,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTileButton(
-      borderColor: borderColor,
-      backgroundColor: backgroundColor,
-      body: title,
-      leading: Icon(
-        icon,
-        color: iconColor ?? Theme.of(context).iconTheme.color,
-        size: 24.0 * sizeFactor,
-      ),
-      leadingSizeFactor: sizeFactor,
+      margin: margin,
       padding: padding,
       contentPadding: contentPadding,
-      bodyAlignment: ListTileTitleAlignment.threeLine,
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
+      elevation: elevation,
+      body: title,
       subtitle: subtitle,
       trailing: trailing,
       onPressed: onPressed,
-      elevation: elevation,
+      leading: Icon(
+        icon,
+        color: iconColor ?? Theme.of(context).iconTheme.color,
+        size: 24.0,
+      ),
+      leadingSizeFactor: leadingSizeFactor,
+      bodyAlignment: ListTileTitleAlignment.threeLine,
     );
   }
 }
 
 class RoundedContainer extends StatelessWidget {
-  final Color? borderColor;
-  final Color? backgroundColor;
-  final double borderRadius;
-  final Widget child;
-  final double? elevation;
-  final EdgeInsetsGeometry? padding;
+  // Layout
   final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+
+  // Content
+  final Widget child;
+
+  // Style
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double borderRadius;
+  final double? elevation;
 
   const RoundedContainer({
     super.key,
-    this.borderColor,
-    this.backgroundColor,
-    this.borderRadius = 10,
     required this.child,
-    this.elevation,
-    this.padding,
     this.margin,
+    this.padding,
+    this.backgroundColor,
+    this.borderColor,
+    this.borderRadius = 10,
+    this.elevation,
   });
 
   @override
@@ -222,12 +259,12 @@ class DoubleListTileButtons extends StatelessWidget {
         children: expanded
             ? [
                 Expanded(child: firstButton),
-                SizedBox(width: space),
+                SizedBox(width: space ?? 8),
                 Expanded(child: secondButton),
               ]
             : [
                 firstButton,
-                SizedBox(width: space),
+                SizedBox(width: space ?? 8),
                 secondButton,
               ],
       ),

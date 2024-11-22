@@ -102,7 +102,7 @@ class ExpandableListTileButton extends StatefulWidget {
         onPressed: () => toggleExpansion.call(),
         backgroundColor: backgroundColor,
         iconColor: iconColor,
-        sizeFactor: sizeFactor,
+        leadingSizeFactor: sizeFactor,
       ),
     );
   }
