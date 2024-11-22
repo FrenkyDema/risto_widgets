@@ -1,6 +1,6 @@
 name: Flutter Coverage
 
-on: [push, pull_request, release]
+on: [ push, pull_request, release ]
 
 jobs:
   test:
@@ -50,12 +50,9 @@ jobs:
           git add coverage/
           git commit -m "Add coverage report"
 
-      - name: Fetch gh-pages Branch
+      - name: Fetch and Pull gh-pages Branch
         run: |
           git fetch origin gh-pages
-
-      - name: Switch to gh-pages Branch
-        run: |
           git checkout gh-pages
           git pull origin gh-pages
 
@@ -64,7 +61,10 @@ jobs:
           git checkout HEAD@{1} -- coverage/  # Check out coverage files from the previous commit (before branch switch)
           git add coverage/
           git commit -m "Update coverage report on gh-pages"
-          git push origin gh-pages
+
+      - name: Force Push to gh-pages Branch
+        run: |
+          git push origin gh-pages --force
 
       - name: Generate Coverage Badge
         run: |
