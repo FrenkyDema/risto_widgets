@@ -13,7 +13,7 @@ class CustomSheetPage extends StatelessWidget {
           'Custom Sheet Example',
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        // Pulsante per aprire il foglio di conferma
+        // Button to open the confirmation sheet
         CustomActionButton(
           margin: const EdgeInsets.symmetric(vertical: 8),
           onPressed: () {
@@ -33,13 +33,13 @@ class CustomSheetPage extends StatelessWidget {
               firstButtonTextColor: Colors.white,
               secondButtonTextColor: Colors.white,
               buttonSpacing: 8.0,
-              confirmButtonText: "Conferma",
-              cancelButtonText: "Chiudi",
+              confirmButtonText: "Confirm",
+              cancelButtonText: "Cancel",
             ).show(context);
           },
           child: const Text('Open Confirm Sheet'),
         ),
-        // Pulsante per aprire un foglio scrollabile
+        // Button to open a scrollable sheet without confirmation buttons
         CustomActionButton(
           margin: const EdgeInsets.symmetric(vertical: 8),
           onPressed: () {
@@ -71,7 +71,7 @@ class CustomSheetPage extends StatelessWidget {
           },
           child: const Text('Open Scrollable Sheet'),
         ),
-        // Pulsante per aprire un foglio di conferma con un body grande ma non troppo
+        // Button to open a large confirmation sheet
         CustomActionButton(
           margin: const EdgeInsets.symmetric(vertical: 8),
           onPressed: () {
@@ -120,7 +120,7 @@ class CustomSheetPage extends StatelessWidget {
           },
           child: const Text('Open Large Confirm Sheet'),
         ),
-        // Pulsante per aprire un foglio con un modulo personalizzato
+        // Button to open a custom form sheet without confirmation buttons
         CustomActionButton(
           margin: const EdgeInsets.symmetric(vertical: 8),
           onPressed: () {

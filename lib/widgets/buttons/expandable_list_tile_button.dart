@@ -2,20 +2,58 @@ import 'package:flutter/material.dart';
 
 import 'list_tile_button.dart';
 
+/// A widget that provides an expandable list tile button with customizable headers and content.
+///
+/// The [ExpandableListTileButton] can be used to create a list tile that expands to reveal additional content when tapped.
+/// It supports custom headers, icons, and expanded content.
+///
+/// Example usage:
+/// ```dart
+/// ExpandableListTileButton.listTile(
+///   title: Text('Tap to expand'),
+///   expanded: Text('Expanded content here'),
+/// );
+/// ```
 class ExpandableListTileButton extends StatefulWidget {
+  /// The content to display when the tile is expanded.
   final Widget expanded;
+
+  /// The primary content of the tile when collapsed.
   final Widget? title;
+
+  /// Additional content displayed below the [title] when collapsed.
   final Widget? subtitle;
+
+  /// The background color of the tile when collapsed.
   final Color? backgroundColor;
+
+  /// The background color of the expanded content.
   final Color? expandedColor;
+
+  /// The color of the leading icon.
   final Color? iconColor;
+
+  /// The color of the trailing expand/collapse icon.
   final Color? trailingIconColor;
+
+  /// The color of the border around the tile.
   final Color? borderColor;
+
+  /// The elevation of the tile's shadow.
   final double elevation;
+
+  /// The leading widget of the tile, typically an icon or avatar.
   final Widget? leading;
+
+  /// The icon data for the leading icon.
   final IconData? icon;
+
+  /// A builder function to create a custom header widget.
+  ///
+  /// The function provides a [tapAction] callback and a [isExpanded] boolean to control the expansion state.
   final Widget Function(Function tapAction, bool isExpanded)? customHeader;
 
+  /// Creates an [ExpandableListTileButton] with the given properties.
   const ExpandableListTileButton({
     super.key,
     required this.expanded,
@@ -32,6 +70,15 @@ class ExpandableListTileButton extends StatefulWidget {
     this.customHeader,
   });
 
+  /// Creates an [ExpandableListTileButton] with a default [ListTileButton] header.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// ExpandableListTileButton.listTile(
+  ///   title: Text('Tap to expand'),
+  ///   expanded: Text('Expanded content here'),
+  /// );
+  /// ```
   factory ExpandableListTileButton.listTile({
     required Widget expanded,
     required Widget title,
@@ -67,6 +114,16 @@ class ExpandableListTileButton extends StatefulWidget {
     );
   }
 
+  /// Creates an [ExpandableListTileButton] with a default [IconListTileButton] header.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// ExpandableListTileButton.iconListTile(
+  ///   icon: Icons.info,
+  ///   title: Text('Tap to expand'),
+  ///   expanded: Text('Expanded content here'),
+  /// );
+  /// ```
   factory ExpandableListTileButton.iconListTile({
     required Widget expanded,
     required IconData icon,
@@ -107,6 +164,17 @@ class ExpandableListTileButton extends StatefulWidget {
     );
   }
 
+  /// Creates an [ExpandableListTileButton] with a custom header.
+  ///
+  /// The [customHeader] builder function is used to create the header widget.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// ExpandableListTileButton.custom(
+  ///   expanded: Text('Expanded content here'),
+  ///   customHeader: (toggleExpansion, isExpanded) => YourCustomHeaderWidget(),
+  /// );
+  /// ```
   factory ExpandableListTileButton.custom({
     required Widget expanded,
     required Widget Function(Function tapAction, bool isExpanded) customHeader,
@@ -136,13 +204,25 @@ class ExpandableListTileButton extends StatefulWidget {
 
 class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     with SingleTickerProviderStateMixin {
+  /// Tracks the expansion state of the tile.
   bool _isExpanded = false;
+
+  /// Controls the animation for expanding and collapsing.
   late AnimationController _controller;
+
+  /// The animation for size transition.
   late Animation<double> _animation;
+
+  /// The widget displayed in the expanded area.
   late Widget _bodyWidget;
+
+  /// The height of the header widget.
   double _headerHeight = 0.0;
+
+  /// A key to identify the header widget and measure its size.
   final GlobalKey _headerKey = GlobalKey();
 
+  /// Initializes the state of the widget, sets up the animation controller, and measures the header height.
   @override
   void initState() {
     super.initState();
@@ -174,6 +254,7 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     });
   }
 
+  /// Updates the height of the header widget.
   void _updateHeaderHeight() {
     final RenderBox? renderBox =
         _headerKey.currentContext?.findRenderObject() as RenderBox?;
@@ -187,6 +268,7 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     }
   }
 
+  /// Called whenever the widget configuration changes.
   @override
   void didUpdateWidget(covariant ExpandableListTileButton oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -195,12 +277,14 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     });
   }
 
+  /// Disposes the animation controller.
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
+  /// Toggles the expansion state of the tile and triggers the animation.
   void _toggleExpansion() {
     setState(() {
       _isExpanded = !_isExpanded;
@@ -212,6 +296,7 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     });
   }
 
+  /// Builds the widget tree.
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -251,6 +336,7 @@ class _ExpandableListTileButtonState extends State<ExpandableListTileButton>
     );
   }
 
+  /// Builds the default header if [customHeader] is not provided.
   Widget _buildDefaultHeader(BuildContext context, ThemeData theme) {
     return widget.icon != null
         ? IconListTileButton(

@@ -1,60 +1,125 @@
-// widgets.dart
-
 import 'package:flutter/material.dart';
-import 'package:risto_widgets/risto_widgets.dart'; // Ensure this import points to your custom widgets package
+
+import 'custom_action_button.dart';
 
 /// A customizable button that ensures the [onPressed] callback is invoked
 /// only once per press. It prevents multiple invocations during a single press,
 /// making it ideal for handling actions that shouldn't be executed multiple times
 /// concurrently, such as network requests.
+///
+/// The [SinglePressButton] provides options to display a loading indicator
+/// while processing, customize its appearance, and handle processing states
+/// with callbacks.
+///
+/// Example usage:
+/// ```dart
+/// SinglePressButton(
+///   onPressed: () async {
+///     await performNetworkRequest();
+///   },
+///   child: Text('Submit'),
+///   showLoadingIndicator: true,
+///   color: Colors.blue,
+///   disabledColor: Colors.blueAccent,
+///   borderRadius: 12.0,
+///   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+///   onStartProcessing: () {
+///     // Optional: Actions to perform when processing starts.
+///   },
+///   onFinishProcessing: () {
+///     // Optional: Actions to perform when processing finishes.
+///   },
+///   onError: (error) {
+///     // Optional: Handle errors during processing.
+///   },
+/// );
+/// ```
 class SinglePressButton extends StatefulWidget {
   /// The widget below this widget in the tree.
+  ///
+  /// Typically, this is the content of the button, such as text or an icon.
   final Widget child;
 
   /// The callback that is called when the button is tapped.
-  /// It can be asynchronous.
+  ///
+  /// This callback can be asynchronous and is invoked only once per press.
+  /// It is responsible for handling the primary action of the button.
   final Future<void> Function() onPressed;
 
   /// The amount of space to surround the child inside the button.
+  ///
+  /// If not specified, default padding is applied.
   final EdgeInsetsGeometry? padding;
 
   /// The external margin around the button.
+  ///
+  /// This margin wraps the button, providing space between it and other widgets.
   final EdgeInsetsGeometry? margin;
 
   /// The background color of the button when enabled.
+  ///
+  /// If not specified, the button uses the theme's primary color.
   final Color? color;
 
   /// The background color of the button when disabled.
+  ///
+  /// This color is displayed when the button is in a processing state.
+  /// If not specified, it defaults to the theme's disabled color.
   final Color? disabledColor;
 
   /// The border radius of the button.
+  ///
+  /// Controls the roundness of the button's corners.
+  /// Defaults to 8.0.
   final double borderRadius;
 
   /// The text style for the button's label.
+  ///
+  /// If not specified, it inherits the theme's text style.
   final TextStyle? textStyle;
 
   /// The elevation of the button.
+  ///
+  /// Controls the shadow depth of the button.
+  /// If not specified, it defaults to the theme's elevated button elevation.
   final double? elevation;
 
   /// The shape of the button's material.
+  ///
+  /// Allows for customizing the button's outline and borders.
+  /// If not specified, a rounded rectangle is used.
   final OutlinedBorder? shape;
 
   /// Whether to show a loading indicator while processing.
+  ///
+  /// If set to `true`, a [CircularProgressIndicator] is displayed on top of the button's child.
+  /// Defaults to `false`.
   final bool showLoadingIndicator;
 
   /// The color of the loading indicator.
+  ///
+  /// If not specified, it defaults to the theme's [ColorScheme.onPrimary].
   final Color? loadingIndicatorColor;
 
   /// Callback invoked when the button starts processing.
+  ///
+  /// Useful for triggering actions like disabling other UI elements.
   final VoidCallback? onStartProcessing;
 
   /// Callback invoked when the button finishes processing.
+  ///
+  /// Useful for resetting states or triggering subsequent actions.
   final VoidCallback? onFinishProcessing;
 
   /// Callback invoked when an error occurs during processing.
+  ///
+  /// Provides a way to handle exceptions thrown by the [onPressed] callback.
   final void Function(Object error)? onError;
 
   /// Creates a [SinglePressButton].
+  ///
+  /// The [child] and [onPressed] parameters are required.
+  /// The [borderRadius] defaults to 8.0, and [showLoadingIndicator] defaults to `false`.
   const SinglePressButton({
     super.key,
     required this.child,
@@ -79,10 +144,15 @@ class SinglePressButton extends StatefulWidget {
 }
 
 class _SinglePressButtonState extends State<SinglePressButton> {
+  /// Indicates whether the button is currently processing an action.
+  ///
+  /// When `true`, the button is disabled, and a loading indicator is shown if enabled.
   bool _isProcessing = false;
 
   /// Handles the button press by invoking [widget.onPressed].
-  /// It ensures that the callback is invoked only once per press.
+  ///
+  /// Ensures that the callback is invoked only once per press.
+  /// Manages the processing state and handles optional callbacks for processing events.
   Future<void> _handlePress() async {
     if (_isProcessing) return;
 
@@ -122,6 +192,14 @@ class _SinglePressButtonState extends State<SinglePressButton> {
         ? (widget.disabledColor ?? Theme.of(context).disabledColor)
         : (widget.color ?? Theme.of(context).primaryColor);
 
+    // Determine the text style, merging with provided [textStyle] if any.
+    final TextStyle effectiveTextStyle = widget.textStyle ??
+        Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: widget.color != null
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).textTheme.labelLarge!.color,
+            );
+
     return Container(
       margin: widget.margin, // Apply the external margin here
       child: CustomActionButton(
@@ -135,7 +213,10 @@ class _SinglePressButtonState extends State<SinglePressButton> {
           alignment: Alignment.center,
           children: [
             // Original child
-            widget.child,
+            DefaultTextStyle(
+              style: effectiveTextStyle,
+              child: widget.child,
+            ),
 
             // Loading indicator overlay
             if (_isProcessing && widget.showLoadingIndicator)
