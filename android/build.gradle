@@ -1,4 +1,6 @@
-group = "francescodema.dev.risto_widgets"
+package android
+
+group = "com.ristocloudgroup.lib.risto_widgets"
 version = "1.0"
 
 buildscript {
@@ -23,7 +25,7 @@ apply plugin: "com.android.library"
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace = "francescodema.dev.risto_widgets"
+        namespace = "com.ristocloudgroup.lib.risto_widgets"
     }
 
     compileSdk = 34
