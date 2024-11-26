@@ -24,7 +24,6 @@ apply plugin: "com.android.library"
 android {
     if (project.android.hasProperty("namespace")) {
         namespace = "com.ristocloudgroup.lib.risto_widgets"
-        namespace = "com.ristocloudgroup.lib.risto_widgets"
     }
 
     compileSdk = 34
