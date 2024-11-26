@@ -1,4 +1,4 @@
-package android.src.test.java.com.ristocloudgroup.lib.risto_widgets;
+package com.ristocloudgroup.lib.risto_widgets;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
