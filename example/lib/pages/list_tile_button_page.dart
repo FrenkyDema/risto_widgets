@@ -51,6 +51,31 @@ class ListTileButtonPage extends StatelessWidget {
             leading: const Icon(Icons.info, color: Colors.blue),
             leadingSizeFactor: 1.5,
           ),
+          ListTileButton(
+            onPressed: () => {},
+            backgroundColor: Colors.white,
+            leading: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("21"),
+                Padding(
+                  padding: EdgeInsets.only(top: 2.0),
+                  child: Text("set"),
+                )
+              ],
+            ),
+            leadingSizeFactor: 2,
+            trailing: const Icon(Icons.arrow_forward),
+            subtitle: const Text('Subtitle Text'),
+            body: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('List Tile Button column leading'),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
           IconListTileButton(
             margin: const EdgeInsets.symmetric(vertical: 8),
