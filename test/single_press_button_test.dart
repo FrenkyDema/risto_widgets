@@ -7,6 +7,36 @@ import 'package:risto_widgets/widgets/buttons/single_press_button.dart';
 
 void main() {
   group('SinglePressButton Tests', () {
+    testWidgets('SinglePressButton respects width and height properties',
+        (WidgetTester tester) async {
+      const double testWidth = 200.0;
+      const double testHeight = 50.0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SinglePressButton(
+              onPressed: () async {},
+              width: testWidth,
+              height: testHeight,
+              child: const Text('Press Me'),
+            ),
+          ),
+        ),
+      );
+
+      // Find the SinglePressButton widget.
+      final finder = find.byType(SinglePressButton);
+      expect(finder, findsOneWidget);
+
+      // Get the RenderBox of the SinglePressButton.
+      final RenderBox renderBox =
+          tester.renderObject(find.byType(CustomActionButton));
+
+      // Verify the size matches the specified width and height.
+      expect(renderBox.size.width, equals(testWidth));
+      expect(renderBox.size.height, equals(testHeight));
+    });
     testWidgets('SinglePressButton invokes onPressed once on single tap',
         (WidgetTester tester) async {
       int pressCount = 0;

@@ -29,8 +29,14 @@ class ListTileButton extends StatelessWidget {
   /// Internal padding within the tile.
   final EdgeInsetsGeometry? padding;
 
-  /// Padding for the content within the [ListTile].
-  final EdgeInsetsGeometry? contentPadding;
+  /// Padding for the [body] within the [ListTile].
+  final EdgeInsetsGeometry? bodyPadding;
+
+  /// Padding around the [leading] widget.
+  final EdgeInsetsGeometry? leadingPadding;
+
+  /// Padding around the [trailing] widget.
+  final EdgeInsetsGeometry? trailingPadding;
 
   // Content
 
@@ -83,7 +89,9 @@ class ListTileButton extends StatelessWidget {
     this.onLongPress,
     this.margin,
     this.padding,
-    this.contentPadding,
+    this.bodyPadding,
+    this.leadingPadding,
+    this.trailingPadding,
     this.leading,
     this.leadingSizeFactor = 1.0,
     required this.body,
@@ -102,17 +110,32 @@ class ListTileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? leadingWidget;
     if (leading != null) {
-      leadingWidget = Center(
-        child: SizedBox(
-          key: const Key('leading_wrapper'),
-          // Added Key for testing
-          width: 24.0 * leadingSizeFactor,
-          height: 24.0 * leadingSizeFactor,
-          child: FittedBox(
-            fit: BoxFit.fill,
-            alignment: Alignment.center,
-            child: leading,
+      leadingWidget = Padding(
+        padding: leadingPadding ?? EdgeInsets.zero,
+        child: Center(
+          child: SizedBox(
+            key: const Key('leading_wrapper'),
+            // Added Key for testing
+            width: 24.0 * leadingSizeFactor,
+            height: 24.0 * leadingSizeFactor,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+              child: leading,
+            ),
           ),
+        ),
+      );
+    }
+
+    Widget? trailingWidget;
+    if (trailing != null) {
+      trailingWidget = Padding(
+        padding: trailingPadding ?? const EdgeInsets.only(right: 12),
+        child: Container(
+          alignment: Alignment.center,
+          height: double.infinity,
+          child: trailing,
         ),
       );
     }
@@ -144,20 +167,14 @@ class ListTileButton extends StatelessWidget {
                         titleAlignment: bodyAlignment,
                         visualDensity: visualDensity ?? VisualDensity.compact,
                         contentPadding:
-                            contentPadding ?? const EdgeInsets.only(left: 8),
+                            bodyPadding ?? const EdgeInsets.only(left: 8),
                         minVerticalPadding: 0,
                         minLeadingWidth: 0,
                         title: body,
                         subtitle: subtitle,
                       ),
                     ),
-                    if (trailing != null)
-                      Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        alignment: Alignment.center,
-                        height: double.infinity,
-                        child: trailing,
-                      ),
+                    if (trailingWidget != null) trailingWidget,
                   ],
                 ),
               ),
@@ -193,8 +210,14 @@ class IconListTileButton extends StatelessWidget {
   /// Internal padding within the tile.
   final EdgeInsetsGeometry? padding;
 
-  /// Padding for the content within the [ListTile].
-  final EdgeInsetsGeometry? contentPadding;
+  /// Padding for the [body] within the [ListTile].
+  final EdgeInsetsGeometry? bodyPadding;
+
+  /// Padding around the [leading] widget.
+  final EdgeInsetsGeometry? leadingPadding;
+
+  /// Padding around the [trailing] widget.
+  final EdgeInsetsGeometry? trailingPadding;
 
   // Content
 
@@ -227,6 +250,9 @@ class IconListTileButton extends StatelessWidget {
   /// Elevation of the tile's shadow.
   final double? elevation;
 
+  /// Border radius of the tile's rounded corners.
+  final double borderRadius;
+
   /// Creates an [IconListTileButton] with an icon and customizable content.
   const IconListTileButton({
     super.key,
@@ -241,8 +267,11 @@ class IconListTileButton extends StatelessWidget {
     this.leadingSizeFactor = 1.0,
     this.margin,
     this.padding,
-    this.contentPadding,
+    this.bodyPadding,
+    this.leadingPadding,
+    this.trailingPadding,
     this.elevation,
+    this.borderRadius = 10,
   });
 
   @override
@@ -250,10 +279,13 @@ class IconListTileButton extends StatelessWidget {
     return ListTileButton(
       margin: margin,
       padding: padding,
-      contentPadding: contentPadding,
+      bodyPadding: bodyPadding,
+      leadingPadding: leadingPadding,
+      trailingPadding: trailingPadding,
       backgroundColor: backgroundColor,
       borderColor: borderColor,
       elevation: elevation,
+      borderRadius: borderRadius,
       body: title,
       subtitle: subtitle,
       trailing: trailing,
