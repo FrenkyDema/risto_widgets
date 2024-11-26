@@ -19,7 +19,7 @@ import 'custom_action_button.dart';
 ///   },
 ///   child: Text('Submit'),
 ///   showLoadingIndicator: true,
-///   color: Colors.blue,
+///   backgroundColor: Colors.blue,
 ///   disabledColor: Colors.blueAccent,
 ///   borderRadius: 12.0,
 ///   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -61,7 +61,7 @@ class SinglePressButton extends StatefulWidget {
   /// The background color of the button when enabled.
   ///
   /// If not specified, the button uses the theme's primary color.
-  final Color? color;
+  final Color? backgroundColor;
 
   /// The background color of the button when disabled.
   ///
@@ -138,7 +138,7 @@ class SinglePressButton extends StatefulWidget {
     required this.onPressed,
     this.padding,
     this.margin,
-    this.color,
+    this.backgroundColor,
     this.disabledColor,
     this.borderRadius = 8.0,
     this.textStyle,
@@ -204,12 +204,12 @@ class _SinglePressButtonState extends State<SinglePressButton> {
     // Determine the button's background color based on its state.
     final Color backgroundColor = _isProcessing
         ? (widget.disabledColor ?? Theme.of(context).disabledColor)
-        : (widget.color ?? Theme.of(context).primaryColor);
+        : (widget.backgroundColor ?? Theme.of(context).primaryColor);
 
     // Determine the text style, merging with provided [textStyle] if any.
     final TextStyle effectiveTextStyle = widget.textStyle ??
         Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: widget.color != null
+              color: widget.backgroundColor != null
                   ? Theme.of(context).colorScheme.onPrimary
                   : Theme.of(context).textTheme.labelLarge!.color,
             );

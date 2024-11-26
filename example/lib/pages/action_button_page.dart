@@ -111,7 +111,7 @@ class _ActionButtonPageState extends State<ActionButtonPage> {
         SinglePressButton(
           onPressed: _incrementCounterAsync,
           margin: const EdgeInsets.symmetric(vertical: 8),
-          color: Colors.purple,
+          backgroundColor: Colors.purple,
           disabledColor: Colors.purple.shade200,
           borderRadius: 8.0,
           elevation: 4.0,
