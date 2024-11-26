@@ -23,6 +23,8 @@ import 'custom_action_button.dart';
 ///   disabledColor: Colors.blueAccent,
 ///   borderRadius: 12.0,
 ///   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+///   width: 200,
+///   height: 50,
 ///   onStartProcessing: () {
 ///     // Optional: Actions to perform when processing starts.
 ///   },
@@ -101,6 +103,16 @@ class SinglePressButton extends StatefulWidget {
   /// If not specified, it defaults to the theme's [ColorScheme.onPrimary].
   final Color? loadingIndicatorColor;
 
+  /// The width of the button.
+  ///
+  /// If not specified, the button will size itself based on its child's size constraints.
+  final double? width;
+
+  /// The height of the button.
+  ///
+  /// If not specified, the button will size itself based on its child's size constraints.
+  final double? height;
+
   /// Callback invoked when the button starts processing.
   ///
   /// Useful for triggering actions like disabling other UI elements.
@@ -134,6 +146,8 @@ class SinglePressButton extends StatefulWidget {
     this.shape,
     this.showLoadingIndicator = false,
     this.loadingIndicatorColor,
+    this.width,
+    this.height,
     this.onStartProcessing,
     this.onFinishProcessing,
     this.onError,
@@ -209,6 +223,8 @@ class _SinglePressButtonState extends State<SinglePressButton> {
         borderRadius: widget.borderRadius,
         elevation: widget.elevation,
         shape: widget.shape,
+        width: widget.width,
+        height: widget.height,
         child: Stack(
           alignment: Alignment.center,
           children: [
