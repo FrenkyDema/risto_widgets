@@ -201,7 +201,7 @@ void main() {
       expect(find.text('Cancel'), findsNothing);
     });
 
-    testWidgets('Scrollable sheet does not show confirmation buttons',
+    testWidgets('Scrollable sheet works correctly',
         (WidgetTester tester) async {
 
       await tester.pumpWidget(
